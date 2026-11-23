@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/cutscenes/cutscene_player.gd" id="1_cutscene"]
+[ext_resource type="PackedScene" uid="uid://bwn2aqgtvvriy" path="res://scenes/dialogue_box.tscn" id="2_dialogue_box"]
+
+[node name="CutscenePlayer" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cutscene")
+
+[node name="DialogueBox" parent="." instance=ExtResource("2_dialogue_box")]

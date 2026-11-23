@@ -1,0 +1,11 @@
+{
+	"chapter": 5,
+	"title": "Fajar 07:00",
+	"npcs": {},
+	"interactables": {
+		"ENDINGS": {
+			"speaker": "Arthur Vance",
+			"lines": ["Meja kerja Whitehall. Terminal transmisi satelit nasional bersiap.", "Satu perintah, dan seluruh Kota Concord akan mengingat... atau melupakan selamanya."]
+		}
+	}
+}

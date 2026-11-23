@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/chapters/chapter_2/chapter_2.gd" id="1_chapter"]
+[ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
+[ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="3_exit"]
+[ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="4_interactable"]
+
+[node name="Chapter2" type="Node2D"]
+script = ExtResource("1_chapter")
+chapter_number = 2
+
+[node name="World" parent="." instance=ExtResource("2_world")]
+start_map = "indoor"
+start_spawn = Vector2(320, 280)
+
+[node name="Evidence201" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(480, 210)
+evidence_id = "EVID-201"
+prompt_text = "[E] Periksa terminal"
+memory_bonus = 10
+lines = Array[String](["Log Vance-Cipher Rev3. Algoritma celah 40ms berbasis fonetik Nusantara.", "Ini gayaku sendiri. Tidak mungkin orang lain yang menulis ini."])
+
+[node name="Evidence203" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(420, 250)
+evidence_id = "EVID-203"
+flag_to_set = "colin_sparrow_met"
+prompt_text = "[E] Dengarkan Colin"
+memory_bonus = 20
+lines = Array[String](["Kamu yang merancangnya, Arthur! Kamu Arsitek Kognitifnya!", "Kamu menyusup untuk menanam Protokol Jayabaya dengan sandi aksara ayahmu."])
+
+[node name="Evidence204" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(220, 180)
+evidence_id = "EVID-204"
+prompt_text = "[E] Periksa kaca van"
+memory_bonus = 10
+lines = Array[String](["Goresan darah di kaca: SEKTOR 0 // LACI 884-B.", "Colin meninggalkan petunjuk terakhirnya."])
+
+[node name="ExitTrigger" parent="." instance=ExtResource("3_exit")]
+position = Vector2(120, 280)
+target_next_chapter = 3
+required_flags = Array[String](["colin_sparrow_met"])
+prompt_message = "[E] Menuju Sektor 0"

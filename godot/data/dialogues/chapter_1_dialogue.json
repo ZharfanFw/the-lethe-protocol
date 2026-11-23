@@ -1,0 +1,37 @@
+{
+	"chapter": 1,
+	"title": "Kidung yang Hilang & Jejak Sub-Sektor 4",
+	"npcs": {
+		"miller": {
+			"speaker": "Miller",
+			"role": "SAKSI // SUB-SEKTOR 4",
+			"lines": [
+				"Saya tidak tahu apa-apa soal kaset itu, Inspektur.",
+				"Kaset itu bukan buatan saya! Saya hanya mengambilnya di gudang suku cadang lama dari pria bernama Colin.",
+				"Kalau kau mencari Colin, coba periksa ventilasi gudang. Dia selalu meninggalkan tanda di sana."
+			]
+		},
+		"patrol": {
+			"speaker": "Petugas Patroli",
+			"role": "OTORITAS SEKTOR",
+			"lines": [
+				"Area ini steril sejak semalam, Inspektur.",
+				"Direktur Graves memerintahkan semua bukti di gudang Sub-Sektor 4 dibersihkan sebelum fajar."
+			]
+		}
+	},
+	"interactables": {
+		"EVID-103": {
+			"speaker": "Arthur Vance",
+			"lines": ["Puntung kretek Black Clove... aroma cengkeh selatan. Barang selundupan.", "Seseorang baru saja lewat sini."]
+		},
+		"EVID-104": {
+			"speaker": "Arthur Vance",
+			"lines": ["Coretan fosfor di ventilasi: 0x4F5552 // T-CORE // SPARROW.", "T-CORE... kode arsitektur kognitif rezim. Sparrow adalah nama sandi."]
+		},
+		"EVID-105": {
+			"speaker": "Arthur Vance",
+			"lines": ["Peta saluran air menuju Dok Whitehall Bawah.", "Catatan untuk Thur: temui aku di batas air sebelum Graves menutup jaringnya. - Colin"]
+		}
+	}
+}

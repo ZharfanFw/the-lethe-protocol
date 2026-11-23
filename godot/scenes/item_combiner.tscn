@@ -1,0 +1,307 @@
+[gd_scene load_steps=7 format=3 uid="uid://dsgv43a7n7ib3"]
+
+[ext_resource type="Script" uid="uid://bjdeqhcr2s0kx" path="res://scripts/item_combiner.gd" id="1_iwolj"]
+[ext_resource type="Texture2D" path="res://assets/Complete_UI_Essential_Pack_Free/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Frame01a.png" id="2_wcea4"]
+[ext_resource type="Texture2D" path="res://assets/Complete_UI_Essential_Pack_Free/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Banner01a.png" id="3_bx1m4"]
+[ext_resource type="Texture2D" path="res://assets/Complete_UI_Essential_Pack_Free/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button02a_1.png" id="4_q77p0"]
+[ext_resource type="Texture2D" path="res://assets/Complete_UI_Essential_Pack_Free/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Button02a_3.png" id="5_3bigo"]
+[ext_resource type="Texture2D" path="res://assets/Complete_UI_Essential_Pack_Free/Complete_UI_Essential_Pack_Free/01_Flat_Theme/Sprites/UI_Flat_Bar02a.png" id="6_p51ye"]
+
+[node name="ItemCombiner" type="CanvasLayer"]
+visible = false
+script = ExtResource("1_iwolj")
+
+[node name="MainPanel" type="NinePatchRect" parent="."]
+texture_filter = 2
+self_modulate = Color(0.0313726, 0.141176, 0.239216, 0.88)
+offset_left = 146.0
+offset_top = 72.0
+offset_right = 1006.0
+offset_bottom = 576.0
+pivot_offset = Vector2(430, 252)
+texture = ExtResource("2_wcea4")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="LeftPanel" type="NinePatchRect" parent="MainPanel"]
+self_modulate = Color(0.0509804, 0.239216, 0.380392, 0.78)
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 420.0
+offset_bottom = 460.0
+texture = ExtResource("2_wcea4")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="ListBanner" type="NinePatchRect" parent="MainPanel/LeftPanel"]
+self_modulate = Color(0.0862745, 0.576471, 0.721569, 1)
+layout_mode = 0
+offset_left = 72.0
+offset_top = 16.0
+offset_right = 332.0
+offset_bottom = 64.0
+texture = ExtResource("3_bx1m4")
+patch_margin_left = 16
+patch_margin_top = 8
+patch_margin_right = 16
+patch_margin_bottom = 8
+
+[node name="ListTitle" type="Label" parent="MainPanel/LeftPanel/ListBanner"]
+layout_mode = 0
+offset_right = 260.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 12
+text = "BARANG BUKTI"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemList" type="VBoxContainer" parent="MainPanel/LeftPanel"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 82.0
+offset_right = 382.0
+offset_bottom = 392.0
+theme_override_constants/separation = 6
+
+[node name="RightPanel" type="NinePatchRect" parent="MainPanel"]
+self_modulate = Color(0.0509804, 0.239216, 0.380392, 0.78)
+layout_mode = 0
+offset_left = 436.0
+offset_top = 16.0
+offset_right = 844.0
+offset_bottom = 460.0
+texture = ExtResource("2_wcea4")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="RightBanner" type="NinePatchRect" parent="MainPanel/RightPanel"]
+self_modulate = Color(0.0862745, 0.576471, 0.721569, 1)
+layout_mode = 0
+offset_left = 64.0
+offset_top = 12.0
+offset_right = 344.0
+offset_bottom = 56.0
+texture = ExtResource("3_bx1m4")
+patch_margin_left = 16
+patch_margin_top = 8
+patch_margin_right = 16
+patch_margin_bottom = 8
+
+[node name="RightTitle" type="Label" parent="MainPanel/RightPanel/RightBanner"]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 44.0
+theme_override_font_sizes/font_size = 12
+text = "SINTESIS FORENSIK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SlotA" type="NinePatchRect" parent="MainPanel/RightPanel"]
+self_modulate = Color(0.101961, 0.45098, 0.65098, 0.85098)
+layout_mode = 0
+offset_left = 66.0
+offset_top = 108.0
+offset_right = 150.0
+offset_bottom = 192.0
+texture = ExtResource("2_wcea4")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="IconA" type="TextureRect" parent="MainPanel/RightPanel/SlotA"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = 70.0
+offset_bottom = 70.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SlotB" type="NinePatchRect" parent="MainPanel/RightPanel"]
+self_modulate = Color(0.101961, 0.45098, 0.65098, 0.85098)
+layout_mode = 0
+offset_left = 258.0
+offset_top = 108.0
+offset_right = 342.0
+offset_bottom = 192.0
+texture = ExtResource("2_wcea4")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="IconB" type="TextureRect" parent="MainPanel/RightPanel/SlotB"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = 70.0
+offset_bottom = 70.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ResultSlot" type="NinePatchRect" parent="MainPanel/RightPanel"]
+self_modulate = Color(0.0784314, 0.360784, 0.541176, 0.78)
+layout_mode = 0
+offset_left = 162.0
+offset_top = 208.0
+offset_right = 246.0
+offset_bottom = 292.0
+texture = ExtResource("2_wcea4")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="IconResult" type="TextureRect" parent="MainPanel/RightPanel/ResultSlot"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 14.0
+offset_right = 70.0
+offset_bottom = 70.0
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StatusBox" type="NinePatchRect" parent="MainPanel/RightPanel"]
+self_modulate = Color(0.0784314, 0.360784, 0.541176, 0.78)
+layout_mode = 0
+offset_left = 22.0
+offset_top = 306.0
+offset_right = 386.0
+offset_bottom = 382.0
+texture = ExtResource("2_wcea4")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="StatusText" type="RichTextLabel" parent="MainPanel/RightPanel/StatusBox"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 8.0
+offset_right = 352.0
+offset_bottom = 70.0
+theme_override_constants/line_separation = 5
+theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/bold_font_size = 10
+bbcode_enabled = true
+
+[node name="CombineBtn" type="TextureButton" parent="MainPanel/RightPanel"]
+self_modulate = Color(0.0862745, 0.576471, 0.721569, 1)
+layout_mode = 0
+offset_left = 22.0
+offset_top = 392.0
+offset_right = 386.0
+offset_bottom = 428.0
+texture_normal = ExtResource("4_q77p0")
+texture_pressed = ExtResource("5_3bigo")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CombineLbl" type="Label" parent="MainPanel/RightPanel/CombineBtn"]
+layout_mode = 0
+offset_right = 364.0
+offset_bottom = 36.0
+theme_override_font_sizes/font_size = 10
+text = "PROSES SINTESIS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HpFrame" type="NinePatchRect" parent="MainPanel/RightPanel"]
+self_modulate = Color(0.0313726, 0.141176, 0.239216, 0.9)
+layout_mode = 0
+offset_left = 22.0
+offset_top = 62.0
+offset_right = 386.0
+offset_bottom = 86.0
+texture = ExtResource("6_p51ye")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="HpRow" type="HBoxContainer" parent="MainPanel/RightPanel/HpFrame"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 359.0
+offset_bottom = 20.0
+theme_override_constants/separation = 3
+
+[node name="ColorRect" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect2" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect3" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect4" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect5" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect6" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect7" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect8" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect9" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorRect10" type="ColorRect" parent="MainPanel/RightPanel/HpFrame/HpRow"]
+self_modulate = Color(0, 1, 0.533333, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CloseBtn" type="TextureButton" parent="MainPanel"]
+self_modulate = Color(0.0862745, 0.576471, 0.721569, 1)
+layout_mode = 0
+offset_left = 730.0
+offset_top = 466.0
+offset_right = 844.0
+offset_bottom = 494.0
+texture_normal = ExtResource("4_q77p0")
+texture_pressed = ExtResource("5_3bigo")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CloseLbl" type="Label" parent="MainPanel/CloseBtn"]
+layout_mode = 0
+offset_right = 114.0
+offset_bottom = 28.0
+theme_override_font_sizes/font_size = 9
+text = "Tutup [Esc]"
+horizontal_alignment = 1
+vertical_alignment = 1

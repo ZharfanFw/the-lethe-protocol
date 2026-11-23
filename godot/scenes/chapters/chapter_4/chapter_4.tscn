@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/chapters/chapter_4/chapter_4.gd" id="1_chapter"]
+[ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
+[ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="3_exit"]
+[ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="4_interactable"]
+
+[node name="Chapter4" type="Node2D"]
+script = ExtResource("1_chapter")
+chapter_number = 4
+check_suspicion_ending = true
+
+[node name="World" parent="." instance=ExtResource("2_world")]
+start_map = "outdoor"
+start_spawn = Vector2(1150, 550)
+
+[node name="Evidence401" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(850, 550)
+evidence_id = "EVID-401"
+prompt_text = "[E] Buka berkas Tabula Rasa"
+memory_bonus = 10
+lines = Array[String](["Project Tabula Rasa. Jutaan nama warga Concord.", "Semua ingatan masa kecil dihapus lewat The Tonic."])
+
+[node name="Evidence404" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(1000, 550)
+evidence_id = "EVID-404"
+flag_to_set = "master_key_assembled"
+prompt_text = "[E] Ambil Master Override Key"
+memory_bonus = 20
+lines = Array[String](["Kristal prisma biru... Master Override Key.", "Dengan ini aku bisa mengambil alih seluruh satelit pemancar kognitif nasional."])
+
+[node name="ExitTrigger" parent="." instance=ExtResource("3_exit")]
+position = Vector2(1240, 550)
+target_next_chapter = 5
+required_flags = Array[String](["master_key_assembled"])
+prompt_message = "[E] Menuju Meja Kerja Whitehall"

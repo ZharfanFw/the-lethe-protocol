@@ -1,0 +1,142 @@
+{
+	"version": "1.0",
+	"evidence": {
+		"EVID-001": {
+			"name": "Lempengan Ukiran Kayu Ayah",
+			"category": "Fisik / Artefak",
+			"description": "Lempengan kayu ulin kecil dengan ukiran Aksara Nusantara kuno. Masih bernoda darah segar Edward Vance."
+		},
+		"EVID-002": {
+			"name": "Tembang Leluhur (Kidung)",
+			"category": "Memori / Audio",
+			"description": "Nada melodi pengantar tidur tentang perahu kayu dan tanah air yang disenandungkan Edward sebelum meninggal."
+		},
+		"EVID-101": {
+			"name": "Kaset Analog Miller",
+			"category": "Fisik / Audio",
+			"description": "Kaset magnetik berpelindung timbal. Berisi lagu tidur tradisional Nusantara yang identik dengan memori masa kecil Arthur."
+		},
+		"EVID-102": {
+			"name": "Testimoni Miller",
+			"category": "Testimoni",
+			"description": "Kaset itu bukan buatan saya! Saya hanya mengambilnya di gudang suku cadang lama Sub-Sektor 4 dari pria bernama Colin."
+		},
+		"EVID-103": {
+			"name": "Puntung Kretek Black Clove",
+			"category": "Fisik",
+			"description": "Puntung rokok dengan aroma cengkeh manis asli kawasan selatan. Tembakau non-sintetis ilegal berstatus barang selundupan perlawanan."
+		},
+		"EVID-104": {
+			"name": "Coretan Hex Ventilasi",
+			"category": "Digital / Teks",
+			"description": "Tulisan fosfor UV: 0x4F5552 // T-CORE // SPARROW. T-CORE adalah kode arsitektur komputasi tingkat arsitek kognitif rezim."
+		},
+		"EVID-105": {
+			"name": "Peta Rute Dok & Catatan Thur",
+			"category": "Fisik / Dokumen",
+			"description": "Peta saluran air menuju Dok Pelabuhan Whitehall Bawah dengan catatan: Thur, temui aku di batas air sebelum Graves menutup jaringnya. - Colin"
+		},
+		"EVID-201": {
+			"name": "Log Vance-Cipher Rev3",
+			"category": "Digital / Kode",
+			"description": "Blok kode enkripsi pembobol Deep Vault dengan algoritma celah 40ms berbasis fonetik Nusantara."
+		},
+		"EVID-202": {
+			"name": "Token Otoritas Penyerbuan",
+			"category": "Fisik / Kunci",
+			"description": "Silinder otorisasi eksekutif bertanda tangan Direktur Graves untuk memimpin penyerbuan dok kargo."
+		},
+		"EVID-203": {
+			"name": "Testimoni Colin Ward",
+			"category": "Testimoni",
+			"description": "Kamu yang merancangnya, Arthur! Kamu Arsitek Kognitifnya! Kamu menyusup untuk menanam Protokol Jayabaya."
+		},
+		"EVID-204": {
+			"name": "Goresan Darah Laci 884-B",
+			"category": "Fisik / Teks",
+			"description": "Pesan darah yang ditulis Colin menjelang ajal: SEKTOR 0 // LACI 884-B."
+		},
+		"EVID-205": {
+			"name": "Residu Neurotoksin Hidrolik",
+			"category": "Forensik",
+			"description": "Racun saraf sintetis berdaya bunuh instan yang dikendalikan dari jarak jauh oleh jaringan pusat Direktur Graves."
+		},
+		"EVID-301": {
+			"name": "Ukiran Kayu Edward Vance (Dead Drop #1)",
+			"category": "Fisik / Artefak",
+			"description": "Lempengan kayu ulin berukir aksara Nusantara peninggalan mendiang ayah Arthur yang menyimpan struktur gelombang fonetik kuno."
+		},
+		"EVID-302": {
+			"name": "Kaset Mikro Rekaman Arthur (Dead Drop #1)",
+			"category": "Audio / Analog",
+			"description": "Rekaman suara Arthur masa lalu yang mengonfirmasi statusnya sebagai arsitek perlawanan dan mengarahkan ke Garrick Shaw."
+		},
+		"EVID-303": {
+			"name": "Tabung Titanium (Dead Drop #2)",
+			"category": "Fisik / Modul",
+			"description": "Modul fisik otentikasi kuantum yang dibutuhkan untuk mengaktifkan terminal meja kerja Graves."
+		},
+		"EVID-304": {
+			"name": "Rokok Kretek Garrick Shaw",
+			"category": "Fisik / Bukti",
+			"description": "Kretek Black Clove beraroma cengkeh selatan yang identik dengan puntung rokok di gudang Sub-Sektor 4."
+		},
+		"EVID-401": {
+			"name": "Berkas Project Tabula Rasa",
+			"category": "Digital / Dokumen",
+			"description": "Database jutaan warga Concord yang memori masa kecil, keluarga, dan budaya leluhurnya dimusnahkan melalui suplemen The Tonic."
+		},
+		"EVID-402": {
+			"name": "Buku Besar Rekening Graves",
+			"category": "Digital / Keuangan",
+			"description": "Aliran dana korupsi triliunan kredit hasil penjualan konsesi tambang dan pembalakan hutan adat Nusantara."
+		},
+		"EVID-403": {
+			"name": "Rekaman Satelit Eksekusi Edward",
+			"category": "Digital / Video",
+			"description": "Rekaman video yang membuktikan Direktur Lucian Graves muda menembak mati Edward Vance demi menutupi kejahatan agraria rezim."
+		},
+		"EVID-404": {
+			"name": "The Master Override Key",
+			"category": "Fisik / Kunci Kuantum",
+			"description": "Drive portabel berbentuk kristal prisma biru safir bercahaya dengan otorisasi tingkat dewa atas satelit pemancar kognitif nasional."
+		}
+	},
+	"deductions": {
+		"DEDUKSI-101": {
+			"name": "Sparrow adalah Colin Ward",
+			"requires": ["EVID-102", "EVID-104"],
+			"memory_bonus": 10
+		},
+		"DEDUKSI-102": {
+			"name": "Jejak Rute Dok Bawah",
+			"requires": ["EVID-103", "EVID-105"],
+			"memory_bonus": 10
+		},
+		"DEDUKSI-201": {
+			"name": "Protokol Jayabaya Rancangan Arthur",
+			"requires": ["EVID-104", "EVID-201"],
+			"memory_bonus": 20
+		},
+		"DEDUKSI-202": {
+			"name": "Peninggalan Edward Tersimpan di Sektor 0",
+			"requires": ["EVID-203", "EVID-204"],
+			"memory_bonus": 15
+		},
+		"DEDUKSI-301": {
+			"name": "Struktur Ukiran Edward",
+			"requires": ["EVID-301", "EVID-302"],
+			"memory_bonus": 20
+		},
+		"DEDUKSI-302": {
+			"name": "Blueprint Perakitan Master Key",
+			"requires": ["EVID-302", "EVID-303"],
+			"memory_bonus": 20
+		},
+		"DEDUKSI-401": {
+			"name": "Graves Membunuh Edward",
+			"requires": ["EVID-402", "EVID-403"],
+			"memory_bonus": 25
+		}
+	}
+}

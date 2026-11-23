@@ -1,0 +1,1152 @@
+:: StoryTitle
+The Lethe Protocol: Concord 2084 (5-Chapter Edition)
+
+:: StoryData
+{
+  "ifid": "B2C3D4E5-F6A7-8901-BCDE-FA2345678901",
+  "format": "Harlowe",
+  "format-version": "3.3.8",
+  "start": "Inisialisasi"
+}
+
+:: StoryInit [startup]
+{
+  (set: $memory to 0)
+  (set: $suspicion to 0)
+  (set: $sparrow_met to false)
+  (set: $dead_drop_1 to false)
+  (set: $dead_drop_2 to false)
+  (set: $item_ukiran to false)
+  (set: $item_kaset to false)
+  (set: $item_tabung to false)
+  (set: $shaw_saved to false)
+  (set: $purged_loyalists to false)
+  (set: $master_key to false)
+  (set: $tonictaken to true)
+}
+
+:: StoryStylesheet [stylesheet]
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;600;700&display=swap');
+
+html, body {
+  background-color: #0b0f19 !important;
+  color: #d1d5db;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+tw-story {
+  font-family: 'Inter', sans-serif;
+  color: #d1d5db;
+  background-color: transparent !important;
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 860px;
+  margin: 0 auto !important;
+  padding: 2.5em 1.5em !important;
+}
+
+tw-passage {
+  text-align: justify;
+}
+
+tw-sidebar {
+  display: none;
+}
+
+/* HUD System */
+.hud-panel {
+  border: 1px solid #1f2937;
+  background: rgba(17, 24, 39, 0.9);
+  padding: 12px 18px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.hud-title {
+  color: #9ca3af;
+  text-transform: uppercase;
+}
+
+.hud-mem {
+  color: #60a5fa;
+  font-weight: bold;
+}
+
+.hud-sus {
+  color: #f87171;
+  font-weight: bold;
+}
+
+.hud-items {
+  color: #fbbf24;
+}
+
+/* Boxes & Callouts */
+.terminal-box {
+  background: #030712;
+  border-left: 4px solid #3b82f6;
+  border-top: 1px solid #1f2937;
+  border-right: 1px solid #1f2937;
+  border-bottom: 1px solid #1f2937;
+  padding: 16px;
+  font-family: 'Share Tech Mono', monospace;
+  color: #93c5fd;
+  margin: 20px 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.warning-box {
+  background: #180505;
+  border-left: 4px solid #ef4444;
+  border-top: 1px solid #450a0a;
+  border-right: 1px solid #450a0a;
+  border-bottom: 1px solid #450a0a;
+  padding: 16px;
+  font-family: 'Share Tech Mono', monospace;
+  color: #fca5a5;
+  margin: 20px 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.secret-log {
+  background: #022c22;
+  border-left: 4px solid #10b981;
+  border-top: 1px solid #064e3b;
+  border-right: 1px solid #064e3b;
+  border-bottom: 1px solid #064e3b;
+  padding: 16px;
+  font-family: 'Share Tech Mono', monospace;
+  color: #a7f3d0;
+  margin: 20px 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.quote-dialogue {
+  border-left: 3px solid #6b7280;
+  padding-left: 14px;
+  font-style: italic;
+  color: #e5e7eb;
+  margin: 16px 0;
+}
+
+.speaker {
+  font-weight: 700;
+  color: #93c5fd;
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.speaker-edward { color: #f59e0b; }
+.speaker-colin { color: #34d399; }
+.speaker-graves { color: #e879f9; }
+.speaker-prescott { color: #f87171; }
+.speaker-shaw { color: #fb923c; }
+
+.act-header {
+  font-family: 'Share Tech Mono', monospace;
+  color: #60a5fa;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+
+.act-title {
+  color: #f3f4f6;
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #1f2937;
+  padding-bottom: 10px;
+}
+
+.ending-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Links */
+tw-link {
+  color: #38bdf8 !important;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+tw-link:hover {
+  color: #93c5fd !important;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+}
+
+.choice-container {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px dashed #374151;
+}
+
+.choice-prompt {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+:: Inisialisasi
+<div class="terminal-box">
+[THE REGISTRY // CENTRAL DIRECTORY OF COGNITIVE CONCORD]
+LOKASI: KOTA CONCORD, SEKTOR WHITEHALL
+ERA: 2084 A.D.
+EDISI KHUSUS: REKAYASA PADAT 5 CHAPTER (PROLOG + CHAPTER 1–5)
+SUBJEK: INSPEKTUR ARTHUR VANCE (UNIT V-09)
+</div>
+
+Selamat datang di naskah interaktif **The Lethe Protocol: Concord 2084 (Versi 5 Chapter)**.
+
+Naskah ini dirampingkan agar waktu produksi game capstone dapat diselesaikan lebih cepat dan efisien, tanpa menghilangkan kedalaman plot, karakterisasi **Edward Vance**, maupun kelima kemungkinan cabang ending.
+
+**Sistem Pelacakan:**
+* **Memory Meter ($memory, 0–100%):** Rekonstruksi jati diri Arthur sebagai Arsitek Kognitif dan putra Nusantara.
+* **Bureau Suspicion Meter ($suspicion, 0–100%):** Ambang kecurigaan rezim. Nilai $\ge 75\%$ di Chapter 4 langsung memicu *Game Over*.
+
+<div class="choice-container">
+  <div class="choice-prompt">MULAI PERJALANAN:</div>
+  * [[Mulai Prolog: Janji di Malam Hujan->Prolog-RumahKayu]]
+</div>
+
+:: HeaderHUD
+<div class="hud-panel">
+  <span class="hud-title">SUBJEK: ARTHUR VANCE // UNIT V-09</span>
+  <span>MEMORI: <span class="hud-mem">$memory%</span></span>
+  <span>KECURIGAAN BIRO: <span class="hud-sus">$suspicion%</span></span>
+  <span>INVENTARIS: <span class="hud-items">(if: $master_key)[Master Key](else-if: $dead_drop_2)[Ukiran, Kaset, Modul Titanium](else-if: $dead_drop_1)[Ukiran Kayu, Kaset](else:)[Kosong]</span></span>
+</div>
+
+:: Prolog-RumahKayu
+<div class="act-header">Prolog: Janji di Malam Hujan</div>
+<h2 class="act-title">Rumah Panggung Kayu, Pedalaman Nusantara (Masa Lalu)</h2>
+
+Hujan lebat mengguyur atap rumbia rumah panggung kayu di pedalaman desa adat Nusantara. Di luar, suara angin malam beradu dengan gemerisik rumpun bambu. Di dalam ruangan, lampu minyak keemasan bergoyang lembut menimpa anyaman bilik dan ukiran kayu jati.
+
+Kau duduk merapat di atas tikar pandan, bersandar pada pangkuan ayahmu, **EDWARD VANCE**. Ayahmu adalah seorang budayawan, guru sejarah, dan tetua adat terhormat. Jemari tangannya yang terampil sedang mengikir pelan sebuah lempengan kayu kecil berpola Aksara Nusantara kuno yang meliuk indah.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-edward">EDWARD VANCE:</span>
+"Dengarkan hujan di luar, Arthur... Tanah ini punya nyanyiannya sendiri. Setiap tetes air yang jatuh ke akar beringin adalah janji bahwa esok pagi kehidupan akan bersemi kembali."
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR KECIL:</span>
+"Ayah... kenapa huruf ini bentuknya meliuk seperti ombak? Tidak seperti huruf di plang birokrasi yang kotak dan kaku?"
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker speaker-edward">EDWARD VANCE:</span>
+"Karena aksara ini lahir dari detak jantung para leluhurmu, Nak. Mereka menulis bukan untuk menghitung laba tambang atau upah buruh, melainkan untuk menjaga ingatan. Selama aksara ini hidup di dalam dadamu, tanah tumpah darahmu tidak akan pernah bisa dirampas oleh siapa pun."
+</div>
+
+Edward menyenandungkan tembang pengantar tidur leluhur Nusantara. Suaranya mengalun lirih dan damai, meneduhkan hati.
+
+<div class="choice-container">
+  * [[Tiba-tiba pintu rumah didobrak keras dari luar...->Prolog-SerbuanGraves]]
+</div>
+
+:: Prolog-SerbuanGraves
+<div class="warning-box">
+[SERBUAN PASUKAN EKSEKUTIF WHITEHALL]
+</div>
+
+**BRAAAK!**
+
+Pintu kayu didobrak hingga hancur berkeping-keping. Kilatan cahaya laser putih-kebiruan dari moncong senapan serbu menyilaukan ruangan. Empat **TENTARA PEMERINTAH** merangsek masuk.
+
+Edward secara refleks langsung berlutut dan mendekapmu erat-erat di balik punggungnya.
+
+Di belakang barisan prajurit, melangkah masuk **LUCIAN GRAVES** muda berseragam birokrasi hitam berkerah tinggi. Wajahnya dingin membeku.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Edward Vance. Peneliti senior yang keras kepala. Waktu negosiasi sudah berakhir. Proyek Pembangunan Inti Kota Concord tidak bisa ditunda hanya demi sepetak tanah adat usangmu. Di mana buku besar tanah ulayat dan naskah peta geologis itu?"
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker speaker-edward">EDWARD VANCE:</span>
+"Kalian bukan membangun peradaban, Graves! Kalian adalah gerombolan serigala korporat yang mencuri hutan kami, mengeruk gunung emas leluhur, dan menjual pulau-pulau ini ke asing! Tanah ini bukan milik kantormu!"
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Maka kau hanyalah residu yang harus dimusnahkan."
+</div>
+
+<div class="choice-container">
+  * [[Graves menarik pelatuk pistolnya...->Prolog-KematianEdward]]
+</div>
+
+:: Prolog-KematianEdward
+**PTHUUUK!**
+
+Tembakan berperedam meletus. Peluru menembus dada kiri Edward. Edward tersentak dan jatuh berlutut di atas lantai kayu yang bersimbah darah.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Geledah gudang belakang! Cari naskah pembukuan tanah ulayat itu!"
+</div>
+
+Pasukan birokrasi bergegas ke belakang. Di ambang mautnya, Edward menggenggam jemarimu yang menangis histeris. Ia menyelipkan lempengan kayu berukir aksara Nusantara itu ke tanganmu.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-edward">EDWARD VANCE:</span>
+"Arthur... anakku... Simpan ukiran ini... Ini kuncinya... Jangan biarkan mereka menghapus jiwamu... Ingat kidung itu, Thur... Arthur... tolong... jangan pernah lupakan... Ayah..."
+</div>
+
+Tangan ayahmu terkulai lunglai ke lantai. Matanya terpejam selamanya saat hujan meraung semakin liar.
+
+<div class="choice-container">
+  * [[Lompatan Distorsi Kognitif ke Tahun 2084...->Chapter1-Apartemen]]
+</div>
+
+:: Chapter1-Apartemen
+(display: "HeaderHUD")
+<div class="act-header">Chapter 1: Kidung yang Hilang & Jejak Sub-Sektor 4</div>
+<h2 class="act-title">Apartemen Dinas, Fajar Pukul 06:00 (Tahun 2084)</h2>
+
+Layar pandanganmu tersentak oleh retakan piksel merah dan distorsi kognitif hebat. Adegan rumah panggung masa lalu lenyap seketika.
+
+Kau terbangun di atas tempat tidur kapsul minimalis apartemen dinasmu di Kota Concord, tahun 2084. Air mata hangat membasahi pipimu. Di depan pintu keluar, cermin pintar (*Biometric Mirror HUD*) memindai korneamu:
+
+<div class="warning-box">
+[BIOMETRIC SCAN // HUD-MIRROR VER. 4.8]
+SUBJEK: INSPEKTUR ARTHUR VANCE (UNIT V-09)
+ANOMALI KOGNITIF: AIR MATA // DETAK JANTUNG +38 BPM
+STATUS: MEMORI TIDAK STABIL
+</div>
+
+Kompartemen cermin berdesis terbuka, menyodorkan ampul logam berisi suplemen penekan emosi: **The Tonic (Cognitive Stabilizer No. 9)**.
+
+<div class="choice-container">
+  <div class="choice-prompt">KEPUTUSAN KOGNITIF DI DEPAN CERMIN:</div>
+  * [[Tenggak The Tonic untuk menekan mimpi buruk ini->Chapter1-Cermin-Taat]]
+  * [[Biarkan The Tonic di meja, hadapi cermin dengan mata berkaca-kaca->Chapter1-Cermin-Ragu]]
+</div>
+
+:: Chapter1-Cermin-Taat
+(set: $suspicion to $suspicion - 10)
+(set: $tonictaken to true)
+(display: "HeaderHUD")
+Kau menelan cairan perak dingin itu dalam sekali teguk. Rasa logam menyengat ujung lidahmu, disusul rasa hampa yang menyapu kepalamu. Air mata di pipimu mengering seketika, dan warna-warna di ruangan memudar menjadi monokrom kelabu dingin. Cermin berkedip hijau memberi izin keluar.
+
+Kau mengenakan mantel dinas kelabumu dan berangkat menuju markas Whitehall.
+
+<div class="choice-container">
+  * [[Masuk ke Ruang Interogasi Whitehall->Chapter1-InterogasiMiller]]
+</div>
+
+:: Chapter1-Cermin-Ragu
+(set: $memory to $memory + 10)
+(set: $suspicion to $suspicion + 10)
+(set: $tonictaken to false)
+(display: "HeaderHUD")
+Kau membiarkan ampul itu tergeletak di atas meja. Kau melangkah mendekati cermin dengan air mata yang masih basah. Kilatan ingatan laboratorium putih dan deretan tabung komputasi menyengat kepalamu.
+
+Cermin berkedip merah mencatat anomali mikro-stres kornea dan mengirim log ke sistem monitoring biro sebelum pintu terbuka dengan catatan pengawasan.
+
+Kau menyeka air matamu dan melangkah keluar menuju markas Whitehall.
+
+<div class="choice-container">
+  * [[Masuk ke Ruang Interogasi Whitehall->Chapter1-InterogasiMiller]]
+</div>
+
+:: Chapter1-InterogasiMiller
+(display: "HeaderHUD")
+<h2 class="act-title">Ruang Interogasi Unit V-09 (Whitehall Complex)</h2>
+
+Ruang beton dingin abu-abu. Di hadapanmu duduk **MILLER (Tahanan 402)**, buruh pabrik perakitan Sub-Sektor 4 yang terborgol gemetar. DETECTIVE MILES PRESCOTT bersandar di dinding sambil menyeruput cangkir kopi sintetisnya.
+
+Di atas meja, tergeletak sebuah pemutar kaset analog kuno berlapis timbal hasil sitaan pos pemeriksaan.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-prescott">PRESCOTT:</span>
+"Miller tertangkap basah membawa kaset kuno terlarang ini dari Sub-Sektor 4. Putar rekamannya, Vance. Biarkan dia mendengar kejahatannya."
+</div>
+
+Kau menekan tombol *Play*.
+
+Suara desis pita magnetik tua mengudara, disusul nyanyian seorang wanita melantunkan tembang tidur tradisional Nusantara yang mendayu-dayu.
+
+**Deg!** Jantungmu berdenyut kencang. Struktur melodi dan harmoni lagu ini sama persis dengan kidung yang dinyanyikan Edward Vance dalam mimpimu tadi pagi! Monitor HUD mencatat lonjakan denyut nadi: `BPM: 108`.
+
+<div class="quote-dialogue">
+<span class="speaker">MILLER:</span>
+"Itu... itu suara ibu saya... Sebelum proyek restrukturisasi menghapus namanya... Saat mendengar kaset ini, saya ingat bahwa saya pernah punya keluarga, Pak Inspektur..."
+</div>
+
+<div class="choice-container">
+  <div class="choice-prompt">TAKTIK INTEROGASI:</div>
+  * [[Terapkan SOP Birokrasi secara kejam (Hentikan rekaman, kirim Miller ke unit lobotomi)->Chapter1-Interogasi-SOP]]
+  * [[Tanyakan asal-usul kaset dengan empati mendalam->Chapter1-Interogasi-Resonansi]]
+</div>
+
+:: Chapter1-Interogasi-SOP
+(set: $suspicion to $suspicion - 15)
+(display: "HeaderHUD")
+Kau menampar tombol *Stop* pemutar kaset hingga berhenti mendadak, membanting berkas digital ke meja.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Cukup! Sentimentalitas masa lalu adalah tindak subversif. Miller, kau akan dikirim ke unit lobotomi Sektor 0!"
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker">MILLER:</span>
+*(Meratap histeris saat diseret petugas)*
+"Ampun, Pak Inspektur! Kaset itu bukan buatan saya! Saya hanya mengambilnya di gudang suku cadang lama Sub-Sektor 4 dari pria bernama 'Colin'!"
+</div>
+
+Prescott mengangkat alisnya mendengar nama "Colin". Pada saat yang sama, sirene komunikator Prescott berbunyi: gudang suku cadang yang baru saja disebut Miller dilaporkan mengalami sabotase kelistrikan! Kalian berdua langsung meluncur ke lokasi.
+
+<div class="choice-container">
+  * [[Meluncur ke Gudang Sub-Sektor 4->Chapter1-GudangTKP]]
+</div>
+
+:: Chapter1-Interogasi-Resonansi
+(set: $memory to $memory + 15)
+(set: $suspicion to $suspicion + 15)
+(display: "HeaderHUD")
+Kau menahan tangan Prescott yang hendak mematikan pemutar kaset. Kau menatap lurus ke manik mata Miller.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Dari mana kau mendapatkan pemutar kaset berpelindung timbal ini, Miller? Siapa yang memancarkan frekuensi lagu ini?"
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker">MILLER:</span>
+"Gudang suku cadang lama di Sub-Sektor 4... Seseorang bernama 'Colin' yang memberikannya pada kami..."
+</div>
+
+Prescott mencatat nama "Colin" dengan sorot mata curiga melihat keterikatan emosimu. Tepat saat itu, alarm komunikator berbunyi: gudang suku cadang Sub-Sektor 4 baru saja disabotase! Kalian berdua langsung meluncur ke lokasi.
+
+<div class="choice-container">
+  * [[Meluncur ke Gudang Sub-Sektor 4->Chapter1-GudangTKP]]
+</div>
+
+:: Chapter1-GudangTKP
+(display: "HeaderHUD")
+<h2 class="act-title">Gudang Industri Terbengkalai (Sub-Sektor 4)</h2>
+
+Hujan asam membasahi jalanan berlumpur Sub-Sektor 4. Pipa-pipa uap pabrik mendesis di dinding beton bertingkat yang dipenuhi lumut dan jelaga.
+
+Kau dan Prescott tiba di gudang suku cadang lama yang baru saja disabotase. Pintu darurat telah dibobol paksa.
+
+<div class="choice-container">
+  <div class="choice-prompt">PEMERIKSAAN BUKTI OLAH TKP:</div>
+  * [[Periksa puntung rokok di dekat tong oli berkarat->Chapter1-Bukti-Puntung]]
+  * [[Sorot kisi-kisi ventilasi dengan lampu ultraviolet->Chapter1-Bukti-CoretanHex]]
+  * [[Periksa generator tua di sudut ruangan yang memancarkan pendar hologram->Chapter1-Bukti-Hologram]]
+</div>
+
+:: Chapter1-Bukti-Puntung
+(display: "HeaderHUD")
+Di dekat tong oli berkarat, kau menemukan puntung rokok kretek beraroma cengkeh manis asli Nusantara: **Black Clove**. Zat tembakau ini dilarang keras beredar dan hanya dikonsumsi oleh jaringan pejuang kawasan selatan.
+
+<div class="choice-container">
+  * [[Periksa kisi-kisi ventilasi->Chapter1-Bukti-CoretanHex]]
+  * [[Periksa generator tua berhologram->Chapter1-Bukti-Hologram]]
+</div>
+
+:: Chapter1-Bukti-CoretanHex
+(display: "HeaderHUD")
+Di bawah senter UV, kisi ventilasi memperlihatkan coretan cat fosfor neon:
+
+<div class="terminal-box">
+`0x4F5552 // T-CORE // SPARROW`
+</div>
+
+Dadamu berdegup. *T-CORE* adalah istilah untuk inti komputasi kuantum tingkat arsitek birokrasi. Bagaimana mungkin buronan jalanan mengetahui istilah yang hanya dirancang oleh perancang sistem elit?
+
+<div class="choice-container">
+  * [[Periksa puntung rokok di lantai->Chapter1-Bukti-Puntung]]
+  * [[Periksa generator tua berhologram->Chapter1-Bukti-Hologram]]
+</div>
+
+:: Chapter1-Bukti-Hologram
+(display: "HeaderHUD")
+Di balik lempengan besi generator tua, kau menemukan proyektor saku hologram yang menampilkan serpihan-serpihan garis cahaya emas yang melayang teracak di udara.
+
+Kompartemen rahasia generator ini terkunci oleh mekanisme pengenal aksara kuno.
+
+<div class="choice-container">
+  * [[Mulai Puzzle Rekonstruksi Hologram Aksara (Affine Transformation)->Chapter1-PuzzleAksara]]
+</div>
+
+:: Chapter1-PuzzleAksara
+(set: $memory to $memory + 10)
+(display: "HeaderHUD")
+<div class="secret-log">
+[ANTARMUKA REKONSTRUKSI AKSARA // AFFINE TRANSFORMATION]
+STATUS PECAHAN: TERACAK (3 FRAGMEN CAHAYA EMAS)
+KONTROL: TRANSLASI (GESER), ROTASI (PUTAR), SKALASI (SESUAIKAN UKURAN)
+</div>
+
+Kau menggerakkan jemarimu di atas proyektor. Pecahan-pecahan garis emas berputar dan saling mengunci dengan presisi matematis, membentuk satu karakter Aksara Nusantara kuno yang memancarkan pendar keemasan terang: karakter **"JA"**.
+
+**KLIK!**
+
+Mekanisme magnetik generator terbuka meluncur. Di dalamnya terdapat peta skematik saluran pembuangan air yang mengarah langsung ke **Dok Pelabuhan Whitehall Bawah**, beserta secarik kertas tulisan tangan:
+
+<div class="quote-dialogue">
+"Thur, temui aku di batas air sebelum Graves menutup jaringnya. - Colin"
+</div>
+
+Surat itu menyebut nama panggilannmu: "Thur". Prescott melangkah mendekat dari belakang.
+
+<div class="choice-container">
+  <div class="choice-prompt">KEPUTUSAN PELAPORAN BUKTI:</div>
+  * [[Laporkan temuan rute dok ke Prescott secara resmi (Turunkan kecurigaan)->Chapter1-LaporResmi]]
+  * [[Sembunyikan kertas catatan ke dalam saku mantelmu (Lindungi buronan)->Chapter1-SembunyikanBukti]]
+</div>
+
+:: Chapter1-LaporResmi
+(set: $suspicion to $suspicion - 15)
+(display: "HeaderHUD")
+Kau menunjuk kompartemen yang terbuka tanpa menyentuh kertas catatannya.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Kompartemen ini berisi rute pelarian menuju Dok Pelabuhan Whitehall Bawah. Buronan itu berusaha menyeberang lewat jalur air. Hubungi divisi taktis untuk menyisir perimeter pelabuhan."
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker speaker-prescott">PRESCOTT:</span>
+"Bagus sekali, rekan. Instingmu masih yang tertajam di biro. Aku laporkan ini langsung ke Direktur Graves."
+</div>
+
+<div class="choice-container">
+  * [[Lanjutkan ke Chapter 2: Celah Vance-Cipher & Titik Balik Sparrow->Chapter2-AudiensiGraves]]
+</div>
+
+:: Chapter1-SembunyikanBukti
+(set: $suspicion to $suspicion + 15)
+(set: $memory to $memory + 10)
+(display: "HeaderHUD")
+Kau dengan cepat meremas kertas catatan itu ke dalam saku mantelmu dan menutup kembali pelat besi generator.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Hanya sirkuit generator cadangan yang korslet karena tikus saluran air. Jejak pelarian mereka kemungkinan menuju perbatasan Sektor 5."
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker speaker-prescott">PRESCOTT:</span>
+"Tikus saluran air tidak merokok kretek cengkeh, Vance. Tapi baiklah... kita periksa Sektor 5. Jangan sampai kau menyesali laporan palsumu ini."
+</div>
+
+<div class="choice-container">
+  * [[Lanjutkan ke Chapter 2: Celah Vance-Cipher & Titik Balik Sparrow->Chapter2-AudiensiGraves]]
+</div>
+
+:: Chapter2-AudiensiGraves
+(display: "HeaderHUD")
+<div class="act-header">Chapter 2: Celah Vance-Cipher & Titik Balik Sparrow</div>
+<h2 class="act-title">Lantai 80 Menara Eksekutif (Ruang Kerja Graves)</h2>
+
+Malam hari di puncak Kota Concord. Ruang kerja Direktur Lucian Graves berbentuk bundar megah dengan dinding kaca panorama raksasa yang menghadap hamparan gedung-gedung kota berkabut. Meja kerja Graves terbuat dari marmer obsidian hitam pekat tanpa ada selembar kertas pun, hanya sebuah konsol kuantum monolitik di tengahnya.
+
+Graves memanggil Arthur ke meja kerjanya. Proyeksi holografik biru safir membubung di antara kalian, menampilkan jutaan baris kode peretasan brankas data negara (*Deep Vault*).
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Dini hari tadi, Deep Vault ditembus selama 40 milidetik oleh buronan bernama sandi 'Sparrow'. Perhatikan algoritma yang digunakannya, Vance."
+</div>
+
+Di tengah lautan data biru, satu blok kode enkripsi memancarkan pendar keemasan anomali:
+
+<div class="terminal-box">
+`ALGORITHM: VANCE-CIPHER_REV3`
+`BACKDOOR LATENCY: 0.040s // ASYMMETRIC LOGIC GATE`
+`SYNTAX BASE: OLD NUSANTARA CHAR-MAP`
+`STATUS: PINTU BELAKANG KUDA TROYA TERDETEKSI`
+</div>
+
+Kau terpaku. *Vance-Cipher*? Algoritma ini menggunakan namamu sendiri! Gaya penulisan sintaksis dan efisiensi gerbang logikanya adalah caramu berpikir sebelum memorimu dicuci.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Kau mengenali struktur logika itu, Vance? Kode ini memiliki tanda tangan intelektual yang sangat langka. Sparrow baru saja terdeteksi di dok kargo Whitehall Bawah. Ambil token penyerbuan ini. Pimpin pasukan elit, bawa dia hidup-hidup ke van komando taktis!"
+</div>
+
+<div class="choice-container">
+  <div class="choice-prompt">RESPON KEPADA GRAVES:</div>
+  * [[Jawab dingin dan analitis (Kambinghitamkan mantan teknisi biro)->Chapter2-Respon-Dingin]]
+  * [[Pertanyakan apakah celah ini sengaja ditinggalkan arsitek masa lalu->Chapter2-Respon-Membela]]
+</div>
+
+:: Chapter2-Respon-Dingin
+(set: $memory to $memory + 15)
+(display: "HeaderHUD")
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Ini adalah kode tingkat tinggi, Direktur. Pelaku pasti mantan teknisi senior yang membelot sebelum era restrukturisasi selesai. Pola 40 milidetik ini memanfaatkan celah sinkronisasi satelit pemancar."
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Tepat sekali. Analisis yang tajam seperti biasa. Jangan biarkan peretas jalanan ini mempermalukan biro kita."
+</div>
+
+<div class="choice-container">
+  * [[Meluncur ke Dok Whitehall Bawah untuk menyergap Sparrow->Chapter2-VanKomando]]
+</div>
+
+:: Chapter2-Respon-Membela
+(set: $suspicion to $suspicion + 20)
+(set: $memory to $memory + 15)
+(display: "HeaderHUD")
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Bagaimana jika kode ini bukan pembobolan asing, melainkan celah uji coba yang sengaja ditinggalkan arsitek sistem masa lalu untuk menguji integritas data?"
+</div>
+
+Graves menatapmu dengan sorot mata membunuh yang dingin menusuk tulang.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Tidak ada celah yang sengaja ditinggalkan di bawah pengawasanku, Inspektur. Pertanyaanmu terdengar nyaris seperti sebuah pembenaran atas kejahatan teroris ini."
+</div>
+
+<div class="choice-container">
+  * [[Meluncur ke Dok Whitehall Bawah untuk menyergap Sparrow->Chapter2-VanKomando]]
+</div>
+
+:: Chapter2-VanKomando
+(display: "HeaderHUD")
+<h2 class="act-title">Dok Whitehall Bawah – Bilik Interogasi Van Taktis</h2>
+
+Kawasan pelabuhan bawah tanah berbau uap air laut dan solar industri. Pasukan elit birokrasi mengepung sebuah kontainer tua. Target tertangkap tanpa perlawanan bersenjata dan langsung diseret ke dalam Van Komando Taktis.
+
+Kau melangkah masuk ke dalam bilik van berlampu merah redup. Di tengah van, seorang pria babak belur diikat dengan borgol magnetik ke tiang baja. Wajahnya penuh lebam, namun matanya yang membara langsung menatapmu.
+
+Pria itu adalah **COLIN WARD (nama sandi: "Sparrow")**.
+
+Prescott mengunci pintu van dari luar, memberimu privasi interogasi selama sepuluh menit.
+
+<div class="choice-container">
+  * [[Hadapi Colin Ward->Chapter2-KonfrontasiColin]]
+</div>
+
+:: Chapter2-KonfrontasiColin
+(set: $memory to $memory + 35)
+(set: $sparrow_met to true)
+(display: "HeaderHUD")
+Colin menatapmu dengan tatapan hancur, lalu tertawa lirih—sebuah tawa getir disusul tetesan air mata di pipinya yang berdarah.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-colin">COLIN WARD:</span>
+"Thur...? Kamu... kamu benar-benar sudah lupa ya, Thur? Ini aku, Colin! Kita tumbuh besar bersama di tepi sungai desa adat sebelum tempat itu dibakar oleh Graves! Kita yang bersumpah di depan nisan ayahmu, **EDWARD VANCE**, untuk meruntuhkan rezim korup ini!"
+</div>
+
+**BLARRR!**
+
+Nama ayahmu meledakkan amnesia di kepalamu bagai petir menyambar. Kenangan rumah panggung kayu, lempengan ukiran aksara, darah di lantai, dan tembang tidur masa kecil berputar hebat di benakmu!
+
+<div class="quote-dialogue">
+<span class="speaker speaker-colin">COLIN WARD:</span>
+"Graves membunuh ayahmu demi merebut buku besar tanah ulayat! Elit birokrasi menjual hutan, emas, dan pulau-pulau kita ke konglomerat asing, lalu membagi-bagi triliunan kredit ke rekening rahasia mereka! Dan agar rakyat tidak memberontak, mereka menciptakan The Lethe Protocol untuk mencuci otak warga!  
+Kamu yang merancang sistem itu, Arthur! Kamu Kepala Arsitek Kognitifnya! Kamu menanam pintu belakang **Protokol Jayabaya** dengan sandi aksara ayahmu! Tapi Graves mencium rencanamu dan mencuci otakmu dengan mesin ciptaanmu sendiri!"
+</div>
+
+Kau jatuh berlutut di lantai van. Dinding amnesiamu runtuh berkeping-keping. Kau mengingat segalanya.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Colin... Ya Tuhan... Colin... Sahabatku..."
+</div>
+
+<div class="choice-container">
+  * [[Tiba-tiba lampu sirine van menyala merah melengking...->Chapter2-RacunGraves]]
+</div>
+
+:: Chapter2-RacunGraves
+(display: "HeaderHUD")
+<div class="warning-box">
+[ALARM OTOMATIS // FAILSAFE PROTOKOL GRAVES DIJALANKAN]
+</div>
+
+Lampu merah di langit-langit van berkedip liar. Monitor van menampilkan perintah eksekusi otomatis dari terminal Graves.
+
+Sebuah jarum mikro menyembul dari kerah baju tahanan Colin, menyuntikkan racun saraf neurotoksin hijau pekat ke lehernya. Tubuh Colin mengejang hebat, busa putih keluar dari bibirnya, dan urat lehernya menghitam seketika.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Tidak! Bertahanlah, Colin! Bertahanlah!"
+</div>
+
+<div class="choice-container">
+  * [[Dekap Colin menjelang hembusan napas terakhirnya...->Chapter2-WasiatColin]]
+</div>
+
+:: Chapter2-WasiatColin
+(display: "HeaderHUD")
+Colin terengah-engah dalam dekapanmu. Dengan sisa tenaga terakhirnya, jarinya yang berlumuran darah menorehkan pesan di kaca jendela van:
+
+<div class="terminal-box">
+`SEKTOR 0 // LACI 884-B`
+</div>
+
+Colin tersenyum sangat tulus menatap manik matamu.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-colin">COLIN WARD:</span>
+"Selesaikan... tugas ayahmu, Thur... Ambil ukiran kayu di laci itu... temui Garrick Shaw di Undercity... Bebaskan kota ini... Maafkan aku... tidak bisa ikut... sampai akhir..."
+</div>
+
+Tangan Colin terkulai lemas di pangkuanmu. Sahabat masa kecilmu menghembuskan napas terakhir.
+
+Kau mendekap jasadnya erat-erat dalam bilik van yang kedap suara, meraung meluapkan kepedihan yang teramat sangat. Saat kau bangkit, air matamu telah kering. Tekadmu telah bulat untuk membakar tirani ini dari akarnya.
+
+<div class="choice-container">
+  * [[Pintu van terbuka dari luar: Hadapi Detective Prescott->Chapter3-HadapiPrescott]]
+</div>
+
+:: Chapter3-HadapiPrescott
+(display: "HeaderHUD")
+<div class="act-header">Chapter 3: Arsip Sektor 0 & Garis Depan Undercity</div>
+<h2 class="act-title">Pintu Van Komando Taktis</h2>
+
+Pintu hidrolik van terbuka. Prescott melangkah masuk dengan pistol terhunus, matanya tertuju pada mayat Colin dan kau yang berdiri membelakanginya.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-prescott">PRESCOTT:</span>
+"Tahanan mati karena racun pengaman otomatis birokrasi. Tapi interogasimu berlangsung terlalu lama, Vance. Apa saja yang dibisikkan tikus perlawanan ini ke telingamu sebelum nyawanya melayang?"
+</div>
+
+<div class="choice-container">
+  <div class="choice-prompt">ALIBI KEPADA PRESCOTT:</div>
+  * [[Alibi Tenang: "Dia menolak bicara dan hanya meracau kutukan masa lalu"->Chapter3-Alibi-Tenang]]
+  * [[Alibi Agresif: "Jangan pertanyakan kewenanganku di bawah Surat Perintah Eksekutif Graves!"->Chapter3-Alibi-Agresif]]
+  * [[Gugup: Terbata-bata mengingat masa kecil yang baru kau ingat->Chapter3-Alibi-Gugup]]
+</div>
+
+:: Chapter3-Alibi-Tenang
+(display: "HeaderHUD")
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Dia menolak berbicara sepatah kata pun mengenai sel pejuangnya. Sebelum racun Graves membunuhnya, dia hanya meracau tentang kutukan masa lalu. Bersihkan mayat ini."
+</div>
+
+Prescott menurunkan senjatanya sambil mengangguk puas.
+
+<div class="choice-container">
+  * [[Tengah malam: Menyelinap ke Arsip Bawah Tanah Sektor 0->Chapter3-InfiltrasiSektor0]]
+</div>
+
+:: Chapter3-Alibi-Agresif
+(set: $suspicion to $suspicion - 10)
+(display: "HeaderHUD")
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Kau berani menginterogasi caraku menjalankan tugas, Prescott? Sesuai Surat Perintah Eksekutif Direktur Graves, aku memegang kendali penuh atas operasi ini. Jika kau meragukan kepatuhanku, laporkan ke Dewan Pengawas atau minggir dari jalanku!"
+</div>
+
+Prescott tersenyum kecut dan mundur selangkah memberi jalan.
+
+<div class="choice-container">
+  * [[Tengah malam: Menyelinap ke Arsip Bawah Tanah Sektor 0->Chapter3-InfiltrasiSektor0]]
+</div>
+
+:: Chapter3-Alibi-Gugup
+(set: $suspicion to $suspicion + 25)
+(display: "HeaderHUD")
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Dia... dia hanya bicara omong kosong... Tentang masa kecil... dan nama-nama yang tidak kukenal..."
+</div>
+
+Visor biometrik Prescott berkedip merah mencatat anomali pupilmu.
+
+<div class="choice-container">
+  * [[Tengah malam: Menyelinap ke Arsip Bawah Tanah Sektor 0->Chapter3-InfiltrasiSektor0]]
+</div>
+
+:: Chapter3-InfiltrasiSektor0
+(display: "HeaderHUD")
+<h2 class="act-title">Arsip Fisik Bawah Tanah Sektor 0 (Tengah Malam)</h2>
+
+Tengah malam di sub-level Whitehall. Lorong lemari arsip raksasa setinggi langit-langit diselimuti bayang-bayang gelap. Drone pemindai berlampu merah berpatroli secara periodik melintasi lantai beton.
+
+Kau menyusup mengendap-endap di antara lemari arsip baja, menghindari kerucut sensor drone pengawas.
+
+Akhirnya kau tiba di depan **Laci 884-B**. Panel kuncinya menggunakan papan angka dial kuno lima digit.
+
+<div class="choice-container">
+  <div class="choice-prompt">MASUKKAN KOMBINASI ANGKA 5 DIGIT:</div>
+  * [[Putar dial angka Kuda Troya: 1 - 2 - 0 - 9 - 4->Chapter3-DeadDrop1]]
+</div>
+
+:: Chapter3-DeadDrop1
+(set: $dead_drop_1 to true)
+(set: $item_ukiran to true)
+(set: $item_kaset to true)
+(set: $memory to $memory + 20)
+(display: "HeaderHUD")
+**KLIIK... SSSSHHH!**
+
+Laci besi tebal itu meluncur terbuka perlahan. Di dalamnya terbaring dua artefak berharga:
+1. **Lempengan Ukiran Kayu Beraksara Nusantara** milik ayahmu, Edward Vance.
+2. **Kaset Mikro Analog Kuno** berisi rekaman suaramu sendiri di masa lalu.
+
+Kau memasang earphone pemutar sakumu. Suara rekaman dirimu di masa lalu mengalun:
+
+<div class="secret-log">
+[REKAMAN AUDIO // LEAD ARCHITECT ARTHUR VANCE]
+"Dengarkan baik-baik, Arthur. Ayahmu adalah Edward Vance yang dibantai oleh Graves. Kau yang merancang The Lethe Protocol dan menanam Kuda Troya Protokol Jayabaya. Kunci logikanya ada pada ukiran kayu ayahmu.
+
+Tapi modul fisik peluncurannya dipegang oleh Komandan Garrick Shaw. Graves sedang mengirim pasukan untuk membantai markas Shaw di stasiun maglev tua Undercity. Pergilah ke sana, selamatkan Shaw, satukan kuncinya!"
+</div>
+
+Kau menyimpan ukiran kayu ayahmu di saku dada kiri tepat di atas jantungmu. Waktunya menuju medan tempur Undercity!
+
+<div class="choice-container">
+  * [[Lanjutkan ke Garis Depan Stasiun Maglev Undercity->Chapter3-StasiunUndercity]]
+</div>
+
+:: Chapter3-StasiunUndercity
+(display: "HeaderHUD")
+<h2 class="act-title">Stasiun Maglev Tua Bawah Tanah (The Undercity)</h2>
+
+Udara di stasiun bawah tanah berbau karat, belerang mesiu, dan limbah. Terowongan rel gelap diterangi kilatan tembakan kinetik merah dan biru yang memekakkan telinga.
+
+Pasukan birokrasi bersenjata berat mendesak maju. Di seberang rel, barisan pejuang gerilya membalas tembakan di balik gerbong-gerbong maglev reyot.
+
+Di balik barikade beton, berdiri komandan pemberontak **GARRICK SHAW**. Pria kekar bertangan bionik itu menembak sambil mengapit rokok kretek *Black Clove*. Dari saku rompinya menyembul sebuah tabung silinder titanium: **Dead Drop #2**.
+
+Shaw melihatmu memimpin pasukan birokrasi.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-shaw">GARRICK SHAW:</span>
+"Arthur Vance! Algojo Whitehall! Kau membunuh Colin dan sekarang kau datang membawa pasukan Graves untuk membantai kami semua?!"
+</div>
+
+Perwira pasukan biro di sampingmu mengokang peluncur granat fosfor pembakar.
+
+<div class="choice-container">
+  <div class="choice-prompt">PERSIMPANGAN KEPUTUSAN MORAL:</div>
+  * [[OPSI TAAT: Perintahkan tembak mati seluruh isi stasiun demi penyamaran mutlak->Chapter3-OpsiTaat]]
+  * [[OPSI SABOTASE: Perintahkan pasukan biro mundur palsu dan selamatkan Shaw->Chapter3-OpsiSabotase]]
+</div>
+
+:: Chapter3-OpsiTaat
+(set: $suspicion to $suspicion - 25)
+(set: $memory to $memory + 10)
+(set: $purged_loyalists to true)
+(set: $dead_drop_2 to true)
+(set: $item_tabung to true)
+(display: "HeaderHUD")
+Kau menelan rasa pahit di tenggorokanmu dan memberi perintah tembak mati tanpa ampun.
+
+Rentetan granat fosfor membakar seisi peron stasiun. Jeritan pejuang gerilya tenggelam dalam deru kobaran api. Garrick Shaw roboh bersimbah darah di atas rel. Sebelum menghembuskan napas terakhirnya, Shaw menatapmu dengan pandangan mengutuk.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-shaw">GARRICK SHAW:</span>
+"Kau... benar-benar... sudah menjadi monster mereka, Thur..."
+</div>
+
+Kau mengambil silinder titanium **Dead Drop #2** dari mayat Shaw yang hangus. Penyamaranmu aman tanpa celah.
+
+<div class="choice-container">
+  * [[Lanjutkan ke Chapter 4: Infiltrasi Puncak Menara Eksekutif->Chapter4-InfiltrasiMalam]]
+</div>
+
+:: Chapter3-OpsiSabotase
+(set: $suspicion to $suspicion + 30)
+(set: $memory to $memory + 25)
+(set: $shaw_saved to true)
+(set: $dead_drop_2 to true)
+(set: $item_tabung to true)
+(display: "HeaderHUD")
+Kau menurunkan laras senjatamu dan berteriak panik palsu ke perwira pasukan birokrasi:
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Tahan tembakan! Mundur! Sensor biometrikku mendeteksi ranjau resonansi seismik di bawah bantalan rel! Seluruh terowongan ini akan runtuh jika kalian menembakkan fosfor! Mundur ke perimeter luar sekarang!"
+</div>
+
+Pasukan birokrasi bergegas mundur keluar dari terowongan.
+
+Kau melompati bantalan rel dan berlari ke barikade Shaw. Shaw menodongkan senapannya ke dahimu, namun kau segera berbisik cepat:
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Gema Nusantara di atas batu karang! Protokol Jayabaya 12094! Colin tewas di van komando, Shaw... Dia menitipkan tugas ini padaku!"
+</div>
+
+Shaw terperangah. Senapannya diturunkan perlahan. Dengan penuh haru, Shaw menyerahkan tabung silinder titanium **Dead Drop #2** ke tanganmu.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-shaw">GARRICK SHAW:</span>
+"Jangan mati sia-sia di atas sana, Nak. Buat ayahmu bangga!"
+</div>
+
+Shaw dan pasukannya meloloskan diri lewat gorong-gorong air. Kau keluar menyusul pasukan biro setelah merekayasa kontak senjata di dinding beton.
+
+<div class="choice-container">
+  * [[Lanjutkan ke Chapter 4: Infiltrasi Puncak Menara Eksekutif->Chapter4-InfiltrasiMalam]]
+</div>
+
+:: Chapter4-InfiltrasiMalam
+(display: "HeaderHUD")
+<div class="act-header">Chapter 4: Infiltrasi Puncak & Perakitan Master Key</div>
+<h2 class="act-title">Ruang Kerja Direktur Graves (Malam Badai Petir)</h2>
+
+Lantai 80 Whitehall Complex. Badai petir menerangi kaca-kaca jendela raksasa menara pusat. Kilatan halilintar sesekali membelah kegelapan ruangan obsidian yang kosong.
+
+Di saku mantelmu, seluruh kepingan kunci telah bersatu:
+1. **Lempengan Ukiran Kayu Beraksara Nusantara** milik ayahmu, Edward Vance.
+2. **Kaset Mikro Rekaman Protokol Jayabaya**.
+3. **Tabung Silinder Titanium Dead Drop #2**.
+
+Kau melangkah mendekati meja kerja marmer obsidian Graves. Di hadapanmu, konsol kuantum terminal pusat berkedip menanti otentikasi fisik.
+
+Kau menancapkan silinder titanium ke slot konsol kuantum dan menempelkan lempengan kayu ayahmu ke atas pemindai optik meja.
+
+<div class="choice-container">
+  * [[Periksa ambang batas kecurigaan sistem birokrasi...->Chapter4-CekKecurigaan]]
+</div>
+
+:: Chapter4-CekKecurigaan
+{
+  (if: $suspicion >= 75)[
+    (go-to: "Ending4-Kalah")
+  ](else:)[
+    (go-to: "Chapter4-OtentikasiSukses")
+  ]
+}
+
+:: Chapter4-OtentikasiSukses
+(set: $memory to 100)
+(set: $master_key to true)
+(display: "HeaderHUD")
+<div class="secret-log">
+[OTENTIKASI ARSITEK DITERIMA // WELCOME BACK, LEAD ARCHITECT VANCE]
+BERKAS: TOP SECRET // PROJECT TABULA RASA
+STATUS KUDA TROYA: BACKDOOR AKTIF PADA INTI SATELIT
+</div>
+
+Konsol kuantum membaca lekukan aksara Nusantara pada kayu Edward Vance dan mengurai enkripsi silinder titanium. Pendar cahaya biru keemasan membubung dari meja kerja.
+
+Layar raksasa ruangan membeberkan ribuan berkas rahasia paling kelam yang disembunyikan rezim:
+* **Buku Besar Korupsi:** Rekening triliunan kredit korporasi hasil penjualan tambang emas, nikel, dan pulau-pulau adat Nusantara milik Graves dan Dewan Direksi.
+* **Rekaman Pembantaian:** Video satelit penggusuran paksa desa adat dan eksekusi ayahnya, Edward Vance.
+* **Project Tabula Rasa:** Daftar jutaan nama warga kota Concord yang ingatannya dihapus paksa menggunakan The Tonic.
+
+Konsol kuantum mencetak sebuah drive portabel berbentuk kristal prisma bercahaya biru elektrik: **The Master Override Key**.
+
+Kau mengambil kunci itu. Energinya terasa hangat di telapak tanganmu.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Ini untukmu, Ayah... Ini untukmu, Colin..."
+</div>
+
+Kau mengantongi kunci tersebut, menyelinap keluar sebelum pergantian jam dinas pagi, dan turun ke lantai operasional birokrasi untuk menyambut fajar penghakiman.
+
+<div class="choice-container">
+  * [[Lanjutkan ke Chapter 5: Fajar Penghakiman di Lantai Operasional->Chapter5-MejaKerja]]
+</div>
+
+:: Chapter5-MejaKerja
+(display: "HeaderHUD")
+<div class="act-header">Chapter 5: Fajar Penghakiman</div>
+<h2 class="act-title">Fajar di Kota Concord: Meja Kerja Arthur Vance (Pukul 07:00)</h2>
+
+Cahaya fajar menembus kabut kelabu Kota Concord, menyinari meja kerjamu di lantai operasional Whitehall. Ratusan pegawai birokrasi duduk tegak menatap layar masing-masing dalam keheningan total yang kaku.
+
+Di seberang mejamu, Detective Prescott duduk santai menyeruput kopi sintetis paginya.
+
+Di bawah mejamu, kabel transmisi terminal dinas telah terhubung langsung ke satelit pemancar kognitif nasional Kota Concord.
+
+Di saku mantelmu, jemarimu menggenggam erat **The Master Override Key**.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-prescott">PRESCOTT:</span>
+"Fajar yang indah di Concord, bukan, Vance? Direktur Graves baru saja mengumumkan bahwa operasi Undercity semalam sukses total. Kota ini kembali selaras sempurna. Bersulang untuk masa depan birokrasi."
+</div>
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Ya, Prescott... Sebentar lagi, kota ini akan menyaksikan masa depan yang sesungguhnya."
+</div>
+
+Kau menempelkan The Master Override Key ke slot terminal di bawah mejamu. Layar tersembunyi memancarkan pilihan eksekusi akhir:
+
+<div class="choice-container">
+  <div class="choice-prompt">PILIH RESOLUSI AKHIR NASIB KOTA CONCORD:</div>
+  (if: $memory >= 70)[
+    * [[ENDING 1: Tancapkan Kunci ke Pemancar Nasional (Bongkar Kebenaran Massal & Anarki Total)->Ending1-Anarki]]
+  ]
+  (if: $memory >= 70 and $suspicion < 40)[
+    * [[ENDING 2: Retas Implan Graves Secara Senyap (Kudeta Senyap & Reformasi Bayangan)->Ending2-Reformasi]]
+  ]
+  (if: $memory >= 70)[
+    * [[ENDING 3: Injak dan Hancurkan Master Override Key (Cegah Perang Saudara, Bunuh Ayah untuk Kedua Kalinya)->Ending3-BebanBisu]]
+  ]
+  (if: $memory < 50)[
+    * [[ENDING 5: Serahkan Kunci ke Meja Graves sebagai Virus Teroris (Menjadi Alat yang Patuh)->Ending5-PionPatuh]]
+  ]
+</div>
+
+:: Ending1-Anarki
+<div class="terminal-box">
+<h2 class="ending-title" style="color: #60a5fa;">ENDING 1: PENGORBANAN YANG MEMBAKAR KOTA (AKHIR ANARKI)</h2>
+STATUS SISTEM: PROTOKOL JAYABAYA DIEKSEKUSI PENUH KE SATELIT NASIONAL
+</div>
+
+Kau menancapkan Master Override Key dan menekan tombol *Broadcast Global*.
+
+Sirine darurat nasional melolong di seluruh penjuru Kota Concord. Layar-layar raksasa di fasad gedung pencakar langit, billboard jalanan, televisi apartemen, hingga lensa kacamata HUD warga mendadak berubah warna. Proyeksi video memutar buku besar korupsi Graves, rekaman pembantaian tanah adat, tarian tradisional, hingga tembang tidur yang dinyanyikan ayahmu, Edward Vance.
+
+Di jalanan, jutaan warga memegangi kepala mereka. Dinding amnesia yang dibangun The Tonic selama puluhan tahun runtuh seketika. Ingatan akan keluarga yang dibantai dan tanah air yang dirampas membanjiri benak mereka.
+
+Kesedihan berubah menjadi amarah liar massal.
+
+Massa buruh bersatu dengan rakyat sipil membakar gedung-gedung kementerian dan menyeret pejabat korup ke jalanan. Markas The Registry terbakar hebat. Helikopter Graves ditembak jatuh oleh roket pejuang bawah tanah.
+
+Kau berdiri di lantai atas gedung yang terbakar, menatap Kota Concord yang tenggelam dalam lautan api perang saudara.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Kebenaran telah kembali, Ayah... tapi tanah ini harus dibasuh dengan darah anak-anaknya sendiri..."
+</div>
+
+Kota Concord bebas dari tirani, namun harus memulai sejarah barunya dari abu kehancuran anarki total.
+
+<div class="choice-container">
+  * [[Kembali ke Menu Utama->Inisialisasi]]
+</div>
+
+:: Ending2-Reformasi
+<div class="secret-log">
+<h2 class="ending-title" style="color: #10b981;">ENDING 2: KESEPAN SANG PEMIMPIN BAYANGAN (REFORMASI SENYAP)</h2>
+STATUS SISTEM: COVERT ADMINISTRATIVE TAKEOVER // KECURIGAAN BIRO BERSIH
+</div>
+
+Kau tidak memilih anarki jalanan yang menumpahkan darah orang-orang tak bersalah. Memanfaatkan aksesmu yang bersih dari kecurigaan rezim, kau mengeksekusi peretasan jarak jauh melalui gerbang belakang Vance-Cipher. Implan saraf kognitif milik Direktur Lucian Graves dan seluruh anggota Dewan Direksi diretas secara diam-diam.
+
+Keesokan paginya, Direktur Lucian Graves tampil di mimbar publik dengan tatapan patuh tanpa jiwa. Graves mengumumkan pengunduran dirinya dan menyerahkan seluruh mandat kepemimpinan The Registry kepadamu: **Inspektur Jenderal Arthur Vance**.
+
+Tahun-tahun berlalu. Kota Concord tetap tenang di permukaan, namun revolusi senyap berjalan di bawah arahanmu:
+* Triliunan dana korupsi dialirkan diam-diam untuk membangun rumah sakit rakyat, panti asuhan, dan sanitasi layak di distrik buruh.
+* Formula The Tonic diencerkan secara bertahap hingga efek amnesianya hilang tanpa disadari warga.
+* Frekuensi radio dongeng dan lagu Nusantara disiarkan sembunyi-sembunyi ke sekolah-sekolah pinggiran.
+
+Di malam hari, kau duduk sendirian di meja kerja obsidian menara lantai 80, menatap lempengan kayu ayahmu di samping cangkir kopi dingin. Kau hidup dalam kesepian mutlak tanpa keluarga dan sahabat, memikul dosa birokrasi sendirian demi menjaga senyum anak-anak Concord tanpa menumpahkan setetes darah pun.
+
+<div class="choice-container">
+  * [[Kembali ke Menu Utama->Inisialisasi]]
+</div>
+
+:: Ending3-BebanBisu
+<div class="warning-box">
+<h2 class="ending-title" style="color: #f59e0b;">ENDING 3: MEMBUNUH AYAH UNTUK KEDUA KALINYA (AKHIR PALING TRAGIS)</h2>
+STATUS PILIHAN: PENGORBANAN EKSISTENSIAL PRIBADI // PENGHANCURAN KUNCI
+</div>
+
+Kau menatap terminal pemancar. Simulasi komputer memperlihatkan bahwa kebenaran instan akan memicu kerusuhan berdarah, kelaparan massal, dan perang saudara yang menewaskan jutaan warga tak berdosa dalam hitungan hari.
+
+Kau memandangi Master Override Key di tanganmu, lalu menatap lempengan kayu ukiran ayahmu.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Ayah mengajarkanku untuk melindungi kehidupan... Jika demi membalas dendam kematian Ayah, jutaan anak-anak yang tak bersalah di kota ini harus terbakar dalam api kerusuhan... maka aku bukan pembebas, aku hanya pembunuh berdarah dingin seperti Graves..."
+</div>
+
+Dengan tangan yang gemetar hebat dan air mata bercucuran membasahi meja kerjamu, kau mencabut Master Override Key.
+
+Kau meletakkannya di lantai beton di bawah mejamu, lalu mengangkat sepatu laras bajamu.
+
+**KRAAAK!**
+
+Kristal prisma kuantum itu diinjak hingga hancur berkeping-keping menjadi serpihan debu kaca tak berguna. Salinan sejarah, bukti korupsi, dan kenangan tentang ayahmu musnah untuk selamanya dari muka bumi.
+
+Kau berlutut di bawah meja, mengumpulkan serpihan kaca tajam itu hingga telapak tanganmu berdarah. Kau meraung memukul dadamu dalam keheningan kubikelmu, sadar bahwa kau baru saja membunuh ayahmu untuk kedua kalinya demi menjaga kedamaian palsu jutaan orang asing di kota ini.
+
+Kau menolak meminum The Tonic hari itu, memilih menanggung siksaan rasa bersalah dan kenangan tentang ayahmu sendirian sampai akhir hayatmu.
+
+<div class="choice-container">
+  * [[Kembali ke Menu Utama->Inisialisasi]]
+</div>
+
+:: Ending4-Kalah
+<div class="warning-box">
+<h2 class="ending-title" style="color: #ef4444;">ENDING 4: DIHAPUS & DIREKONDISI PERMANEN (GAME OVER)</h2>
+TINGKAT KECURIGAAN BIRO: $suspicion% (AMBANG KRITIS TERLAMPAUI >= 75%)
+</div>
+
+Sebelum jarimu sempat menancapkan modul kunci, lampu sorot merah menyala menyilaukan seisi ruangan kerja Graves. Pintu baja hidrolik tertutup membanting di belakangmu.
+
+Dari balik pilar obsidian, muncul Direktur Graves, Prescott, dan satu peleton penuh pasukan elit birokrasi dengan senapan terkokang.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Tingkat kewaspadaan biro terhadapmu mencapai batas kritis sejak hari pertama, Inspektur Vance. Kau mengira Prescott adalah rekan kerjamu? Dia adalah anjing pengawas yang mencatat setiap kedipan matamu."
+</div>
+
+Sebuah proyektil kejut saraf menghantam dadamu. Tubuhmu lumpuh kaku di lantai marmer. Seluruh artefak peninggalan ayahmu dan Colin disita di depan matamu.
+
+Petugas medis birokrasi maju membawa suntikan neuro-injeksi konsentrasi tinggi.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Arthur Vance akan dihapus selamanya dari dunia ini. Besok pagi, birokrasi akan menyambut inspektur baru yang dingin, patuh, dan tidak akan pernah bermimpi lagi."
+</div>
+
+Jarum suntik menembus tengkukmu. Layar pandanganmu menggelap perlahan diiringi hilangnya seluruh ingatan dan kepribadianmu. Arthur Vance lenyap selamanya menjadi cangkang kosong tanpa jiwa.
+
+<div class="choice-container">
+  * [[Kembali ke Menu Utama->Inisialisasi]]
+</div>
+
+:: Ending5-PionPatuh
+<div class="terminal-box">
+<h2 class="ending-title" style="color: #9ca3af;">ENDING 5: ALAT YANG PATUH (THE OBEDIENT PAWN)</h2>
+STATUS KOGNITIF: MEMORI GAGAL DIREKONSTRUKSI ($memory% < 50%)
+</div>
+
+Kau tiba di babak akhir tanpa pernah memahami arti di balik artefak yang kau kumpulkan. Bagimu, ukiran kayu dan rekaman analog itu hanyalah virus teroris yang mengancam stabilitas kota Concord.
+
+Kau tidak menghubungkan kunci itu ke pemancar satelit. Sebaliknya, kau melangkah masuk ke ruangan Direktur Graves dan menyerahkan seluruh modul tersebut ke atas mejanya.
+
+<div class="quote-dialogue">
+<span class="speaker">ARTHUR VANCE:</span>
+"Tugas selesai, Direktur. Seluruh instrumen sabotase teroris 'Sparrow' telah diamankan tanpa sisa."
+</div>
+
+Graves tersenyum puas bagai majikan yang bangga pada anjing pelacaknya yang setia. Graves menyematkan Medali Keselarasan Kota di dadamu dan memberimu sekotak pil The Tonic formula emas eksekutif.
+
+<div class="quote-dialogue">
+<span class="speaker speaker-graves">LUCIAN GRAVES:</span>
+"Kerja yang luar biasa, Inspektur Vance. Kau adalah teladan keselarasan sejati."
+</div>
+
+Kau kembali ke apartemenmu yang dingin. Kau menelan pil formula emas tersebut, merasakan manis kimiawi yang melenyapkan seluruh sakit kepala dan mimpi burukmu. Kau berdiri di depan cermin biometrik HUD, menatap bayangan dirimu sendiri, dan tersenyum hampa. Kau akan hidup tenang selamanya—sebagai pion tanpa jiwa dalam ketidaktahuan mutlak.
+
+<div class="choice-container">
+  * [[Kembali ke Menu Utama->Inisialisasi]]
+</div>

@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scenes/chapters/chapter_1/chapter_1.gd" id="1_chapter"]
+[ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
+[ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="3_exit"]
+[ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="4_interactable"]
+
+[node name="Chapter1" type="Node2D"]
+script = ExtResource("1_chapter")
+chapter_number = 1
+
+[node name="World" parent="." instance=ExtResource("2_world")]
+start_map = "outdoor"
+start_spawn = Vector2(952, 220)
+
+[node name="Evidence103" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(520, 200)
+evidence_id = "EVID-103"
+flag_to_set = "evid_103_collected"
+prompt_text = "[E] Periksa puntung kretek"
+memory_bonus = 10
+lines = Array[String](["Puntung kretek Black Clove... aroma cengkeh selatan. Barang selundupan.", "Seseorang baru saja lewat sini."])
+
+[node name="Evidence104" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(650, 200)
+evidence_id = "EVID-104"
+flag_to_set = "evid_104_collected"
+prompt_text = "[E] Periksa ventilasi"
+memory_bonus = 10
+lines = Array[String](["Coretan fosfor di ventilasi: 0x4F5552 // T-CORE // SPARROW.", "T-CORE... kode arsitektur kognitif rezim. Sparrow adalah nama sandi."])
+
+[node name="Evidence105" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(800, 200)
+evidence_id = "EVID-105"
+flag_to_set = "evid_105_collected"
+prompt_text = "[E] Periksa kompartemen generator"
+memory_bonus = 10
+lines = Array[String](["Peta saluran air menuju Dok Whitehall Bawah.", "Catatan untuk Thur: temui aku di batas air sebelum Graves menutup jaringnya. - Colin"])
+
+[node name="ExitTrigger" parent="." instance=ExtResource("3_exit")]
+position = Vector2(1200, 200)
+target_next_chapter = 2
+required_flags = Array[String](["evid_103_collected", "evid_104_collected", "evid_105_collected"])
+prompt_message = "[E] Tinggalkan Sub-Sektor 4"

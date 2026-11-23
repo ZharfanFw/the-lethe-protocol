@@ -1,0 +1,29 @@
+{
+	"chapter": 3,
+	"title": "Sektor 0 & Undercity",
+	"npcs": {
+		"garrick": {
+			"speaker": "Garrick Shaw",
+			"role": "PENGHUBUNG UNDERCITY",
+			"lines": [
+				"Kau datang juga, Thur.",
+				"Laci 884-B sudah menunggumu sejak lama.",
+				"Kalau kau memilih menyelamatkanku, kau kehilangan sebagian bukti. Pilih dengan sadar."
+			]
+		}
+	},
+	"interactables": {
+		"EVID-301": {
+			"speaker": "Arthur Vance",
+			"lines": ["Ukiran kayu ulin ini... sama dengan yang ada di tangan ayah saat meninggal.", "Struktur gelombang fonetik kuno tersimpan di dalamnya."]
+		},
+		"EVID-302": {
+			"speaker": "Arthur Vance",
+			"lines": ["Rekaman suaraku sendiri. Aku terdengar seperti orang yang sudah lama lupa siapa dirinya.", "Garrick Shaw ada di Undercity."]
+		},
+		"EVID-303": {
+			"speaker": "Arthur Vance",
+			"lines": ["Tabung titanium di rompi Shaw. Modul otentikasi kuantum.", "Ini kunci untuk terminal meja kerja Graves."]
+		}
+	}
+}

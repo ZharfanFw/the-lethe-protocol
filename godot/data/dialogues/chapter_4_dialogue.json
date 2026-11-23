@@ -1,0 +1,25 @@
+{
+	"chapter": 4,
+	"title": "Lantai 80 Infiltrasi",
+	"npcs": {
+		"graves": {
+			"speaker": "Direktur Lucian Graves",
+			"role": "PEMIMPIN THE REGISTRY",
+			"lines": [
+				"Kau sampai sejauh ini karena aku mengizinkannya.",
+				"Tapi mesin Tabula Rasa tidak bisa dihentikan oleh seorang detektif yang lelah.",
+				"Serahkan Master Override Key, dan kau akan kembali menjadi alat yang patuh."
+			]
+		}
+	},
+	"interactables": {
+		"EVID-401": {
+			"speaker": "Arthur Vance",
+			"lines": ["Project Tabula Rasa. Jutaan nama warga Concord.", "Semua ingatan masa kecil dihapus lewat The Tonic."]
+		},
+		"EVID-404": {
+			"speaker": "Arthur Vance",
+			"lines": ["Kristal prisma biru... Master Override Key.", "Dengan ini aku bisa mengambil alih seluruh satelit pemancar kognitif nasional."]
+		}
+	}
+}

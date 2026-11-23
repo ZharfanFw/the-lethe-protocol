@@ -1,0 +1,246 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scenes/menu/main_menu.gd" id="1_menu"]
+[ext_resource type="PackedScene" path="res://scenes/menu/settings_menu.tscn" id="2_settings"]
+
+[sub_resource type="Gradient" id="Gradient_vignette"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0, 0.0117647, 0.0431373, 0.0705882, 0.85)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vignette"]
+gradient = SubResource("Gradient_vignette")
+width = 640
+height = 360
+fill = 1
+fill_from = Vector2(0.5, 0.4)
+fill_to = Vector2(1.1, 1.1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_start_normal"]
+bg_color = Color(0.0784314, 0.509804, 0.639216, 0.95)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_start_hover"]
+bg_color = Color(0.101961, 0.6, 0.729412, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_start_pressed"]
+bg_color = Color(0.0588235, 0.419608, 0.54902, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_quit_normal"]
+bg_color = Color(0.0509804, 0.239216, 0.380392, 0.55)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.34902, 0.780392, 0.878431, 0.55)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_quit_hover"]
+bg_color = Color(0.0705882, 0.321569, 0.458824, 0.75)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.941176, 1, 0.8)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_quit_pressed"]
+bg_color = Color(0.0392157, 0.180392, 0.290196, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0.941176, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0.941176, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="BG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0117647, 0.0431373, 0.0705882, 1)
+
+[node name="Vignette" type="TextureRect" parent="."]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_vignette")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Decor" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Overline" type="Label" parent="."]
+layout_mode = 0
+offset_top = 44.0
+offset_right = 640.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.533333, 0.831373, 0.909804, 0.9)
+theme_override_font_sizes/font_size = 7
+text = "FORENSIC DIVISION // CASE 4092"
+horizontal_alignment = 1
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_top = 62.0
+offset_right = 640.0
+offset_bottom = 98.0
+theme_override_colors/font_color = Color(0.909804, 0.988235, 1, 1)
+theme_override_colors/font_outline_color = Color(0.00784314, 0.0470588, 0.0784314, 0.9)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 26
+text = "THE LETHE PROTOCOL"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="."]
+layout_mode = 0
+offset_top = 102.0
+offset_right = 640.0
+offset_bottom = 122.0
+theme_override_colors/font_color = Color(0, 0.941176, 1, 1)
+theme_override_colors/font_outline_color = Color(0.00784314, 0.0470588, 0.0784314, 0.9)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 13
+text = "CONCORD 2084"
+horizontal_alignment = 1
+
+[node name="Rule" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 138.0
+offset_right = 390.0
+offset_bottom = 140.0
+color = Color(0, 0.941176, 1, 0.35)
+
+[node name="Buttons" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 190.0
+offset_top = 150.0
+offset_right = 450.0
+offset_bottom = 318.0
+theme_override_constants/separation = 6
+
+[node name="Start" type="Button" parent="Buttons"]
+custom_minimum_size = Vector2(260, 36)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../Load")
+theme_override_colors/font_color = Color(0.94902, 1, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.815686, 0.933333, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBox_start_normal")
+theme_override_styles/hover = SubResource("StyleBox_start_hover")
+theme_override_styles/pressed = SubResource("StyleBox_start_pressed")
+theme_override_styles/focus = SubResource("StyleBox_focus")
+text = "MULAI INVESTIGASI"
+
+[node name="Load" type="Button" parent="Buttons"]
+custom_minimum_size = Vector2(260, 36)
+layout_mode = 2
+focus_neighbor_top = NodePath("../Start")
+focus_neighbor_bottom = NodePath("../Settings")
+theme_override_colors/font_color = Color(0.803922, 0.933333, 0.968627, 1)
+theme_override_colors/font_pressed_color = Color(0.815686, 0.933333, 1, 1)
+theme_override_colors/font_hover_color = Color(0.917647, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBox_quit_normal")
+theme_override_styles/hover = SubResource("StyleBox_quit_hover")
+theme_override_styles/pressed = SubResource("StyleBox_quit_pressed")
+theme_override_styles/focus = SubResource("StyleBox_focus")
+text = "MUAT SIMPANAN"
+
+[node name="Settings" type="Button" parent="Buttons"]
+custom_minimum_size = Vector2(260, 36)
+layout_mode = 2
+focus_neighbor_top = NodePath("../Load")
+focus_neighbor_bottom = NodePath("../Quit")
+theme_override_colors/font_color = Color(0.803922, 0.933333, 0.968627, 1)
+theme_override_colors/font_pressed_color = Color(0.815686, 0.933333, 1, 1)
+theme_override_colors/font_hover_color = Color(0.917647, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBox_quit_normal")
+theme_override_styles/hover = SubResource("StyleBox_quit_hover")
+theme_override_styles/pressed = SubResource("StyleBox_quit_pressed")
+theme_override_styles/focus = SubResource("StyleBox_focus")
+text = "PENGATURAN"
+
+[node name="Quit" type="Button" parent="Buttons"]
+custom_minimum_size = Vector2(260, 36)
+layout_mode = 2
+focus_neighbor_top = NodePath("../Settings")
+theme_override_colors/font_color = Color(0.803922, 0.933333, 0.968627, 1)
+theme_override_colors/font_pressed_color = Color(0.815686, 0.933333, 1, 1)
+theme_override_colors/font_hover_color = Color(0.917647, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+theme_override_styles/normal = SubResource("StyleBox_quit_normal")
+theme_override_styles/hover = SubResource("StyleBox_quit_hover")
+theme_override_styles/pressed = SubResource("StyleBox_quit_pressed")
+theme_override_styles/focus = SubResource("StyleBox_focus")
+text = "KELUAR"
+
+[node name="Hint" type="Label" parent="."]
+layout_mode = 0
+offset_top = 326.0
+offset_right = 640.0
+offset_bottom = 340.0
+theme_override_colors/font_color = Color(0.533333, 0.831373, 0.909804, 0.85)
+theme_override_font_sizes/font_size = 8
+text = "[ATAS/BAWAH] PILIH   [ENTER] KONFIRMASI   [ESC] KELUAR"
+horizontal_alignment = 1
+
+[node name="SettingsMenu" parent="." instance=ExtResource("2_settings")]
+visible = false
+layout_mode = 1

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://pshso8mof0ex"]
+
+[ext_resource type="Script" uid="uid://l2hgr8v88suo" path="res://scripts/world.gd" id="1_world_script"]
+[ext_resource type="PackedScene" uid="uid://bwn2aqgtvvriy" path="res://scenes/dialogue_box.tscn" id="2_dialogue_scene"]
+[ext_resource type="PackedScene" uid="uid://c5tjngc353pev" path="res://scenes/detective_notebook.tscn" id="3_notebook_scene"]
+[ext_resource type="PackedScene" uid="uid://dsgv43a7n7ib3" path="res://scenes/item_combiner.tscn" id="4_combiner_scene"]
+
+[node name="World" type="Node" unique_id=1137139324]
+script = ExtResource("1_world_script")
+
+[node name="Backdrop" type="CanvasLayer" parent="." unique_id=1337545720]
+layer = -10
+
+[node name="Black" type="ColorRect" parent="Backdrop" unique_id=287004353]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MapRoot" type="Node2D" parent="." unique_id=2098697680]
+
+[node name="DialogueBox" parent="." unique_id=1977900305 instance=ExtResource("2_dialogue_scene")]
+
+[node name="DetectiveNotebook" parent="." unique_id=534038318 instance=ExtResource("3_notebook_scene")]
+
+[node name="ItemCombiner" parent="." unique_id=295674893 instance=ExtResource("4_combiner_scene")]
+
+[node name="FadeLayer" type="CanvasLayer" parent="." unique_id=137274543]
+layer = 100
+
+[node name="Fade" type="ColorRect" parent="FadeLayer" unique_id=284166171]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

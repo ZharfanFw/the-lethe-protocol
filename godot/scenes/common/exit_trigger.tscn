@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scenes/common/exit_trigger.gd" id="1_exit_trigger"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_exit"]
+radius = 48.0
+
+[node name="ExitTrigger" type="Area2D"]
+collision_layer = 0
+collision_mask = 1
+monitorable = false
+script = ExtResource("1_exit_trigger")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_exit")

@@ -1,0 +1,34 @@
+{
+	"chapter": 2,
+	"title": "Dok Whitehall Bawah",
+	"npcs": {
+		"graves": {
+			"speaker": "Direktur Lucian Graves",
+			"role": "PEMIMPIN THE REGISTRY",
+			"lines": [
+				"Inspektur Vance. Tepat waktu seperti biasa.",
+				"Kota ini hanya bertahan karena ingatan yang kita pilih untuk dihapus.",
+				"Jangan biarkan kidung lama ayahmu mengacaukan tugasmu."
+			]
+		},
+		"colin": {
+			"speaker": "Colin Ward",
+			"role": "BURONAN // T-CORE",
+			"lines": [
+				"Arthur... kau yang merancang Protokol Jayabaya.",
+				"Kau menyusup untuk menanam sandi aksara ayahmu sendiri.",
+				"Laci 884-B... Sektor 0... jangan sampai Graves menutup jaringnya."
+			]
+		}
+	},
+	"interactables": {
+		"EVID-201": {
+			"speaker": "Arthur Vance",
+			"lines": ["Log Vance-Cipher Rev3. Algoritma celah 40ms berbasis fonetik Nusantara.", "Ini gayaku sendiri. Tidak mungkin orang lain yang menulis ini."]
+		},
+		"EVID-204": {
+			"speaker": "Arthur Vance",
+			"lines": ["Goresan darah di kaca: SEKTOR 0 // LACI 884-B.", "Colin meninggalkan petunjuk terakhirnya."]
+		}
+	}
+}

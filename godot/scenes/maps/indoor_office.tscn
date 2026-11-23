@@ -1,0 +1,231 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/map_door.gd" id="1_door_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
+size = Vector2(44, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_top"]
+size = Vector2(640, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_side"]
+size = Vector2(16, 340)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_bottom_left"]
+size = Vector2(298, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_bottom_right"]
+size = Vector2(298, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_desk"]
+size = Vector2(220, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shelf"]
+size = Vector2(56, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cabinet"]
+size = Vector2(72, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plant"]
+size = Vector2(26, 26)
+
+[node name="IndoorOffice" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.145098, 0.152941, 0.180392, 1)
+
+[node name="Rug" type="ColorRect" parent="."]
+offset_left = 130.0
+offset_top = 195.0
+offset_right = 510.0
+offset_bottom = 285.0
+mouse_filter = 2
+color = Color(0.290196, 0.121569, 0.141176, 1)
+
+[node name="DoorMat" type="ColorRect" parent="."]
+offset_left = 292.0
+offset_top = 308.0
+offset_right = 348.0
+offset_bottom = 328.0
+mouse_filter = 2
+color = Color(0.419608, 0.360784, 0.219608, 1)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 1
+
+[node name="TopShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 12)
+shape = SubResource("RectangleShape2D_wall_top")
+
+[node name="LeftShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(8, 170)
+shape = SubResource("RectangleShape2D_wall_side")
+
+[node name="RightShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(632, 170)
+shape = SubResource("RectangleShape2D_wall_side")
+
+[node name="BottomLeftShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(149, 334)
+shape = SubResource("RectangleShape2D_wall_bottom_left")
+
+[node name="BottomRightShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(491, 334)
+shape = SubResource("RectangleShape2D_wall_bottom_right")
+
+[node name="WallTopVisual" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.0901961, 0.0980392, 0.129412, 1)
+
+[node name="WallLeftVisual" type="ColorRect" parent="."]
+offset_right = 16.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.0901961, 0.0980392, 0.129412, 1)
+
+[node name="WallRightVisual" type="ColorRect" parent="."]
+offset_left = 624.0
+offset_right = 640.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.0901961, 0.0980392, 0.129412, 1)
+
+[node name="WallBottomLeftVisual" type="ColorRect" parent="."]
+offset_top = 328.0
+offset_right = 298.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.0901961, 0.0980392, 0.129412, 1)
+
+[node name="WallBottomRightVisual" type="ColorRect" parent="."]
+offset_left = 342.0
+offset_top = 328.0
+offset_right = 640.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.0901961, 0.0980392, 0.129412, 1)
+
+[node name="WallSign" type="Label" parent="."]
+offset_left = 200.0
+offset_top = 4.0
+offset_right = 440.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 8
+text = "KANTOR DETEKTIF VANCE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Desk" type="StaticBody2D" parent="."]
+position = Vector2(320, 120)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="Desk"]
+shape = SubResource("RectangleShape2D_desk")
+
+[node name="Body" type="ColorRect" parent="Desk"]
+offset_left = -110.0
+offset_top = -30.0
+offset_right = 110.0
+offset_bottom = 30.0
+mouse_filter = 2
+color = Color(0.321569, 0.231373, 0.156863, 1)
+
+[node name="Top" type="ColorRect" parent="Desk"]
+offset_left = -110.0
+offset_top = -30.0
+offset_right = 110.0
+offset_bottom = -20.0
+mouse_filter = 2
+color = Color(0.403922, 0.301961, 0.211765, 1)
+
+[node name="Bookshelf" type="StaticBody2D" parent="."]
+position = Vector2(60, 130)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="Bookshelf"]
+shape = SubResource("RectangleShape2D_shelf")
+
+[node name="Body" type="ColorRect" parent="Bookshelf"]
+offset_left = -28.0
+offset_top = -60.0
+offset_right = 28.0
+offset_bottom = 60.0
+mouse_filter = 2
+color = Color(0.239216, 0.180392, 0.129412, 1)
+
+[node name="Shelf1" type="ColorRect" parent="Bookshelf"]
+offset_left = -24.0
+offset_top = -38.0
+offset_right = 24.0
+offset_bottom = -34.0
+mouse_filter = 2
+color = Color(0.360784, 0.282353, 0.2, 1)
+
+[node name="Shelf2" type="ColorRect" parent="Bookshelf"]
+offset_left = -24.0
+offset_top = -4.0
+offset_right = 24.0
+offset_bottom = 0.0
+mouse_filter = 2
+color = Color(0.360784, 0.282353, 0.2, 1)
+
+[node name="Cabinet" type="StaticBody2D" parent="."]
+position = Vector2(566, 140)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="Cabinet"]
+shape = SubResource("RectangleShape2D_cabinet")
+
+[node name="Body" type="ColorRect" parent="Cabinet"]
+offset_left = -36.0
+offset_top = -45.0
+offset_right = 36.0
+offset_bottom = 45.0
+mouse_filter = 2
+color = Color(0.219608, 0.231373, 0.278431, 1)
+
+[node name="Handle" type="ColorRect" parent="Cabinet"]
+offset_left = -14.0
+offset_top = -4.0
+offset_right = 14.0
+offset_bottom = -2.0
+mouse_filter = 2
+color = Color(0.501961, 0.521569, 0.588235, 1)
+
+[node name="Plant" type="StaticBody2D" parent="."]
+position = Vector2(566, 58)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="Plant"]
+shape = SubResource("RectangleShape2D_plant")
+
+[node name="Body" type="ColorRect" parent="Plant"]
+offset_left = -13.0
+offset_top = -13.0
+offset_right = 13.0
+offset_bottom = 13.0
+mouse_filter = 2
+color = Color(0.160784, 0.341176, 0.219608, 1)
+
+[node name="ExitDoor" type="Area2D" parent="."]
+position = Vector2(320, 330)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("1_door_script")
+target_map = "outdoor"
+spawn_position = Vector2(952, 200)
+
+[node name="ExitShape" type="CollisionShape2D" parent="ExitDoor"]
+shape = SubResource("RectangleShape2D_door")

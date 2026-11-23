@@ -1,0 +1,126 @@
+[gd_scene load_steps=17 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/map/city.png" id="1_map_texture"]
+[ext_resource type="PackedScene" path="res://scenes/npc.tscn" id="2_npc_scene"]
+[ext_resource type="PackedScene" path="res://scenes/npc_garrick.tscn" id="3_garrick_scene"]
+[ext_resource type="PackedScene" path="res://scenes/npc_edward.tscn" id="4_edward_scene"]
+[ext_resource type="PackedScene" path="res://scenes/npc_lucian.tscn" id="5_lucian_scene"]
+[ext_resource type="Script" path="res://scripts/map_door.gd" id="6_door_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_outer_h"]
+size = Vector2(1320, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_outer_v"]
+size = Vector2(40, 1000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tl_top"]
+size = Vector2(464, 144)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tl_left"]
+size = Vector2(144, 464)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_top_center"]
+size = Vector2(656, 144)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_center"]
+size = Vector2(642, 194)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_right"]
+size = Vector2(178, 194)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom_left"]
+size = Vector2(560, 194)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottom_right"]
+size = Vector2(418, 194)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_entrance"]
+size = Vector2(48, 20)
+
+[node name="OutdoorCity" type="Node2D"]
+y_sort_enabled = true
+
+[node name="MapBackground" type="Sprite2D" parent="."]
+texture = ExtResource("1_map_texture")
+centered = false
+
+[node name="RoadBoundaries" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 1
+
+[node name="OuterTop" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(640, -20)
+shape = SubResource("RectangleShape2D_outer_h")
+
+[node name="OuterBottom" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(640, 980)
+shape = SubResource("RectangleShape2D_outer_h")
+
+[node name="OuterLeft" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(-20, 480)
+shape = SubResource("RectangleShape2D_outer_v")
+
+[node name="OuterRight" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(1300, 480)
+shape = SubResource("RectangleShape2D_outer_v")
+
+[node name="TopLeftTop" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(232, 72)
+shape = SubResource("RectangleShape2D_tl_top")
+
+[node name="TopLeftSide" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(72, 232)
+shape = SubResource("RectangleShape2D_tl_left")
+
+[node name="TopCenterLot" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(952, 72)
+shape = SubResource("RectangleShape2D_top_center")
+
+[node name="CenterLot" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(623, 367)
+shape = SubResource("RectangleShape2D_center")
+
+[node name="RightLot" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(1191, 367)
+shape = SubResource("RectangleShape2D_right")
+
+[node name="BottomLeftLot" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(280, 719)
+shape = SubResource("RectangleShape2D_bottom_left")
+
+[node name="BottomRightLot" type="CollisionShape2D" parent="RoadBoundaries"]
+position = Vector2(927, 719)
+shape = SubResource("RectangleShape2D_bottom_right")
+
+[node name="NPCLucian" parent="." instance=ExtResource("5_lucian_scene")]
+position = Vector2(1060, 550)
+
+[node name="NPCGarrick" parent="." instance=ExtResource("3_garrick_scene")]
+position = Vector2(290, 550)
+
+[node name="NPCEdward" parent="." instance=ExtResource("4_edward_scene")]
+position = Vector2(290, 220)
+
+[node name="NPCPatrol" parent="." instance=ExtResource("2_npc_scene")]
+position = Vector2(1060, 220)
+speaker_name = "Petugas Patroli Biro"
+dialogue_lines = Array[String](["Lapor, Inspektur Vance. Sektor timur laut terpantau relatif terkendali.", "Namun frekuensi transmisi radio ilegal kelompok perlawanan makin intensif akhir-akhir ini.", "Tetap waspada, Inspektur. Direktur Graves mengawasi kepatuhan kita semua."])
+
+[node name="EntranceDoorVisual" type="ColorRect" parent="."]
+offset_left = 932.0
+offset_top = 116.0
+offset_right = 972.0
+offset_bottom = 144.0
+mouse_filter = 2
+color = Color(0.129412, 0.101961, 0.0862745, 1)
+
+[node name="EntranceDoor" type="Area2D" parent="."]
+position = Vector2(952, 152)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("6_door_script")
+target_map = "indoor"
+spawn_position = Vector2(320, 280)
+
+[node name="EntranceShape" type="CollisionShape2D" parent="EntranceDoor"]
+shape = SubResource("RectangleShape2D_entrance")

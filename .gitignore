@@ -1,0 +1,26 @@
+# Godot 4+ specific ignores
+godot/.godot/
+godot/export_templates/
+godot/feature_profiles/
+godot/script_templates/
+godot/text_editor_themes/
+*.import
+*.translation
+
+# Builds & exports
+builds/
+exports/
+*.exe
+*.x86_64
+*.pck
+*.apk
+*.aab
+*.dmg
+*.zip
+
+# Local logs, temp & OS artifacts
+session-*.md
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
