@@ -442,8 +442,8 @@ func _build_map_panel() -> void:
 	map_info_lbl.add_theme_font_size_override("bold_font_size", 9); map_info_lbl.add_theme_constant_override("line_separation", 6); map_panel.add_child(map_info_lbl)
 
 func _on_inventory_updated() -> void:
-	if tab == 0:
-		_switch_tab(0)
+	if tab == 0 or tab == 1:
+		_switch_tab(tab)
 
 func _switch_tab(t: int) -> void:
 	if tabs.is_empty():
@@ -465,9 +465,25 @@ func _switch_tab(t: int) -> void:
 		for ev_id in GameManager.collected_evidence:
 			ev_items.append(GameManager.get_evidence_display_dict(ev_id))
 		items = ev_items if not ev_items.is_empty() else db[0]
+	elif tab == 1:
+		var note_items: Array = []
+		for ded_id in GameManager.unlocked_deductions:
+			var ded_info: Dictionary = GameManager.get_deduction_info(ded_id)
+			var ded_title: String = str(ded_info.get("name", ded_id))
+			var reqs: Array = ded_info.get("requires", [])
+			note_items.append({
+				"name": "[DEDUKSI] " + ded_title,
+				"qty": "",
+				"desc": "Kesimpulan investigasi terverifikasi dari sintesis bukti: %s." % ", ".join(reqs),
+				"note": "[color=#00ff88][b][DEDUKSI TERBUKA][/b][/color]\nID: %s (+%d%% Memori)" % [ded_id, int(ded_info.get("memory_bonus", 10))],
+				"extra": "[color=#00f0ff][b][KOMPONEN BUKTI][/b][/color]\n• " + "\n• ".join(reqs)
+			})
+		note_items.append_array(db[1])
+		items = note_items
 	else:
 		items = db[tab]
-	scroll_off = 0; _select(0)
+	scroll_off = 0
+	_select(0)
 
 func _select(i: int) -> void:
 	if items.is_empty(): return

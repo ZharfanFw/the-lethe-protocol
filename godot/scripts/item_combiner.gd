@@ -335,7 +335,16 @@ func _on_combine_pressed() -> void:
 	GameManager.replace_evidence([id_a, id_b], new_id)
 	GameManager.set_flag("evidence_combined", true)
 	GameManager.set_flag("puzzle_ja_completed", true)
-	GameManager.add_memory(15)
+	var unlocked_any := false
+	for ded_id in GameManager.deductions_db:
+		var reqs: Array = GameManager.deductions_db[ded_id].get("requires", [])
+		if reqs.size() == 2 and reqs.has(id_a) and reqs.has(id_b):
+			var bonus: int = int(GameManager.deductions_db[ded_id].get("memory_bonus", 10))
+			GameManager.unlock_deduction(str(ded_id), bonus)
+			unlocked_any = true
+			break
+	if not unlocked_any:
+		GameManager.add_memory(15)
 	
 	_sync_inventory_from_game_manager()
 	mystery_lbl.visible = false

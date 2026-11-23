@@ -4,6 +4,7 @@ extends Area2D
 signal collected(evidence_id: String)
 
 @export var evidence_id: String = ""
+@export var dialogue_id: String = ""
 @export var flag_to_set: String = ""
 @export var speaker_name: String = "Arthur Vance"
 @export var lines: Array[String] = []
@@ -75,9 +76,18 @@ func interact() -> void:
 		GameManager.add_memory(memory_bonus)
 	if suspicion_bonus != 0:
 		GameManager.add_suspicion(suspicion_bonus)
-	if not lines.is_empty():
-		UIManager.say(speaker_name, lines)
-
+	var active_speaker: String = speaker_name
+	var active_lines: Array = lines
+	var lookup_id: String = dialogue_id if not dialogue_id.is_empty() else evidence_id
+	if not lookup_id.is_empty():
+		var entry := GameManager.get_interactable_dialogue(lookup_id)
+		if not entry.is_empty():
+			active_speaker = str(entry.get("speaker", active_speaker))
+			var json_lines: Variant = entry.get("lines", [])
+			if json_lines is Array and not json_lines.is_empty():
+				active_lines = json_lines
+	if not active_lines.is_empty():
+		UIManager.say(active_speaker, active_lines)
 	collected.emit(evidence_id)
 	if one_shot:
 		consumed = true

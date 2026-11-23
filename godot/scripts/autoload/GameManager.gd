@@ -43,7 +43,8 @@ var collected_evidence: Array[String] = []
 var unlocked_deductions: Array[String] = []
 var story_flags: Dictionary = {}
 var evidence_db: Dictionary = {}
-
+var deductions_db: Dictionary = {}
+var chapter_dialogues_cache: Dictionary = {}
 const KNOWN_ITEMS: Dictionary = {
 	"lencana": {
 		"name": "Lencana Unit V-09",
@@ -116,7 +117,55 @@ func _load_evidence_db() -> void:
 		var json := JSON.new()
 		if json.parse(file.get_as_text()) == OK and json.data is Dictionary:
 			evidence_db = json.data.get("evidence", {})
+			deductions_db = json.data.get("deductions", {})
 
+func get_chapter_dialogue_data(chapter_num: int = -1) -> Dictionary:
+	var ch: int = current_chapter if chapter_num < 0 else chapter_num
+	if ch <= 0:
+		ch = 1
+	if chapter_dialogues_cache.has(ch):
+		return chapter_dialogues_cache[ch]
+	var path := "res://data/dialogues/chapter_%d_dialogue.json" % ch
+	if not FileAccess.file_exists(path):
+		return {}
+	var file := FileAccess.open(path, FileAccess.READ)
+	if file:
+		var json := JSON.new()
+		if json.parse(file.get_as_text()) == OK and json.data is Dictionary:
+			chapter_dialogues_cache[ch] = json.data
+			return json.data
+	return {}
+
+func get_npc_dialogue(npc_id: String, chapter_num: int = -1) -> Dictionary:
+	if npc_id.is_empty():
+		return {}
+	var data := get_chapter_dialogue_data(chapter_num)
+	var npcs: Dictionary = data.get("npcs", {})
+	if npcs.has(npc_id) and npcs[npc_id] is Dictionary:
+		return npcs[npc_id]
+	if chapter_num < 0:
+		for ch in range(1, TOTAL_CHAPTERS + 1):
+			var ch_npcs: Dictionary = get_chapter_dialogue_data(ch).get("npcs", {})
+			if ch_npcs.has(npc_id) and ch_npcs[npc_id] is Dictionary:
+				return ch_npcs[npc_id]
+	return {}
+
+func get_interactable_dialogue(entry_id: String, chapter_num: int = -1) -> Dictionary:
+	if entry_id.is_empty():
+		return {}
+	var data := get_chapter_dialogue_data(chapter_num)
+	var items: Dictionary = data.get("interactables", {})
+	if items.has(entry_id) and items[entry_id] is Dictionary:
+		return items[entry_id]
+	if chapter_num < 0:
+		for ch in range(1, TOTAL_CHAPTERS + 1):
+			var ch_items: Dictionary = get_chapter_dialogue_data(ch).get("interactables", {})
+			if ch_items.has(entry_id) and ch_items[entry_id] is Dictionary:
+				return ch_items[entry_id]
+	return {}
+
+func get_deduction_info(deduction_id: String) -> Dictionary:
+	return deductions_db.get(deduction_id, {})
 func reset_to_new_game(slot_id: int) -> void:
 	current_slot = slot_id
 	current_chapter = 0

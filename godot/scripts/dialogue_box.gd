@@ -37,6 +37,7 @@ var dialogue_queue: Array[Dictionary] = []
 var is_active: bool = false
 var is_typing: bool = false
 var waiting_for_choice: bool = false
+var _active_choices: Array = []
 var typing_tween: Tween
 var arrow_tween: Tween
 var base_container_pos: Vector2
@@ -352,6 +353,7 @@ func _on_typing_finished(current_line: Dictionary) -> void:
 			next_indicator.visible = true
 
 func _show_choices(choices: Array) -> void:
+	_active_choices = choices.duplicate(true)
 	waiting_for_choice = true
 	if next_indicator:
 		next_indicator.visible = false
@@ -423,7 +425,30 @@ func _show_choices(choices: Array) -> void:
 
 func _on_choice_clicked(index: int, text: String) -> void:
 	waiting_for_choice = false
+	var chosen_data: Variant = _active_choices[index] if index >= 0 and index < _active_choices.size() else null
+	_active_choices.clear()
 	_clear_choices()
+	if chosen_data is Dictionary:
+		var mem_delta: int = int(chosen_data.get("memory", 0))
+		var sus_delta: int = int(chosen_data.get("suspicion", 0))
+		var flag_name: String = str(chosen_data.get("flag", ""))
+		var ev_id: String = str(chosen_data.get("evidence", ""))
+		if mem_delta != 0:
+			GameManager.add_memory(mem_delta)
+		if sus_delta != 0:
+			GameManager.add_suspicion(sus_delta)
+		if not flag_name.is_empty():
+			GameManager.set_flag(flag_name, true)
+		if not ev_id.is_empty():
+			GameManager.add_evidence(ev_id)
+		var follow_lines: Variant = chosen_data.get("next", [])
+		if follow_lines is Array and not follow_lines.is_empty():
+			for j in range(follow_lines.size() - 1, -1, -1):
+				var item: Variant = follow_lines[j]
+				if item is Dictionary:
+					dialogue_queue.push_front(item)
+				elif item is String:
+					dialogue_queue.push_front({"name": "Arthur Vance", "text": item})
 	choice_selected.emit(index, text)
 	_show_next_line()
 

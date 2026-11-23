@@ -93,14 +93,14 @@
 - **Input Interaksi**: Tombol interaksi difokuskan eksklusif hanya ke tombol `[E]` (input Spasi dihapus dari action `interact` dan seluruh script interaksi). Seluruh prompt HUD menggunakan format `[E] ...`.
 - **Smoke test & Verifikasi**: Seluruh unit test, scene loader, save/load slot, dan tes sinkronisasi inventaris lolos pengujian headless (`TEST INTERACTION & INVENTORY SYNC PASS` & `SMOKE_TEST_DONE`).
 
-### Partial / Not Yet Wired
-- Chapter scenes reuse the existing `world.tscn` maps; full per-chapter tilesets, cutscene art, and audio are not present.
-- Dialogue JSON and evidence database are source-of-truth files, but runtime still uses hardcoded NPC lines and the notebook's internal `db` dictionary.
-- `UIManager` HUD and Mind Vault are stubs (`HUDPanel` empty; `toggle_mind_vault` looks for a `MindVaultUI` node that does not exist yet).
-- Deduction chain is exposed through `GameManager.unlock_deduction` but there is no Mind Vault connection UI.
-- `DialogueBox`, `DetectiveNotebook`, and `ItemCombiner` remain under `scenes/` + `scripts/` (not moved into `UIManager`) to avoid regressing the working overlays.
+### Technical Fundamentals Completed (2026-11-23)
+- **Overlay Esc & Input Standardization**: `UIManager._is_any_overlay_open()` checks `visible` on `DetectiveNotebook` and `ItemCombiner` plus `_open` on `EndingTerminal` so pressing `Esc` closes overlays without opening `PauseMenu`. `combine_station.gd` standardized to `[E]` / `[C]` (Spacebar removed).
+- **Runtime JSON Loaders**: `GameManager` loads `deductions_db` and caches `res://data/dialogues/chapter_X_dialogue.json` (`get_npc_dialogue`, `get_interactable_dialogue`, `get_deduction_info`). `npc.gd` (`npc_id`), `interactable.gd` (`dialogue_id` / `evidence_id`), and `detective_notebook.gd` (unlocked deductions in *Catatan* tab) pull directly from JSON.
+- **Branching Dialogue Choices**: `dialogue_box.gd` applies `memory`, `suspicion`, `flag`, `evidence`, and `next` line arrays when choices are selected.
+- **Deduction Sync & In-Game HUD**: `item_combiner.gd` unlocks matching `DEDUKSI-*` entries via `GameManager.unlock_deduction()`, and `UIManager` renders a top HUD bar showing active chapter title and control hints.
+- **Per-Chapter Map Slots & AudioManager**: `world.gd` registers `ch1_subsector4`, `ch2_dock`, `ch3_sector0`, `ch3_undercity`, and `ch4_office_top` for conflict-free parallel map editing. Added `default_bus_layout.tres` and `AudioManager` autoload (`play_bgm`, `stop_bgm`, `play_sfx`).
 
-## Next Steps for Future Iterations
-1. Build the Mind Vault deduction UI and connect it to `GameManager.unlock_deduction`.
-2. Add chapter-specific interactables/tilesets and connect chapter data JSON into `DialogueManager`/notebook.
-3. Replace placeholder cutscene colors with real still-frame art in `assets/cutscenes/` according to `../docs/CUTSCENE_SPECIFICATION.md`.
+### Next Steps for Team
+1. Build dedicated chapter map `.tscn` files and point `world.gd` map slots (`ch1_subsector4`, `ch2_dock`, `ch3_sector0`, `ch3_undercity`, `ch4_office_top`) to them.
+2. Populate `data/dialogues/chapter_1..5_dialogue.json` with branching `choices` (`memory`, `suspicion`, `flag`, `evidence`, `next`) and set `npc_id` / `dialogue_id` on scene nodes.
+3. Add real cutscene PNGs in `assets/cutscenes/` per `../docs/CUTSCENE_SPECIFICATION.md` and BGM/SFX audio files in `assets/audio/`.

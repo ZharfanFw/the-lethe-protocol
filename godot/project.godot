@@ -20,6 +20,7 @@ SettingsManager="*res://scripts/autoload/SettingsManager.gd"
 SaveManager="*res://scripts/autoload/SaveManager.gd"
 GameManager="*res://scripts/autoload/GameManager.gd"
 UIManager="*res://scenes/autoload/ui_manager.tscn"
+AudioManager="*res://scripts/autoload/AudioManager.gd"
 
 [display]
 

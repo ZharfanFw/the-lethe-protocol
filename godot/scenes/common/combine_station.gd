@@ -1,7 +1,7 @@
 class_name CombineStation
 extends Area2D
 
-@export var prompt_message: String = "[Spasi / E / C] Meja Sintesis Bukti"
+@export var prompt_message: String = "[E] Meja Sintesis Bukti"
 
 var player_in_zone: bool = false
 var _prompt: Label
@@ -46,7 +46,7 @@ func _on_body_exited(body: Node2D) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not player_in_zone:
 		return
-	if event.is_action_pressed("interact") or (event is InputEventKey and event.is_pressed() and not event.is_echo() and (event.keycode == KEY_E or event.keycode == KEY_SPACE or event.keycode == KEY_C)):
+	if event.is_action_pressed("interact") or (event is InputEventKey and event.is_pressed() and not event.is_echo() and (event.keycode == KEY_E or event.keycode == KEY_C)):
 		get_viewport().set_input_as_handled()
 		open_combiner()
 

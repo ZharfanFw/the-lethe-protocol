@@ -1,8 +1,8 @@
 extends StaticBody2D
 
+@export var npc_id: String = ""
 @export var speaker_name: String = "Direktur Lucian Graves"
 @export var dialogue_lines: Array[String] = [
-	"Inspektur Vance...? Untuk apa anggota Biro datang ke distrik buruh ini?",
 	"Semalam ada pergerakan mencurigakan di dekat terowongan rel tua Sub-Sektor 4.",
 	"Mereka membawa peti bertanda 'Jayabaya'... Hati-hati, Inspektur. Di sini, dinding pun punya telinga."
 ]
@@ -80,9 +80,17 @@ func _unhandled_input(event: InputEvent) -> void:
 			if face_player_on_interact and player_ref:
 				face_target(player_ref.global_position)
 			is_talking = true
-			dlg.start_dialogue(speaker_name, dialogue_lines)
+			var active_speaker: String = speaker_name
+			var active_lines: Array = dialogue_lines
+			if not npc_id.is_empty():
+				var entry := GameManager.get_npc_dialogue(npc_id)
+				if not entry.is_empty():
+					active_speaker = str(entry.get("speaker", active_speaker))
+					var json_lines: Variant = entry.get("lines", [])
+					if json_lines is Array and not json_lines.is_empty():
+						active_lines = json_lines
+			dlg.start_dialogue(active_speaker, active_lines)
 			get_viewport().set_input_as_handled()
-
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player" or body.is_in_group("player"):
 		player_ref = body
