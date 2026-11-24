@@ -102,6 +102,6 @@
 - **Chapter 1–5 Dialogues, Branching Choices & Evidence Interactables**: `dialogue_box.gd` supports Dictionary choice entries inside `start_dialogue(speaker, lines)`, `data/dialogues/chapter_1..5_dialogue.json` contains full branching choices affecting `memory_meter`, `suspicion_meter`, `story_flags`, and `collected_evidence`, and `chapter_1..5.tscn` includes all chapter evidence interactables (`EVID-101..105`, `EVID-201..205`, `EVID-301..304`, `EVID-401..404`) and briefing/moral choice triggers.
 
 ### Next Steps for Team
-1. Create `npc_miller.tscn` and `npc_prescott.tscn` from `../art_sources/character/` sprites and place NPCs in each chapter scene.
-2. Build dedicated chapter map `.tscn` files and point `world.gd` map slots (`ch1_subsector4`, `ch2_dock`, `ch3_sector0`, `ch3_undercity`, `ch4_office_top`) to them.
+1. Refine building/prop collision shapes in `scenes/maps/sub_sector_4.tscn` (Chapter 1 now uses `npc_miller.tscn` and `npc_prescott.tscn`) and polish the 5 ending presentations (`scenes/endings/ending_screen.gd`).
+2. Build dedicated chapter map `.tscn` files for Chapters 2–4 (`ch2_dock`, `ch3_sector0`, `ch3_undercity`, `ch4_office_top`) and wire them in `world.gd`.
 3. Add real cutscene PNGs in `assets/cutscenes/` per `../docs/CUTSCENE_SPECIFICATION.md` and BGM/SFX audio files in `assets/audio/`.

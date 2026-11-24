@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/npc.gd" id="1_npc_script"]
+[ext_resource type="SpriteFrames" path="res://characters/npcs/miller/miller_sprite_frames.tres" id="2_miller_frames"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_foot"]
+size = Vector2(22, 18)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 32.0
+
+[node name="NPCMiller" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 1
+script = ExtResource("1_npc_script")
+npc_id = "miller"
+speaker_name = "Miller"
+dialogue_lines = Array[String](["Saya tidak tahu apa-apa soal kaset itu, Inspektur.", "Saya hanya mengambilnya di gudang suku cadang lama Sub-Sektor 4 dari pria bernama Colin."])
+sprite_frames = ExtResource("2_miller_frames")
+sprite_scale = Vector2(0.25, 0.25)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+sprite_frames = ExtResource("2_miller_frames")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 16)
+shape = SubResource("RectangleShape2D_foot")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 1
+collision_mask = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_interact")
+
+[node name="PromptLabel" type="Label" parent="."]
+visible = false
+offset_left = -26.0
+offset_top = -38.0
+offset_right = 26.0
+offset_bottom = -24.0
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 9
+text = "[E] Bicara"
+horizontal_alignment = 1

@@ -13,6 +13,14 @@ const ENDING_BODIES: Dictionary = {
 	5: "Arthur gagal merekonstruksi memorinya. Menganggap kunci itu virus teroris, ia menyerahkan seluruh modul ke meja Graves. Graves memberinya Medali Keselarasan dan pil The Tonic formula emas. Arthur kembali ke apartemennya, meminum obatnya, dan tersenyum hampa menatap cermin biometrik. Ia hidup damai selamanya sebagai pion tanpa jiwa.",
 }
 
+const ENDING_ART_PATHS: Dictionary = {
+	1: "res://assets/cutscenes/ending1-slide2.jpg",
+	2: "res://assets/cutscenes/ending2-slide2.jpg",
+	3: "res://assets/cutscenes/ending3-slide2.jpg",
+	4: "res://assets/cutscenes/ending4-slide2.jpg",
+	5: "res://assets/cutscenes/ending5-slide2.jpg",
+}
+
 @export var ending_id: int = 1
 
 func _ready() -> void:
@@ -28,6 +36,22 @@ func _build_ui() -> void:
 	bg.color = Color(0.0117647, 0.0313725, 0.0509804, 1)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
+
+	var art_path: String = String(ENDING_ART_PATHS.get(ending_id, ""))
+	if not art_path.is_empty() and ResourceLoader.exists(art_path):
+		var art := TextureRect.new()
+		art.set_anchors_preset(Control.PRESET_FULL_RECT)
+		art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		art.texture = load(art_path) as Texture2D
+		add_child(art)
+
+		var shade := ColorRect.new()
+		shade.set_anchors_preset(Control.PRESET_FULL_RECT)
+		shade.color = Color(0.01, 0.03, 0.05, 0.65)
+		shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(shade)
 
 	var overline := _label("CASE 4092 // RESOLUSI FINAL", 7, C_DIM)
 	overline.position = Vector2(0, 26)

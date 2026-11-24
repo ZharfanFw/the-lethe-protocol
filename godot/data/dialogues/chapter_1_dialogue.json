@@ -11,12 +11,13 @@
 				"Kalau kau mencari Colin, coba periksa ventilasi gudang. Dia selalu meninggalkan tanda di sana."
 			]
 		},
-		"patrol": {
-			"speaker": "Petugas Patroli",
-			"role": "OTORITAS SEKTOR",
+		"prescott": {
+			"speaker": "Detective Miles Prescott",
+			"role": "REKAN // UNIT V-09",
 			"lines": [
-				"Area ini steril sejak semalam, Inspektur.",
-				"Direktur Graves memerintahkan semua bukti di gudang Sub-Sektor 4 dibersihkan sebelum fajar."
+				"Miller tertangkap di pos pemeriksaan membawa pita magnetik ilegal zaman purba, Vance.",
+				"Periksa kaset di meja dan selesaikan interogasinya, lalu kita sisir gudang Sub-Sektor 4.",
+				"Ingat protokol biro: jangan biarkan sentimen mengganggu objektivitasmu."
 			]
 		}
 	},

@@ -16,8 +16,8 @@ const MAPS := {
 		"follow": false,
 	},
 	"ch1_subsector4": {
-		"scene": preload("res://scenes/maps/outdoor_city.tscn"),
-		"size": Vector2(1280, 960),
+		"scene": preload("res://scenes/maps/sub_sector_4.tscn"),
+		"size": Vector2(1408, 960),
 		"zoom": Vector2(0.85, 0.85),
 		"follow": true,
 	},

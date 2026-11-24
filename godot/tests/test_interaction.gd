@@ -21,32 +21,34 @@ func _ready() -> void:
 	print("Notebook: ", notebook)
 	print("Combiner: ", combiner)
 	
-	# 1. Test Spacebar does NOT interact with NPCLucian
-	var lucian = ch1.find_child("NPCLucian", true, false)
-	player.global_position = lucian.global_position
+	# 1. Verify Chapter 1 only has Miller & Prescott (no Lucian/Garrick/Edward)
+	assert(ch1.find_child("NPCLucian", true, false) == null, "NPCLucian must be removed from Chapter 1!")
+	assert(ch1.find_child("NPCMilesPrescott", true, false) != null, "NPCMilesPrescott must exist in Chapter 1!")
+	var miller = ch1.find_child("NPCMiller", true, false)
+	assert(miller != null, "NPCMiller must exist in Chapter 1!")
+	player.global_position = miller.global_position
 	for i in range(10):
 		await get_tree().physics_frame
 		
-	print("Lucian player_in_range: ", lucian.player_in_range)
-	print("Lucian prompt_label text: ", lucian.prompt_label.text)
+	print("Miller player_in_range: ", miller.player_in_range)
+	print("Miller prompt_label text: ", miller.prompt_label.text)
 	
 	var ev_space = InputEventKey.new()
 	ev_space.pressed = true
 	ev_space.keycode = KEY_SPACE
 	ev_space.physical_keycode = KEY_SPACE
-	lucian._unhandled_input(ev_space)
-	print("After KEY_SPACE on Lucian: is_talking=", lucian.is_talking, " dlg_active=", dlg.is_active)
-	assert(not lucian.is_talking, "Spacebar must NOT trigger NPC dialogue!")
+	miller._unhandled_input(ev_space)
+	print("After KEY_SPACE on Miller: is_talking=", miller.is_talking, " dlg_active=", dlg.is_active)
+	assert(not miller.is_talking, "Spacebar must NOT trigger NPC dialogue!")
 	
-	# 2. Test KEY_E DOES interact with NPCLucian
+	# 2. Test KEY_E DOES interact with NPCMiller
 	var ev_e = InputEventKey.new()
 	ev_e.pressed = true
 	ev_e.keycode = KEY_E
 	ev_e.physical_keycode = KEY_E
-	lucian._unhandled_input(ev_e)
-	print("After KEY_E on Lucian: is_talking=", lucian.is_talking, " dlg_active=", dlg.is_active)
-	assert(lucian.is_talking, "Key E must trigger NPC dialogue!")
-	
+	miller._unhandled_input(ev_e)
+	print("After KEY_E on Miller: is_talking=", miller.is_talking, " dlg_active=", dlg.is_active)
+	assert(miller.is_talking, "Key E must trigger NPC dialogue!")
 	while dlg.is_active:
 		dlg._show_next_line()
 		await get_tree().process_frame

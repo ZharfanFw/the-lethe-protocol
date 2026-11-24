@@ -30,6 +30,8 @@ const ENDING_TITLES: Dictionary = {
 
 var current_slot: int = 1
 var current_chapter: int = 0
+var pending_cutscene_id: String = "prolog"
+var pending_cutscene_next_scene: String = "res://scenes/chapters/chapter_1/chapter_1.tscn"
 var memory_meter: int = 0:
 	set(value):
 		memory_meter = clamp(value, 0, 100)
@@ -306,6 +308,16 @@ func chapter_title(chapter_number: int = -1) -> String:
 func chapter_scene_path(chapter_number: int) -> String:
 	return "res://scenes/chapters/chapter_%d/chapter_%d.tscn" % [chapter_number, chapter_number]
 
+func play_cutscene(cutscene_id: String, next_scene_path: String) -> void:
+	pending_cutscene_id = cutscene_id
+	pending_cutscene_next_scene = next_scene_path
+	if not ResourceLoader.exists(CUTSCENE_SCENE_PATH):
+		push_error("Cutscene scene not found: " + CUTSCENE_SCENE_PATH)
+		if ResourceLoader.exists(next_scene_path):
+			get_tree().change_scene_to_file(next_scene_path)
+		return
+	get_tree().change_scene_to_file(CUTSCENE_SCENE_PATH)
+
 func advance_to_chapter(chapter_number: int, autosave: bool = true) -> void:
 	if chapter_number < 0 or chapter_number > TOTAL_CHAPTERS:
 		push_error("Invalid chapter number: %d" % chapter_number)
@@ -314,11 +326,14 @@ func advance_to_chapter(chapter_number: int, autosave: bool = true) -> void:
 	if autosave:
 		SaveManager.save_game(current_slot)
 	chapter_transition_started.emit(chapter_number)
-	var target_path: String = CUTSCENE_SCENE_PATH if chapter_number == 0 else chapter_scene_path(chapter_number)
+	if chapter_number == 0:
+		play_cutscene("prolog", chapter_scene_path(1))
+		return
+	var target_path: String = chapter_scene_path(chapter_number)
 	if not ResourceLoader.exists(target_path):
 		push_error("Chapter scene not found: " + target_path)
 		return
-	get_tree().change_scene_to_file(target_path)
+	play_cutscene("chapter_%d" % chapter_number, target_path)
 
 func resolve_ending(ending_id: int) -> void:
 	if not ENDING_TITLES.has(ending_id):
@@ -330,7 +345,7 @@ func resolve_ending(ending_id: int) -> void:
 	if not ResourceLoader.exists(path):
 		push_error("Ending scene not found: " + path)
 		return
-	get_tree().change_scene_to_file(path)
+	play_cutscene("ending_%d" % ending_id, path)
 
 func is_ending_available(ending_id: int) -> bool:
 	match ending_id:

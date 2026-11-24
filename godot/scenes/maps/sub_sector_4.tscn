@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/map/sub_sector.png" id="1_map_texture"]
+[ext_resource type="PackedScene" path="res://scenes/npc_miller.tscn" id="2_miller_scene"]
+[ext_resource type="PackedScene" path="res://scenes/npc_prescott.tscn" id="3_prescott_scene"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_outer_h"]
+size = Vector2(1448, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_outer_v"]
+size = Vector2(40, 1000)
+
+[node name="SubSector4" type="Node2D"]
+y_sort_enabled = true
+
+[node name="MapBackground" type="Sprite2D" parent="."]
+texture = ExtResource("1_map_texture")
+centered = false
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 1
+
+[node name="OuterTop" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(704, -20)
+shape = SubResource("RectangleShape2D_outer_h")
+
+[node name="OuterBottom" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(704, 980)
+shape = SubResource("RectangleShape2D_outer_h")
+
+[node name="OuterLeft" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(-20, 480)
+shape = SubResource("RectangleShape2D_outer_v")
+
+[node name="OuterRight" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(1428, 480)
+shape = SubResource("RectangleShape2D_outer_v")
+
+[node name="NPCMiller" parent="." instance=ExtResource("2_miller_scene")]
+position = Vector2(420, 270)
+
+[node name="NPCMilesPrescott" parent="." instance=ExtResource("3_prescott_scene")]
+position = Vector2(540, 250)

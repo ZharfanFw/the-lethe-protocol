@@ -10,28 +10,28 @@ script = ExtResource("1_chapter")
 chapter_number = 1
 
 [node name="World" parent="." instance=ExtResource("2_world")]
-start_map = "outdoor"
-start_spawn = Vector2(952, 220)
-
+start_map = "ch1_subsector4"
+start_spawn = Vector2(480, 320)
 
 [node name="TonicMirror" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(880, 220)
+position = Vector2(340, 240)
 dialogue_id = "CH1_TONIC"
 prompt_text = "[E] Periksa Cermin Biometrik"
 
 [node name="Evidence101" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(720, 240)
+position = Vector2(470, 210)
 evidence_id = "EVID-101"
 prompt_text = "[E] Periksa Kaset Analog Miller"
 memory_bonus = 5
 
 [node name="Evidence102" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(600, 240)
+position = Vector2(350, 320)
 evidence_id = "EVID-102"
 flag_to_set = "miller_interrogated"
 prompt_text = "[E] Interogasi Miller"
+
 [node name="Evidence103" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(520, 200)
+position = Vector2(720, 360)
 evidence_id = "EVID-103"
 flag_to_set = "evid_103_collected"
 prompt_text = "[E] Periksa puntung kretek"
@@ -39,7 +39,7 @@ memory_bonus = 10
 lines = Array[String](["Puntung kretek Black Clove... aroma cengkeh selatan. Barang selundupan.", "Seseorang baru saja lewat sini."])
 
 [node name="Evidence104" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(650, 200)
+position = Vector2(880, 320)
 evidence_id = "EVID-104"
 flag_to_set = "evid_104_collected"
 prompt_text = "[E] Periksa ventilasi"
@@ -47,7 +47,7 @@ memory_bonus = 10
 lines = Array[String](["Coretan fosfor di ventilasi: 0x4F5552 // T-CORE // SPARROW.", "T-CORE... kode arsitektur kognitif rezim. Sparrow adalah nama sandi."])
 
 [node name="Evidence105" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(800, 200)
+position = Vector2(1040, 380)
 evidence_id = "EVID-105"
 flag_to_set = "evid_105_collected"
 prompt_text = "[E] Periksa kompartemen generator"
@@ -55,7 +55,7 @@ memory_bonus = 10
 lines = Array[String](["Peta saluran air menuju Dok Whitehall Bawah.", "Catatan untuk Thur: temui aku di batas air sebelum Graves menutup jaringnya. - Colin"])
 
 [node name="ExitTrigger" parent="." instance=ExtResource("3_exit")]
-position = Vector2(1200, 200)
+position = Vector2(1240, 420)
 target_next_chapter = 2
-required_flags = Array[String](["evid_103_collected", "evid_104_collected", "evid_105_collected"])
+required_flags = Array[String](["miller_interrogated", "evid_103_collected", "evid_104_collected", "evid_105_collected"])
 prompt_message = "[E] Tinggalkan Sub-Sektor 4"
