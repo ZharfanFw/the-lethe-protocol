@@ -15,11 +15,31 @@
 	"interactables": {
 		"EVID-401": {
 			"speaker": "Arthur Vance",
-			"lines": ["Project Tabula Rasa. Jutaan nama warga Concord.", "Semua ingatan masa kecil dihapus lewat The Tonic."]
+			"lines": [
+				"[OTENTIKASI ARSITEK DITERIMA // PROTOKOL JAYABAYA TERVERIFIKASI]",
+				"Project Tabula Rasa: database jutaan warga Concord yang ingatannya dihapus lewat The Tonic."
+			]
+		},
+		"EVID-402": {
+			"speaker": "Arthur Vance",
+			"lines": [
+				"Buku besar rekening lepas pantai Graves dan Dewan Direksi.",
+				"Triliunan kredit hasil perampasan tambang emas dan hutan adat Nusantara mengalir ke rekening pribadi mereka."
+			]
+		},
+		"EVID-403": {
+			"speaker": "Arthur Vance",
+			"lines": [
+				"Rekaman satelit penggusuran desa adat tahun 2068... Lucian Graves muda menembak mati ayahku, Edward Vance.",
+				"Seluruh tirani keselarasan ini hanyalah kedok untuk mengubur pembunuhan dan perampokan tanah leluhur."
+			]
 		},
 		"EVID-404": {
 			"speaker": "Arthur Vance",
-			"lines": ["Kristal prisma biru... Master Override Key.", "Dengan ini aku bisa mengambil alih seluruh satelit pemancar kognitif nasional."]
+			"lines": [
+				"Kristal prisma biru safir meluncur dari konsol kuantum: The Master Override Key.",
+				"Dengan ini aku bisa mengambil alih seluruh satelit pemancar kognitif nasional pada pukul 07:00."
+			]
 		}
 	}
 }

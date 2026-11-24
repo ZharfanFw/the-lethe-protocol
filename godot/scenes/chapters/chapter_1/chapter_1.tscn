@@ -13,6 +13,23 @@ chapter_number = 1
 start_map = "outdoor"
 start_spawn = Vector2(952, 220)
 
+
+[node name="TonicMirror" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(880, 220)
+dialogue_id = "CH1_TONIC"
+prompt_text = "[E] Periksa Cermin Biometrik"
+
+[node name="Evidence101" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(720, 240)
+evidence_id = "EVID-101"
+prompt_text = "[E] Periksa Kaset Analog Miller"
+memory_bonus = 5
+
+[node name="Evidence102" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(600, 240)
+evidence_id = "EVID-102"
+flag_to_set = "miller_interrogated"
+prompt_text = "[E] Interogasi Miller"
 [node name="Evidence103" parent="." instance=ExtResource("4_interactable")]
 position = Vector2(520, 200)
 evidence_id = "EVID-103"

@@ -237,11 +237,16 @@ func start_dialogue(arg1: Variant, arg2: Variant = null) -> void:
 		var spk: String = arg1
 		var arr: Array = arg2 if arg2 is Array else []
 		for item in arr:
-			var txt: String = str(item)
-			dialogue_queue.append({
-				"name": spk,
-				"text": txt
-			})
+			if item is Dictionary:
+				var entry: Dictionary = item.duplicate(true)
+				if not entry.has("name"):
+					entry["name"] = spk
+				dialogue_queue.append(entry)
+			else:
+				dialogue_queue.append({
+					"name": spk,
+					"text": str(item)
+				})
 	elif arg1 is Array:
 		for item in arg1:
 			if item is Dictionary:

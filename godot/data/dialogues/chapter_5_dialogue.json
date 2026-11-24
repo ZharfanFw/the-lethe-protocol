@@ -3,9 +3,19 @@
 	"title": "Fajar 07:00",
 	"npcs": {},
 	"interactables": {
+		"CH5_BRIEFING": {
+			"speaker": "Detective Miles Prescott",
+			"lines": [
+				"Fajar yang damai di Concord, bukan, Vance? Operasi Undercity semalam sukses total. Kota ini kembali selaras sempurna.",
+				{"name": "Arthur Vance", "text": "Ya, Prescott... Sebentar lagi, kota ini akan menyaksikan masa depan yang sesungguhnya."}
+			]
+		},
 		"ENDINGS": {
 			"speaker": "Arthur Vance",
-			"lines": ["Meja kerja Whitehall. Terminal transmisi satelit nasional bersiap.", "Satu perintah, dan seluruh Kota Concord akan mengingat... atau melupakan selamanya."]
+			"lines": [
+				"Meja kerja Whitehall. Terminal transmisi satelit nasional bersiap.",
+				"Satu perintah, dan seluruh Kota Concord akan mengingat... atau melupakan selamanya."
+			]
 		}
 	}
 }

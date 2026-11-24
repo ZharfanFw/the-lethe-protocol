@@ -21,6 +21,18 @@ prompt_text = "[E] Buka berkas Tabula Rasa"
 memory_bonus = 10
 lines = Array[String](["Project Tabula Rasa. Jutaan nama warga Concord.", "Semua ingatan masa kecil dihapus lewat The Tonic."])
 
+
+[node name="Evidence402" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(900, 550)
+evidence_id = "EVID-402"
+prompt_text = "[E] Buka Buku Besar Rekening Graves"
+memory_bonus = 10
+
+[node name="Evidence403" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(950, 550)
+evidence_id = "EVID-403"
+prompt_text = "[E] Putar Rekaman Satelit 2068"
+memory_bonus = 10
 [node name="Evidence404" parent="." instance=ExtResource("4_interactable")]
 position = Vector2(1000, 550)
 evidence_id = "EVID-404"

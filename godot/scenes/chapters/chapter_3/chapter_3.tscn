@@ -13,6 +13,12 @@ chapter_number = 3
 start_map = "outdoor"
 start_spawn = Vector2(520, 550)
 
+
+[node name="AlibiCheck" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(460, 550)
+dialogue_id = "CH3_ALIBI"
+flag_to_set = "ch3_alibi_cleared"
+prompt_text = "[E] Laporan ke Prescott"
 [node name="Evidence301" parent="." instance=ExtResource("4_interactable")]
 position = Vector2(400, 550)
 evidence_id = "EVID-301"
@@ -35,6 +41,12 @@ prompt_text = "[E] Periksa rompi Shaw"
 memory_bonus = 20
 lines = Array[String](["Tabung titanium di rompi Shaw. Modul otentikasi kuantum.", "Ini kunci untuk terminal meja kerja Graves."])
 
+
+[node name="Evidence304" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(780, 550)
+evidence_id = "EVID-304"
+prompt_text = "[E] Periksa Puntung Kretek Shaw"
+memory_bonus = 5
 [node name="ExitTrigger" parent="." instance=ExtResource("3_exit")]
 position = Vector2(520, 600)
 target_next_chapter = 4

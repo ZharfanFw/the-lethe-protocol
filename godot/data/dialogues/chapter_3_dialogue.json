@@ -8,22 +8,90 @@
 			"lines": [
 				"Kau datang juga, Thur.",
 				"Laci 884-B sudah menunggumu sejak lama.",
-				"Kalau kau memilih menyelamatkanku, kau kehilangan sebagian bukti. Pilih dengan sadar."
+				"Pilih dengan sadar bagaimana kita mengakhiri tirani Graves."
 			]
 		}
 	},
 	"interactables": {
+		"CH3_ALIBI": {
+			"speaker": "Detective Miles Prescott",
+			"lines": [
+				"Pintu van terkunci 10 menit dan Sparrow sudah tewas saat kubuka. Apa yang terjadi di dalam, Vance?",
+				{
+					"name": "Detective Miles Prescott",
+					"text": "Berikan laporanmu sebelum kita masuk ke Arsip Sektor 0.",
+					"choices": [
+						{
+							"text": "[Tenang] Failsafe racun memutus interogasi sebelum selnya terbongkar",
+							"memory": 0,
+							"suspicion": 0,
+							"flag": "ch3_alibi_cleared"
+						},
+						{
+							"text": "[Agresif] Gunakan kewenangan Surat Perintah Eksekutif Graves",
+							"memory": 0,
+							"suspicion": -10,
+							"flag": "ch3_alibi_cleared"
+						},
+						{
+							"text": "[Gugup] Jawab terbata-bata sambil menyeka keringat dingin",
+							"memory": 0,
+							"suspicion": 25,
+							"flag": "ch3_alibi_cleared"
+						}
+					]
+				}
+			]
+		},
 		"EVID-301": {
 			"speaker": "Arthur Vance",
-			"lines": ["Ukiran kayu ulin ini... sama dengan yang ada di tangan ayah saat meninggal.", "Struktur gelombang fonetik kuno tersimpan di dalamnya."]
+			"lines": [
+				"Dial kunci 1-2-0-9-4 membuka Laci 884-B. Ukiran kayu ulin ayah ada di dalamnya!",
+				"Struktur gelombang fonetik kuno tersimpan utuh di setiap lekukannya."
+			]
 		},
 		"EVID-302": {
 			"speaker": "Arthur Vance",
-			"lines": ["Rekaman suaraku sendiri. Aku terdengar seperti orang yang sudah lama lupa siapa dirinya.", "Garrick Shaw ada di Undercity."]
+			"lines": [
+				"Rekaman suaraku sendiri: Kunci logikanya ada pada ukiran kayu ayahmu, tapi modul fisiknya ada pada Komandan Garrick Shaw.",
+				"Graves sedang mengirim pasukan ke Stasiun Maglev Tua Undercity. Aku harus segera ke sana."
+			]
+		},
+		"EVID-304": {
+			"speaker": "Arthur Vance",
+			"lines": [
+				"Rokok kretek Black Clove di barikade Undercity... aroma cengkeh yang sama persis dengan puntung di Sub-Sektor 4."
+			]
 		},
 		"EVID-303": {
-			"speaker": "Arthur Vance",
-			"lines": ["Tabung titanium di rompi Shaw. Modul otentikasi kuantum.", "Ini kunci untuk terminal meja kerja Graves."]
+			"speaker": "Garrick Shaw",
+			"lines": [
+				"Arthur Vance! Kau membunuh Colin dan sekarang membawa pasukan Graves ke Stasiun Maglev ini?!",
+				{
+					"name": "Perwira Taktis Biro",
+					"text": "Peluncur granat fosfor siap, Inspektur! Beri perintah untuk meratakan peron pemberontak ini!",
+					"choices": [
+						{
+							"text": "[Sabotase] Teriakkan peringatan ranjau palsu & bisikkan sandi 12094 ke Shaw",
+							"memory": 25,
+							"suspicion": 30,
+							"flag": "garrick_shaw_spared",
+							"next": [
+								{"name": "Garrick Shaw", "text": "Gema Nusantara di atas batu karang... Ambil tabung titanium ini, Thur. Bebaskan Concord!"}
+							]
+						},
+						{
+							"text": "[Taat] Perintahkan tembak fosfor demi menjaga penyamaran",
+							"memory": 10,
+							"suspicion": -25,
+							"flag": "garrick_shaw_killed",
+							"next": [
+								{"name": "Arthur Vance", "text": "Peron terbakar. Aku mengambil tabung titanium Dead Drop #2 dari jasad Shaw dengan tangan dingin."}
+							]
+						}
+					]
+				}
+			]
 		}
 	}
 }

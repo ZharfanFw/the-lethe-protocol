@@ -4,57 +4,16 @@ extends CanvasLayer
 @onready var hud_panel: Control = $HUDPanel
 @onready var pause_menu: Control = get_node_or_null("PauseMenu")
 
-var _hud_chapter_lbl: Label
-
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	if fade_rect:
 		fade_rect.modulate.a = 0.0
-	_build_hud()
 	if hud_panel:
 		hud_panel.hide()
 
-func _build_hud() -> void:
-	if hud_panel == null:
-		return
-	var bar := PanelContainer.new()
-	bar.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	bar.offset_left = 10
-	bar.offset_right = -10
-	bar.offset_top = 8
-	bar.offset_bottom = 26
-	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color(0.02, 0.08, 0.14, 0.78)
-	sb.border_color = Color(0.0, 0.94, 1.0, 0.45)
-	sb.set_border_width_all(1)
-	sb.set_corner_radius_all(3)
-	sb.content_margin_left = 8
-	sb.content_margin_right = 8
-	bar.add_theme_stylebox_override("panel", sb)
-	hud_panel.add_child(bar)
-
-	var hbox := HBoxContainer.new()
-	hbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	bar.add_child(hbox)
-
-	_hud_chapter_lbl = Label.new()
-	_hud_chapter_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	_hud_chapter_lbl.add_theme_font_size_override("font_size", 7)
-	_hud_chapter_lbl.add_theme_color_override("font_color", Color("#00f0ff"))
-	hbox.add_child(_hud_chapter_lbl)
-
-	var hint := Label.new()
-	hint.text = "[E] Interaksi  [Tab] Catatan  [C] Sintesis  [Esc] Pause"
-	hint.add_theme_font_size_override("font_size", 6)
-	hint.add_theme_color_override("font_color", Color("#88d4e8"))
-	hbox.add_child(hint)
-
-func show_hud(show_hud: bool) -> void:
+func show_hud(_show: bool) -> void:
 	if hud_panel:
-		if show_hud and _hud_chapter_lbl:
-			_hud_chapter_lbl.text = GameManager.chapter_title()
-		hud_panel.visible = show_hud
+		hud_panel.hide()
 
 func get_dialogue_box() -> CanvasLayer:
 	var scene := get_tree().current_scene
@@ -146,22 +105,22 @@ func _is_any_overlay_open() -> bool:
 		return false
 	# Dialogue box
 	for b in scene.find_children("DialogueBox", "CanvasLayer", true, false):
-		if b.get("is_active"):
+		if b.get("is_active") == true:
 			return true
 	# Notebook
 	for n in scene.find_children("DetectiveNotebook", "CanvasLayer", true, false):
-		if n.visible or bool(n.get("is_open")):
+		if n.visible:
 			return true
 	# Combiner
 	for c in scene.find_children("ItemCombiner", "CanvasLayer", true, false):
-		if c.visible or bool(c.get("is_open")):
+		if c.visible:
 			return true
 	# Ending terminal
 	for t in scene.find_children("EndingTerminal", "Area2D", true, false):
-		if bool(t.get("_open")):
+		if t.get("_open") == true:
 			return true
 	# Affine puzzle
 	for a in scene.find_children("AffinePuzzle", "Area2D", true, false):
-		if bool(a.get("_open")):
+		if a.get("_open") == true:
 			return true
 	return false

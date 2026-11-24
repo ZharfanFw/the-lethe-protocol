@@ -24,11 +24,62 @@
 	"interactables": {
 		"EVID-201": {
 			"speaker": "Arthur Vance",
-			"lines": ["Log Vance-Cipher Rev3. Algoritma celah 40ms berbasis fonetik Nusantara.", "Ini gayaku sendiri. Tidak mungkin orang lain yang menulis ini."]
+			"lines": [
+				"Log Vance-Cipher Rev3. Algoritma celah 40ms berbasis fonetik Nusantara.",
+				"Ini gayaku sendiri. Tidak mungkin orang lain yang menulis ini."
+			]
+		},
+		"EVID-202": {
+			"speaker": "Direktur Lucian Graves",
+			"lines": [
+				"Deep Vault ditembus selama 40 milidetik memakai VANCE-CIPHER_REV3. Buronan Sparrow terdeteksi di Dok Whitehall Bawah.",
+				{
+					"name": "Direktur Lucian Graves",
+					"text": "Ambil token penyerbuan ini, Vance. Pimpin pasukan elit dan bawa dia hidup-hidup.",
+					"choices": [
+						{
+							"text": "[Dingin & Analitis] Terima token tanpa mempertanyakan asal kode",
+							"memory": 15,
+							"suspicion": 0,
+							"flag": "graves_token_issued",
+							"next": [
+								{"name": "Arthur Vance", "text": "Mengerti, Direktur. Tim taktis akan segera mengepung kanal bawah."}
+							]
+						},
+						{
+							"text": "[Kritis] Pertanyakan kenapa algoritma itu memakai namamu",
+							"memory": 15,
+							"suspicion": 20,
+							"flag": "graves_token_issued",
+							"next": [
+								{"name": "Direktur Lucian Graves", "text": "Jangan bertanya di luar yurisdiksimu, Inspektur. Jalankan perintahmu."}
+							]
+						}
+					]
+				}
+			]
+		},
+		"EVID-203": {
+			"speaker": "Colin Ward",
+			"lines": [
+				"Thur...? Kita tumbuh besar di desa adat sebelum Graves membunuh ayahmu, Edward Vance!",
+				"Kamu yang merancang The Lethe Protocol dan menanam pintu belakang Protokol Jayabaya dengan sandi aksara ayahmu!",
+				{"name": "Arthur Vance", "text": "Colin... Ya Tuhan... semua ingatanku kembali..."}
+			]
 		},
 		"EVID-204": {
 			"speaker": "Arthur Vance",
-			"lines": ["Goresan darah di kaca: SEKTOR 0 // LACI 884-B.", "Colin meninggalkan petunjuk terakhirnya."]
+			"lines": [
+				"Goresan darah di kaca: SEKTOR 0 // LACI 884-B.",
+				"Colin meninggalkan petunjuk terakhirnya."
+			]
+		},
+		"EVID-205": {
+			"speaker": "Arthur Vance",
+			"lines": [
+				"Jarum mikro hidrolik di kerah tahanan Colin menyuntikkan racun saraf hijau pekat.",
+				"Failsafe otomatis yang dikendalikan langsung dari jaringan pusat Direktur Graves."
+			]
 		}
 	}
 }

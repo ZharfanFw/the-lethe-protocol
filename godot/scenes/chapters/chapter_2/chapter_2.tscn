@@ -20,6 +20,11 @@ prompt_text = "[E] Periksa terminal"
 memory_bonus = 10
 lines = Array[String](["Log Vance-Cipher Rev3. Algoritma celah 40ms berbasis fonetik Nusantara.", "Ini gayaku sendiri. Tidak mungkin orang lain yang menulis ini."])
 
+
+[node name="Evidence202" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(360, 210)
+evidence_id = "EVID-202"
+prompt_text = "[E] Audiensi Direktur Graves"
 [node name="Evidence203" parent="." instance=ExtResource("4_interactable")]
 position = Vector2(420, 250)
 evidence_id = "EVID-203"
@@ -35,6 +40,13 @@ prompt_text = "[E] Periksa kaca van"
 memory_bonus = 10
 lines = Array[String](["Goresan darah di kaca: SEKTOR 0 // LACI 884-B.", "Colin meninggalkan petunjuk terakhirnya."])
 
+
+[node name="Evidence205" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(280, 210)
+evidence_id = "EVID-205"
+prompt_text = "[E] Periksa Kerah Tahanan Colin"
+memory_bonus = 10
+required_evidence = Array[String](["EVID-203"])
 [node name="ExitTrigger" parent="." instance=ExtResource("3_exit")]
 position = Vector2(120, 280)
 target_next_chapter = 3
