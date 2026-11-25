@@ -22,6 +22,7 @@ var _orig_master: float = 1.0
 var _orig_bgm: float = 0.8
 var _orig_sfx: float = 0.9
 var _orig_fullscreen: bool = false
+var _is_closing: bool = false
 
 func _ready() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -29,6 +30,8 @@ func _ready() -> void:
 	visible = false
 
 func open_menu() -> void:
+	_is_closing = false
+	SettingsManager.sync_fullscreen_from_window()
 	_orig_master = SettingsManager.master_volume
 	_orig_bgm = SettingsManager.bgm_volume
 	_orig_sfx = SettingsManager.sfx_volume
@@ -47,18 +50,26 @@ func open_menu() -> void:
 	_master_slider.grab_focus()
 
 func close_menu(save: bool = false) -> void:
+	if _is_closing or not visible:
+		return
+	_is_closing = true
 	if save:
 		SettingsManager.save_settings()
 	else:
-		SettingsManager.set_master_volume(_orig_master)
-		SettingsManager.set_bgm_volume(_orig_bgm)
-		SettingsManager.set_sfx_volume(_orig_sfx)
-		SettingsManager.set_fullscreen_mode(_orig_fullscreen)
+		if not is_equal_approx(SettingsManager.master_volume, _orig_master):
+			SettingsManager.set_master_volume(_orig_master)
+		if not is_equal_approx(SettingsManager.bgm_volume, _orig_bgm):
+			SettingsManager.set_bgm_volume(_orig_bgm)
+		if not is_equal_approx(SettingsManager.sfx_volume, _orig_sfx):
+			SettingsManager.set_sfx_volume(_orig_sfx)
+		if SettingsManager.is_fullscreen != _orig_fullscreen:
+			SettingsManager.set_fullscreen_mode(_orig_fullscreen)
 
 	var tween := create_tween()
 	tween.tween_property(self, "modulate:a", 0.0, 0.14)
 	await tween.finished
 	visible = false
+	_is_closing = false
 	closed.emit()
 
 func _build_ui() -> void:
@@ -291,7 +302,7 @@ func _on_fullscreen_toggled() -> void:
 	_update_fullscreen_button_text()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not visible:
+	if not visible or _is_closing:
 		return
 	if event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()

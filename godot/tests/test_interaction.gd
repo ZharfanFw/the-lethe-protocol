@@ -80,7 +80,8 @@ func _ready() -> void:
 	print("Dialogue closed, player.can_move: ", player.can_move)
 
 	# 3. Test pickup Evidence103 with KEY_E
-	var evid103 = ch1.get_node_or_null("Evidence103")
+	var evid103 = ch1.find_child("Evidence103", true, false)
+	assert(evid103 != null, "Evidence103 must exist in SubSector4!")
 	player.global_position = evid103.global_position
 	for i in range(10):
 		await get_tree().physics_frame
@@ -95,7 +96,8 @@ func _ready() -> void:
 		await get_tree().process_frame
 
 	# 4. Test pickup Evidence105 with KEY_E
-	var evid105 = ch1.get_node_or_null("Evidence105")
+	var evid105 = ch1.find_child("Evidence105", true, false)
+	assert(evid105 != null, "Evidence105 must exist in SubSector4!")
 	player.global_position = evid105.global_position
 	for i in range(10):
 		await get_tree().physics_frame

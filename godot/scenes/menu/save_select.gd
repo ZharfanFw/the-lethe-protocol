@@ -20,8 +20,11 @@ var _pending_confirm_action: Callable
 func _ready() -> void:
 	_build_background()
 	_slot_container = VBoxContainer.new()
-	_slot_container.position = Vector2(44, 56)
-	_slot_container.size = Vector2(552, 215)
+	_slot_container.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	_slot_container.offset_left = 44
+	_slot_container.offset_right = -44
+	_slot_container.offset_top = 72
+	_slot_container.offset_bottom = 290
 	_slot_container.add_theme_constant_override("separation", 10)
 	add_child(_slot_container)
 
@@ -39,28 +42,43 @@ func _build_background() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 
-	var title := _make_label("ARSIP SIMPANAN", 14, C_TEXT)
-	title.position = Vector2(0, 18)
-	title.size = Vector2(640, 20)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(title)
+	var header_box := VBoxContainer.new()
+	header_box.name = "HeaderBox"
+	header_box.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	header_box.offset_left = 24
+	header_box.offset_right = -24
+	header_box.offset_top = 14
+	header_box.offset_bottom = 62
+	header_box.add_theme_constant_override("separation", 6)
+	header_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(header_box)
 
 	var overline := _make_label("FORENSIC DIVISION // CASE 4092 // SLOT DATA MANAGEMENT", 7, C_DIM)
-	overline.position = Vector2(0, 8)
-	overline.size = Vector2(640, 12)
+	overline.name = "OverlineLabel"
 	overline.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	add_child(overline)
+	header_box.add_child(overline)
+
+	var title := _make_label("ARSIP SIMPANAN", 14, C_TEXT)
+	title.name = "TitleLabel"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	header_box.add_child(title)
+
+	var rule_wrap := CenterContainer.new()
+	rule_wrap.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	header_box.add_child(rule_wrap)
 
 	var rule := ColorRect.new()
-	rule.position = Vector2(240, 42)
-	rule.size = Vector2(160, 1)
+	rule.custom_minimum_size = Vector2(180, 1)
 	rule.color = Color(C_CYAN, 0.35)
 	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(rule)
+	rule_wrap.add_child(rule)
 
 	var hint := _make_label("[ATAS/BAWAH/KIRI/KANAN] NAVIGASI   [ENTER] PILIH   [ESC] KEMBALI", 7, C_DIM)
-	hint.position = Vector2(0, 336)
-	hint.size = Vector2(640, 14)
+	hint.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	hint.offset_left = 16
+	hint.offset_right = -16
+	hint.offset_top = -24
+	hint.offset_bottom = -8
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(hint)
 
@@ -280,8 +298,13 @@ func _build_confirmation_modal() -> void:
 	_confirm_modal.add_child(backdrop)
 
 	var box := PanelContainer.new()
-	box.position = Vector2(110, 85)
-	box.size = Vector2(420, 180)
+	box.set_anchors_preset(Control.PRESET_CENTER)
+	box.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	box.grow_vertical = Control.GROW_DIRECTION_BOTH
+	box.offset_left = -210
+	box.offset_top = -90
+	box.offset_right = 210
+	box.offset_bottom = 90
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color(0.04, 0.10, 0.15, 0.98)
 	style.border_color = Color(C_ALERT, 0.85)

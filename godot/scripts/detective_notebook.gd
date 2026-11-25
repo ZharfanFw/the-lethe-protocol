@@ -153,62 +153,66 @@ var db := {
 			"id": "lucian",
 			"name": "Direktur Lucian Graves", "qty": "Direktur",
 			"desc": "Pemimpin tertinggi The Registry di Menara Eksekutif\nLt. 80. Mengendalikan distribusi The Tonic.",
-			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMengawasi langsung operasi perburuan buronan Sparrow.",
-			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Menembak mati Edward Vance pada peristiwa 2068.\n• Mengatur failsafe neurotoksin jarak jauh birokrasi."
+			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMemantau langsung penanganan kasus keamanan internal biro.",
+			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Mengeluarkan perintah langsung atas perburuan buronan Sparrow.\n• Menuntut ketegasan penuh terhadap setiap pelanggaran protokol."
 		},
 		{
 			"id": "prescott",
 			"name": "Miles Prescott", "qty": "Rekan",
-			"desc": "Detektif lapangan Unit V-09 dengan kacamata\nanalitik biometrik pemantau kepatuhan.",
-			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMendampingi Arthur dalam interogasi dan olah TKP.",
-			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Mencatat setiap anomali emosi dan kecurigaan Arthur.\n• Melaporkan penyimpangan langsung ke Direktur Graves."
+			"desc": "Detektif lapangan Unit V-09 dengan kacamata\nanalitik biometrik pemantau prosedur kerja.",
+			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMendampingi Arthur dalam interogasi dan penyisiran lapangan.",
+			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Menangani penangkapan awal buruh pabrik di pos Sub-Sektor 4.\n• Selalu menekankan kepatuhan ketat terhadap SOP The Registry."
 		},
 		{
 			"id": "colin",
 			"name": "Colin Ward (Sparrow)", "qty": "Buronan",
-			"desc": "Peretas pembobol Deep Vault dengan algoritma\nVance-Cipher Rev3. Sahabat masa kecil Arthur.",
-			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMenyebarkan kaset lagu tidur Nusantara ke buruh.",
-			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Meninggalkan pesan darah SEKTOR 0 // LACI 884-B.\n• Mengetahui identitas asli Arthur sebagai Arsitek Kognitif."
+			"desc": "Sosok buronan yang namanya disebut dalam kasus\npenyelundupan data dan kaset analog ilegal.",
+			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nKeberadaannya diburu oleh unit taktis The Registry.",
+			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Diduga menjadi pemasok rekaman terlarang di kawasan pekerja.\n• Terkait dengan penembusan sistem yang motifnya masih diselidiki."
 		},
 		{
 			"id": "garrick",
 			"name": "Garrick Shaw", "qty": "Komandan",
-			"desc": "Mantan perwira keamanan biro yang membelot dan\nmemimpin perlawanan di Stasiun Maglev Undercity.",
-			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMemegang modul titanium Dead Drop #2.",
-			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Rekan seperjuangan mendiang Edward Vance.\n• Mengisap rokok kretek Black Clove khas selatan."
+			"desc": "Mantan perwira keamanan biro yang menghilang dan\ndikaitkan dengan kelompok perlawanan bawah tanah.",
+			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nBeroperasi di jalur tersembunyi di luar jangkauan patroli kota.",
+			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Nama lama yang sering muncul dalam laporan aktivitas sektor bawah.\n• Mengetahui banyak operasi lama sebelum restrukturisasi kota."
 		},
 		{
 			"id": "miller",
 			"name": "Miller (Tahanan 402)", "qty": "Saksi",
 			"desc": "Buruh pabrik Sub-Sektor 4 yang tertangkap\nmembawa kaset analog lagu tidur Nusantara.",
-			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nDitahan di ruang interogasi Whitehall Complex.",
-			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Menerima kaset dari Colin di gudang suku cadang lama."
+			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nDitahan di pos pemeriksaan untuk dimintai keterangan.",
+			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Mengaku hanya disuruh mengambil kaset di area gudang lama.\n• Tampak ketakutan dan tidak mengerti bobot pelanggaran yang dituduhkan."
 		}
 	],
 	3: [ # PETA (Titik Lokasi Penting & Investigasi Lapangan)
 		{
+			"id": "ch1_subsector4",
 			"name": "Sub-Sektor 4", "qty": "Distrik",
-			"desc": "Kawasan industri kumuh tempat gudang suku cadang\ntersangka Colin ditemukan terbengkalai.",
+			"desc": "Kawasan industri padat jelaga dan pipa uap.\nArea pos pemeriksaan awal & gudang tua.",
 			"pos": Vector2(109, 159),
-			"info": "[color=#00f0ff][b]TITIK INVESTIGASI #1[/b][/color]\nPeriksa puntung kretek, ventilasi UV,\ndan generator berhologram aksara."
+			"info": "[color=#00f0ff][b]AREA INVESTIGASI[/b][/color]\nPos pemeriksaan penuh pengawasan dan blok\ngudang suku cadang yang lama terbengkalai."
 		},
 		{
+			"id": "ch2_dock",
 			"name": "Dok Whitehall Bawah", "qty": "Kanal",
-			"desc": "Dermaga kargo bawah tanah jalur penyelundupan\npeti bertanda JAYABAYA menuju batas air.",
+			"desc": "Dermaga kargo bawah tanah yang lembap dan\njauh dari sorotan kamera distrik pusat.",
 			"pos": Vector2(256, 75),
-			"info": "[color=#ffd500][b]TITIK INVESTIGASI #2[/b][/color]\nLokasi penyergapan Sparrow dan\nvan komando taktis Unit V-09."
+			"info": "[color=#ffd500][b]PETUNJUK LOKASI[/b][/color]\nJalur perairan gelap yang kerap dipakai untuk\npergerakan diam-diam menembus batas sektor."
 		},
 		{
+			"id": "ch3_sector0",
 			"name": "Arsip Sektor 0", "qty": "Bunker",
-			"desc": "Bunker arsip fisik pra-amnesia yang dijaga\ndrone sensor pemindai otomatis.",
+			"desc": "Bunker arsip fisik lama di bawah gedung biro\ndengan akses terbatas dan sensor keamanan.",
 			"pos": Vector2(74, 212),
-			"info": "[color=#ffd500][b]TITIK INVESTIGASI #3[/b][/color]\nSimpanan Laci 884-B berisi Dead Drop #1\n(ukiran kayu Edward & kaset mikro)."
+			"info": "[color=#ffd500][b]PETUNJUK LOKASI[/b][/color]\nMenyimpan berkas fisik pra-restrukturisasi yang\ntidak tercatat di jaringan digital pusat."
 		},
 		{
+			"id": "ch4_office_top",
 			"name": "Menara Whitehall Lt. 80", "qty": "Puncak",
-			"desc": "Kantor obsidian Direktur Lucian Graves dan\nkonsol kuantum pusat Project Tabula Rasa.",
+			"desc": "Puncak Menara Eksekutif The Registry.\nPusat kendali administratif Distrik Concord.",
 			"pos": Vector2(306, 178),
-			"info": "[color=#ffd500][b]TARGET INFILTRASI[/b][/color]\nTempat perakitan The Master Override Key\nuntuk satelit pemancar nasional."
+			"info": "[color=#ffd500][b]PETUNJUK LOKASI[/b][/color]\nAkses hanya dibuka bagi pejabat teras; segala\nkeputusan akhir biro bermula dari lantai ini."
 		}
 	]
 }
@@ -257,6 +261,8 @@ func _ready() -> void:
 			notebook_closed.connect(func(): p.can_move = true)
 	
 	book_cover.pivot_offset = DESIGN_SIZE * 0.5
+	if item_desc:
+		item_desc.bbcode_enabled = true
 	_build_decorations()
 	_build_right_notes()
 	_generate_rows()
@@ -400,7 +406,9 @@ func _build_right_notes() -> void:
 	# Garis pemisah cyan di bawah nama item
 	var line := TextureRect.new()
 	line.texture = tex.line; line.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	line.position = Vector2(12, 36); line.size = Vector2(236, 2); line.modulate = C_CYAN
+	line.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	line.offset_left = 12; line.offset_right = -12; line.offset_top = 36; line.offset_bottom = 38
+	line.modulate = C_CYAN
 	detail_box.add_child(line)
 	
 	# Kotak Tengah: [LOG ANALISIS] / [KESIMPULAN] / [ALIBI & STATUS]
@@ -507,7 +515,7 @@ func _build_map_panel() -> void:
 	map_info_lbl.add_theme_font_size_override("bold_font_size", 9); map_info_lbl.add_theme_constant_override("line_separation", 6); map_panel.add_child(map_info_lbl)
 
 func _on_inventory_updated() -> void:
-	if tab in [0, 1, 2]:
+	if tab in [0, 1, 2, 3]:
 		_switch_tab(tab)
 
 func _switch_tab(t: int) -> void:
@@ -556,11 +564,17 @@ func _switch_tab(t: int) -> void:
 				prof_items.append(p)
 		items = prof_items
 	else:
-		items = db[tab]
+		var map_items: Array = []
+		for m in db[3]:
+			var mid: String = str(m.get("id", "")).to_lower()
+			if GameManager.has_map(mid):
+				map_items.append(m)
+		items = map_items
 	scroll_off = 0
 	_select(0)
 
 func _select(i: int) -> void:
+	var is_map := (tab == 3)
 	if items.is_empty():
 		for r_i in range(6):
 			rows[r_i].visible = false
@@ -569,6 +583,18 @@ func _select(i: int) -> void:
 		if handle: handle.visible = false
 		if scroll_track: scroll_track.visible = false
 		if preview_icon: preview_icon.texture = null
+		if is_map:
+			for n in [preview_frame, detail_box, note_box, extra_box]:
+				if n: n.visible = false
+			if target_pin: target_pin.visible = false
+			if map_info_lbl:
+				map_info_lbl.text = "[color=#88d4e8]Belum ada lokasi investigasi yang tercatat.\nArea distrik baru akan muncul saat kamu mengunjunginya.[/color]"
+			return
+		if preview_frame: preview_frame.visible = false
+		if detail_box:
+			detail_box.visible = true
+			detail_box.position = Vector2(22, 24)
+			detail_box.size = Vector2(374, 130)
 		if note_box: note_box.visible = true
 		if extra_box: extra_box.visible = false
 		if tab == 0:
@@ -583,15 +609,15 @@ func _select(i: int) -> void:
 			if item_name: item_name.text = "Belum Ada Profil"
 			if item_desc: item_desc.text = "[color=#88d4e8]Belum ada profil karakter yang tercatat.[/color]"
 			if note_lbl: note_lbl.text = "[color=#00f0ff][b][PETUNJUK][/b][/color]\nTemui atau ajak bicara karakter untuk menyimpan data profil mereka."
-		else:
-			if item_name: item_name.text = ""
-			if item_desc: item_desc.text = ""
-			if note_lbl: note_lbl.text = ""
 		if extra_lbl: extra_lbl.text = ""
 		return
-	var is_map := (tab == 3)
 	for n in [preview_frame, detail_box, note_box, extra_box]:
 		if n: n.visible = not is_map
+	if is_map and target_pin:
+		target_pin.visible = true
+	if not is_map and detail_box:
+		detail_box.position = Vector2(136, 24)
+		detail_box.size = Vector2(260, 130)
 	if selector:
 		selector.visible = true
 	idx = clamp(i, 0, items.size() - 1)

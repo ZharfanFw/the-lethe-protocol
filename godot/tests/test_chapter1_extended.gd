@@ -36,7 +36,10 @@ func _ready() -> void:
 	assert(nb_early != null and comb_early != null, "Notebook and Combiner must exist!")
 	nb_early.open_notebook()
 	await get_tree().create_timer(0.35).timeout
+	assert(nb_early.item_desc.bbcode_enabled, "Notebook ItemDescLabel must have bbcode_enabled = true!")
 	assert(nb_early.tab == 0 and nb_early.items.is_empty(), "Bukti tab must be empty initially!")
+	assert(not nb_early.preview_frame.visible, "Blank preview frame must be hidden when Bukti is empty!")
+	assert(nb_early.detail_box.size.x >= 370.0, "Detail box must expand across right page when empty!")
 	var ev_right = InputEventAction.new()
 	ev_right.action = "ui_right"
 	ev_right.pressed = true
@@ -46,12 +49,15 @@ func _ready() -> void:
 	assert(not nb_early.items[0]["desc"].contains("Lucian Graves"), "Initial waking note must NOT spoil Lucian Graves!")
 	nb_early._unhandled_input(ev_right)
 	assert(nb_early.tab == 2 and nb_early.items.is_empty(), "Profil tab must be empty initially!")
+	nb_early._unhandled_input(ev_right)
+	assert(nb_early.tab == 3 and nb_early.items.is_empty(), "Map tab must be empty initially!")
+	assert(not nb_early.target_pin.visible, "Map target pin must be hidden when no locations unlocked!")
 	var ev_esc = InputEventKey.new()
 	ev_esc.pressed = true
 	ev_esc.keycode = KEY_ESCAPE
 	nb_early._unhandled_input(ev_esc)
 	await get_tree().create_timer(0.3).timeout
-	assert(not nb_early.visible, "ESC MUST close notebook even when active tab (Profil) is empty!")
+	assert(not nb_early.visible, "ESC MUST close notebook even when active tab (Peta) is empty!")
 	
 	# Verify empty-state ItemCombiner can close with ESC
 	comb_early.open_combiner()
@@ -69,6 +75,9 @@ func _ready() -> void:
 	assert(mirror != null, "TonicMirror must exist in Apartment!")
 	assert(wardrobe != null, "DeskInteractable must exist in Apartment!")
 	assert(door != null, "ExitDoor must exist in Apartment!")
+	assert(ch1.find_child("Evidence101", true, false) == null, "Sub-Sector 4 Evidence101 must NOT exist while in Apartment!")
+	assert(ch1.find_child("Evidence102", true, false) == null, "Sub-Sector 4 Evidence102 must NOT exist while in Apartment!")
+	assert(ch1.find_child("ExitTrigger", true, false) == null, "Sub-Sector 4 ExitTrigger must NOT exist while in Apartment!")
 	
 	assert(mirror._prompt.text == "E", "Prompt on TonicMirror must be 'E' without extra text!")
 	assert(wardrobe._prompt.text == "E", "Prompt on DeskInteractable must be 'E' without extra text!")
@@ -107,6 +116,9 @@ func _ready() -> void:
 	assert(dlg.waiting_for_choice, "Dialogue box MUST be waiting for choice even when text typing was skipped!")
 	assert(dlg.choice_container.visible, "Choice container must be visible!")
 	assert(dlg.choice_container.get_child_count() == 2, "Must show 2 choices!")
+	var first_btn := dlg.choice_container.get_child(0) as Button
+	var btn_style := first_btn.get_theme_stylebox("normal") as StyleBoxFlat
+	assert(btn_style != null and btn_style.content_margin_left >= 16.0 and btn_style.content_margin_top >= 7.0, "Choice button must have generous padding!")
 	
 	# Pick choice 0 using keyboard number '1'
 	var ev_1 = InputEventKey.new()
@@ -207,6 +219,15 @@ func _ready() -> void:
 		print("Profiles in notebook: ", names_in_profiles)
 		assert("Miles Prescott" in names_in_profiles, "Prescott must appear in profile tab!")
 		assert("Miller (Tahanan 402)" in names_in_profiles, "Miller must appear in profile tab!")
+		for prof_entry in notebook.db[2]:
+			var full_blob := str(prof_entry["desc"]) + str(prof_entry["note"]) + str(prof_entry["extra"])
+			assert(not full_blob.contains("2068") and not full_blob.contains("Arsitek Kognitif") and not full_blob.contains("Dead Drop"), "Profile entries must not spoil plot twists!")
+		notebook._switch_tab(3)
+		assert(notebook.items.size() == 1 and notebook.items[0]["id"] == "ch1_subsector4", "Map tab must unlock Sub-Sektor 4 upon entering!")
+		assert(notebook.target_pin.visible, "Map target pin must appear when location is unlocked!")
+		for map_entry in notebook.db[3]:
+			var map_blob := str(map_entry["desc"]) + str(map_entry["info"])
+			assert(not map_blob.contains("kretek") and not map_blob.contains("Laci 884-B") and not map_blob.contains("Master Override Key"), "Map entries must not spoil exact evidence!")
 		notebook.close_notebook()
 	
 	print("Miller multi-stage interrogation & profile unlock verified.")
@@ -227,6 +248,18 @@ func _ready() -> void:
 	assert(dlg.is_active, "Synthesis tutorial dialogue must be playing!")
 	await _advance_dialogue(dlg)
 	print("Synthesis tutorial & progressive notes verified.")
+	
+	# Check SaveSelect header alignment and spacing
+	var ss_scene: PackedScene = load("res://scenes/menu/save_select.tscn")
+	var ss = ss_scene.instantiate()
+	add_child(ss)
+	await get_tree().process_frame
+	var header_box := ss.find_child("HeaderBox", true, false)
+	var ov_lbl := ss.find_child("OverlineLabel", true, false) as Label
+	var ti_lbl := ss.find_child("TitleLabel", true, false) as Label
+	assert(header_box != null and ov_lbl != null and ti_lbl != null, "SaveSelect HeaderBox must exist!")
+	assert(ov_lbl.position.y + ov_lbl.size.y < ti_lbl.position.y, "SaveSelect overline and title must not overlap!")
+	ss.queue_free()
 	
 	print("--- ALL CHAPTER 1 EXTENDED TESTS PASSED SUCCESSFULLY! ---")
 	get_tree().quit()

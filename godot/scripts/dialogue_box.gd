@@ -207,8 +207,14 @@ func _setup_layout_with_original_assets() -> void:
 		_animate_next_arrow()
 
 	if choice_container:
-		choice_container.set_anchors_preset(Control.PRESET_CENTER)
-		choice_container.offset_top = -60 if is_small else (-90 if is_compact else -120)
+		choice_container.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+		choice_container.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		choice_container.grow_vertical = Control.GROW_DIRECTION_BEGIN
+		var bottom_y: float = -114.0 if is_small else (-146.0 if is_compact else -182.0)
+		choice_container.offset_left = 0.0
+		choice_container.offset_right = 0.0
+		choice_container.offset_top = bottom_y
+		choice_container.offset_bottom = bottom_y
 		choice_container.add_theme_constant_override("separation", 6 if is_small else 8)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -393,27 +399,11 @@ func _show_choices(choices: Array) -> void:
 		var btn := Button.new()
 		btn.text = c_text
 		btn.focus_mode = Control.FOCUS_ALL
-		btn.custom_minimum_size = Vector2(260, 26) if ui_small else Vector2(300, 30)
+		btn.custom_minimum_size = Vector2(280, 28) if ui_small else Vector2(340, 34)
 
-		var sb_normal := StyleBoxFlat.new()
-		sb_normal.bg_color = Color(0.04, 0.16, 0.28, 0.92)
-		sb_normal.border_color = C_TEAL
-		sb_normal.set_border_width_all(1)
-		sb_normal.set_corner_radius_all(3)
-
-		var sb_hover := StyleBoxFlat.new()
-		sb_hover.bg_color = Color(0.08, 0.32, 0.50, 0.98)
-		sb_hover.border_color = C_CYAN
-		sb_hover.set_border_width_all(1)
-		sb_hover.set_corner_radius_all(3)
-		sb_hover.shadow_color = Color(0, 0.94, 1.0, 0.25)
-		sb_hover.shadow_size = 3
-
-		var sb_pressed := StyleBoxFlat.new()
-		sb_pressed.bg_color = Color(0.12, 0.44, 0.66, 1.0)
-		sb_pressed.border_color = C_GREEN
-		sb_pressed.set_border_width_all(1)
-		sb_pressed.set_corner_radius_all(3)
+		var sb_normal := _make_choice_style(Color(0.04, 0.16, 0.28, 0.94), C_TEAL, false)
+		var sb_hover := _make_choice_style(Color(0.08, 0.32, 0.50, 0.98), C_CYAN, true)
+		var sb_pressed := _make_choice_style(Color(0.12, 0.44, 0.66, 1.0), C_GREEN, false)
 
 		btn.add_theme_stylebox_override("normal", sb_normal)
 		btn.add_theme_stylebox_override("hover", sb_hover)
@@ -474,6 +464,23 @@ func _on_choice_clicked(index: int, text: String) -> void:
 					dialogue_queue.push_front({"name": "Arthur Vance", "text": item})
 	choice_selected.emit(index, text)
 	_show_next_line()
+
+func _make_choice_style(bg: Color, border: Color, with_glow: bool = false) -> StyleBoxFlat:
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = bg
+	sb.border_color = border
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(4)
+	var pad_x: float = 16.0 if ui_small else 22.0
+	var pad_y: float = 7.0 if ui_small else 9.0
+	sb.content_margin_left = pad_x
+	sb.content_margin_right = pad_x
+	sb.content_margin_top = pad_y
+	sb.content_margin_bottom = pad_y
+	if with_glow:
+		sb.shadow_color = Color(0, 0.94, 1.0, 0.25)
+		sb.shadow_size = 3
+	return sb
 
 func _clear_choices() -> void:
 	if not choice_container:

@@ -90,10 +90,18 @@ func set_sfx_volume(val: float) -> void:
 	_apply_bus_volume("SFX", sfx_volume)
 	settings_changed.emit()
 
+func sync_fullscreen_from_window() -> bool:
+	if DisplayServer.get_name() == "headless":
+		return is_fullscreen
+	var mode := DisplayServer.window_get_mode()
+	is_fullscreen = (mode == DisplayServer.WINDOW_MODE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	return is_fullscreen
+
 func set_fullscreen_mode(fullscreen: bool) -> void:
 	is_fullscreen = fullscreen
-	if is_fullscreen:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	if DisplayServer.get_name() != "headless":
+		var mode := DisplayServer.window_get_mode()
+		var currently_fs := (mode == DisplayServer.WINDOW_MODE_FULLSCREEN or mode == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+		if currently_fs != is_fullscreen:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if is_fullscreen else DisplayServer.WINDOW_MODE_WINDOWED)
 	settings_changed.emit()

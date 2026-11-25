@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/map/sub_sector.png" id="1_map_texture"]
 [ext_resource type="PackedScene" path="res://scenes/npc_miller.tscn" id="2_miller_scene"]
 [ext_resource type="PackedScene" path="res://scenes/npc_prescott.tscn" id="3_prescott_scene"]
+[ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="4_interactable"]
+[ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="5_exit"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_outer_h"]
 size = Vector2(1448, 40)
@@ -42,3 +44,42 @@ position = Vector2(420, 270)
 
 [node name="NPCMilesPrescott" parent="." instance=ExtResource("3_prescott_scene")]
 position = Vector2(540, 250)
+
+[node name="Evidence101" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(470, 210)
+evidence_id = "EVID-101"
+prompt_text = "E"
+memory_bonus = 5
+
+[node name="Evidence102" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(350, 320)
+evidence_id = "EVID-102"
+flag_to_set = "miller_interrogated"
+prompt_text = "E"
+
+[node name="Evidence103" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(720, 360)
+evidence_id = "EVID-103"
+flag_to_set = "evid_103_collected"
+prompt_text = "E"
+memory_bonus = 10
+
+[node name="Evidence104" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(880, 320)
+evidence_id = "EVID-104"
+flag_to_set = "evid_104_collected"
+prompt_text = "E"
+memory_bonus = 10
+
+[node name="Evidence105" parent="." instance=ExtResource("4_interactable")]
+position = Vector2(1040, 380)
+evidence_id = "EVID-105"
+flag_to_set = "evid_105_collected"
+prompt_text = "E"
+memory_bonus = 10
+
+[node name="ExitTrigger" parent="." instance=ExtResource("5_exit")]
+position = Vector2(1240, 420)
+target_next_chapter = 2
+required_flags = Array[String](["miller_interrogated", "evid_103_collected", "evid_104_collected", "evid_105_collected"])
+prompt_message = "E"

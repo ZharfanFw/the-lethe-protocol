@@ -149,6 +149,7 @@ func _load_map(map_id: String, spawn_position: Vector2) -> void:
 	if not MAPS.has(map_id):
 		return
 	current_map_id = map_id
+	GameManager.unlock_map(map_id)
 	var data: Dictionary = MAPS[map_id]
 	
 	if current_map:

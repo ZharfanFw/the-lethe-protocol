@@ -6,6 +6,7 @@ signal inventory_updated()
 signal deduction_unlocked(deduction_id: String)
 signal profile_unlocked(character_id: String)
 signal note_unlocked(note_id: String)
+signal map_unlocked(map_id: String)
 signal chapter_transition_started(target_chapter: int)
 signal ending_reached(ending_id: int)
 
@@ -47,6 +48,7 @@ var collected_evidence: Array[String] = []
 var unlocked_deductions: Array[String] = []
 var unlocked_profiles: Array[String] = []
 var unlocked_notes: Array[String] = []
+var unlocked_maps: Array[String] = []
 var story_flags: Dictionary = {}
 var evidence_db: Dictionary = {}
 var deductions_db: Dictionary = {}
@@ -184,6 +186,7 @@ func reset_to_new_game(slot_id: int) -> void:
 	unlocked_deductions.clear()
 	unlocked_profiles.clear()
 	unlocked_notes.clear()
+	unlocked_maps.clear()
 	story_flags = _default_story_flags()
 	inventory_updated.emit()
 
@@ -242,6 +245,12 @@ func unlock_note(note_id: String) -> bool:
 
 func has_note(note_id: String) -> bool:
 	return unlocked_notes.has(note_id.to_lower().strip_edges())
+
+func unlock_map(map_id: String) -> bool:
+	return _unlock_unique_entry(unlocked_maps, map_id, map_unlocked)
+
+func has_map(map_id: String) -> bool:
+	return unlocked_maps.has(map_id.to_lower().strip_edges())
 
 func unlock_profile_by_name(raw_name: String) -> bool:
 	var lower := raw_name.to_lower()
@@ -428,6 +437,7 @@ func to_save_dict() -> Dictionary:
 			"unlocked_deductions": unlocked_deductions.duplicate(),
 			"unlocked_profiles": unlocked_profiles.duplicate(),
 			"unlocked_notes": unlocked_notes.duplicate(),
+			"unlocked_maps": unlocked_maps.duplicate(),
 		},
 		"story_flags": story_flags.duplicate(true),
 	}
@@ -460,6 +470,7 @@ func apply_save_data(data: Dictionary) -> bool:
 	_set_string_array(unlocked_deductions, unlocked_deductions if not inventory.has("unlocked_deductions") else inventory.get("unlocked_deductions", []))
 	_set_string_array(unlocked_profiles, inventory.get("unlocked_profiles", []))
 	_set_string_array(unlocked_notes, inventory.get("unlocked_notes", []))
+	_set_string_array(unlocked_maps, inventory.get("unlocked_maps", []))
 	story_flags = _default_story_flags()
 	for key in flags:
 		story_flags[key] = flags[key]

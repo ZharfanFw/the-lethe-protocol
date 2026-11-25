@@ -39,6 +39,23 @@ func _ready() -> void:
 	SettingsManager.load_settings()
 	print("SETTINGS: master=", SettingsManager.master_volume, " bgm=", SettingsManager.bgm_volume, " sfx=", SettingsManager.sfx_volume, " fullscreen=", SettingsManager.is_fullscreen)
 
+	# Verify Esc out of SettingsMenu keeps fullscreen mode intact
+	SettingsManager.set_fullscreen_mode(true)
+	var sm_scene: PackedScene = load("res://scenes/menu/settings_menu.tscn")
+	var sm = sm_scene.instantiate()
+	add_child(sm)
+	await get_tree().process_frame
+	sm.open_menu()
+	var ev_esc := InputEventAction.new()
+	ev_esc.action = "ui_cancel"
+	ev_esc.pressed = true
+	sm._unhandled_input(ev_esc)
+	await get_tree().create_timer(0.25).timeout
+	assert(not sm.visible, "ESC must close SettingsMenu!")
+	assert(SettingsManager.is_fullscreen == true, "ESC from SettingsMenu MUST preserve existing fullscreen state!")
+	sm.queue_free()
+	SettingsManager.set_fullscreen_mode(false)
+
 	# Test Game Save & Slot Management
 	GameManager.reset_to_new_game(3)
 	GameManager.add_evidence("EVID-101")
