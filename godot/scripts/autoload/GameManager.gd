@@ -364,7 +364,7 @@ func play_cutscene(cutscene_id: String, next_scene_path: String) -> void:
 		return
 	get_tree().change_scene_to_file(CUTSCENE_SCENE_PATH)
 
-func advance_to_chapter(chapter_number: int, autosave: bool = true) -> void:
+func advance_to_chapter(chapter_number: int, autosave: bool = true, skip_cutscene: bool = false) -> void:
 	if chapter_number < 0 or chapter_number > TOTAL_CHAPTERS:
 		push_error("Invalid chapter number: %d" % chapter_number)
 		return
@@ -378,6 +378,9 @@ func advance_to_chapter(chapter_number: int, autosave: bool = true) -> void:
 	var target_path: String = chapter_scene_path(chapter_number)
 	if not ResourceLoader.exists(target_path):
 		push_error("Chapter scene not found: " + target_path)
+		return
+	if skip_cutscene or chapter_number == 3:
+		get_tree().change_scene_to_file(target_path)
 		return
 	play_cutscene("chapter_%d" % chapter_number, target_path)
 

@@ -10,6 +10,12 @@ extends StaticBody2D
 @export var default_animation: String = "idle"
 @export var sprite_scale: Vector2 = Vector2(0.12, 0.12)
 @export var face_player_on_interact: bool = true
+@export var quest_dialogue_id: String = ""
+@export var quest_evidence_id: String = ""
+@export var quest_flag: String = ""
+@export var quest_memory_bonus: int = 0
+@export var quest_required_evidence: Array[String] = []
+@export var quest_missing_req_lines: Array[String] = []
 
 @onready var prompt_label: Label = $PromptLabel
 @onready var interaction_area: Area2D = $InteractionArea
@@ -77,12 +83,46 @@ func _unhandled_input(event: InputEvent) -> void:
 		if dlg and not dlg.is_active:
 			if prompt_label:
 				prompt_label.visible = false
-			if face_player_on_interact and player_ref:
+			var quest_done: bool = not quest_flag.is_empty() and GameManager.has_flag(quest_flag)
+			if face_player_on_interact and player_ref and not (quest_done and npc_id == "colin"):
 				face_target(player_ref.global_position)
 			is_talking = true
 			var active_speaker: String = speaker_name
 			var active_lines: Array = dialogue_lines
-			if not npc_id.is_empty():
+			var handled_quest := false
+
+			if not quest_flag.is_empty() and not quest_done:
+				var reqs_ok := true
+				for req_id in quest_required_evidence:
+					if not GameManager.has_evidence(req_id):
+						reqs_ok = false
+						break
+				if not reqs_ok:
+					handled_quest = true
+					if not quest_missing_req_lines.is_empty():
+						active_lines = quest_missing_req_lines
+					else:
+						active_lines = ["Periksa petunjuk di sekitarmu terlebih dahulu sebelum melapor kembali padaku."]
+				else:
+					var q_id: String = quest_dialogue_id if not quest_dialogue_id.is_empty() else quest_evidence_id
+					var q_entry := GameManager.get_interactable_dialogue(q_id) if not q_id.is_empty() else {}
+					if not q_entry.is_empty():
+						handled_quest = true
+						active_speaker = str(q_entry.get("speaker", active_speaker))
+						var q_note: String = str(q_entry.get("note", ""))
+						if not q_note.is_empty():
+							GameManager.unlock_note(q_note)
+						var q_lines: Variant = q_entry.get("lines", [])
+						if q_lines is Array and not q_lines.is_empty():
+							active_lines = q_lines
+					if not quest_evidence_id.is_empty():
+						GameManager.add_evidence(quest_evidence_id)
+					if quest_memory_bonus != 0:
+						GameManager.add_memory(quest_memory_bonus)
+					if not _lines_have_choices(active_lines):
+						GameManager.set_flag(quest_flag, true)
+
+			if not handled_quest and not npc_id.is_empty():
 				var entry := GameManager.get_npc_dialogue(npc_id)
 				if not entry.is_empty():
 					active_speaker = str(entry.get("speaker", active_speaker))
@@ -94,6 +134,12 @@ func _unhandled_input(event: InputEvent) -> void:
 				GameManager.unlock_profile(npc_id)
 			dlg.start_dialogue(active_speaker, active_lines)
 			get_viewport().set_input_as_handled()
+
+func _lines_have_choices(check_lines: Array) -> bool:
+	for item in check_lines:
+		if item is Dictionary and item.has("choices"):
+			return true
+	return false
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player" or body.is_in_group("player"):
 		player_ref = body
