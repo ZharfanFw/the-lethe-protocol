@@ -20,8 +20,8 @@ const CUTSCENES: Dictionary = {
 			{
 				"image": "res://assets/cutscenes/prolog-slide2.jpg",
 				"lines": [
-					{"name": "Lucian Graves", "text": "Edward Vance. Waktu negosiasi sudah habis. Di mana buku besar tanah ulayat dan naskah peta geologis itu?"},
-					{"name": "Edward Vance", "text": "Kalian bukan membangun peradaban, Graves! Kalian mencuri hutan dan mengeruk gunung emas leluhur kami!"}
+					{"name": "???", "text": "Edward Vance. Waktu negosiasi sudah habis. Di mana buku besar tanah ulayat dan naskah peta geologis itu?"},
+					{"name": "Edward Vance", "text": "Kalian bukan membangun peradaban! Kalian mencuri hutan dan mengeruk gunung emas leluhur kami!"}
 				]
 			},
 			{

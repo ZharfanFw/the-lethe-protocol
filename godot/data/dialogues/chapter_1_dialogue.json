@@ -1,140 +1,309 @@
 {
-	"chapter": 1,
-	"title": "Kidung yang Hilang & Jejak Sub-Sektor 4",
-	"npcs": {
-		"miller": {
-			"speaker": "Miller",
-			"role": "SAKSI // SUB-SEKTOR 4",
-			"lines": [
-				"Saya tidak tahu apa-apa soal kaset itu, Inspektur.",
-				"Kaset itu bukan buatan saya! Saya hanya mengambilnya di gudang suku cadang lama dari pria bernama Colin.",
-				"Kalau kau mencari Colin, coba periksa ventilasi gudang. Dia selalu meninggalkan tanda di sana."
-			]
-		},
-		"prescott": {
-			"speaker": "Detective Miles Prescott",
-			"role": "REKAN // UNIT V-09",
-			"lines": [
-				"Miller tertangkap di pos pemeriksaan membawa pita magnetik ilegal zaman purba, Vance.",
-				"Periksa kaset di meja dan selesaikan interogasinya, lalu kita sisir gudang Sub-Sektor 4.",
-				"Ingat protokol biro: jangan biarkan sentimen mengganggu objektivitasmu."
-			]
-		}
-	},
-	"interactables": {
-		"CH1_TONIC": {
-			"speaker": "HUD-Mirror Biometrik",
-			"lines": [
-				"[ANOMALI KOGNITIF: DETAK JANTUNG +38 BPM // MEMORI TIDAK STABIL]",
-				{
-					"name": "Arthur Vance",
-					"text": "Ampul emas The Tonic (Cognitive Stabilizer No. 9) tersedia di meja cermin.",
-					"choices": [
-						{
-							"text": "[Taat] Telan The Tonic sesuai protokol biro",
-							"memory": 0,
-							"suspicion": -10,
-							"flag": "tonic_taken_ch1",
-							"next": [
-								"Rasa logam dingin menjalar di tenggorokan. Detak jantung kembali datar dan hampa."
-							]
-						},
-						{
-							"text": "[Ragu] Biarkan ampul di meja dan pertahankan ingatan",
-							"memory": 10,
-							"suspicion": 10,
-							"flag": "tonic_skipped_ch1",
-							"next": [
-								"Kilatan rumah kayu dan suara kidung ayah berkelebat di kepala, memicu log audit biometrik."
-							]
-						}
-					]
-				}
-			]
-		},
-		"EVID-101": {
-			"speaker": "Arthur Vance",
-			"lines": [
-				"Kaset magnetik berpelindung timbal yang disita dari Miller (Tahanan 402).",
-				"Melodi lagu tidur tradisional Nusantara di dalamnya identik dengan kidung dalam mimpiku."
-			]
-		},
-		"EVID-102": {
-			"speaker": "Miller",
-			"lines": [
-				"Itu... itu suara ibu saya... Sebelum proyek restrukturisasi menghapus namanya dari data kota...",
-				{
-					"name": "Detective Miles Prescott",
-					"text": "Wajahmu tegang sekali, Vance. Bagaimana kita menangani tahanan 402 ini?",
-					"choices": [
-						{
-							"text": "[Empati] Tanya asal pemutar kaset berpelindung timbal",
-							"memory": 15,
-							"suspicion": 15,
-							"flag": "miller_interrogated",
-							"evidence": "EVID-102",
-							"next": [
-								{"name": "Miller", "text": "Gudang suku cadang lama di Sub-Sektor 4... Seseorang bernama Colin yang memberikannya pada kami..."},
-								{"name": "Detective Miles Prescott", "text": "Prescott mencatat keraguanmu, namun nama Colin memberi petunjuk lokasi gudang."}
-							]
-						},
-						{
-							"text": "[SOP Keras] Ancam kirim Miller ke unit lobotomi Sektor 0",
-							"memory": 0,
-							"suspicion": -15,
-							"flag": "miller_interrogated",
-							"evidence": "EVID-102",
-							"next": [
-								{"name": "Miller", "text": "Ampun, Pak! Saya cuma mengambilnya dari pria bernama Colin di gudang suku cadang Sub-Sektor 4!"},
-								{"name": "Detective Miles Prescott", "text": "Bagus, Vance. Efisiensi tanpa kompromi seperti biasa."}
-							]
-						}
-					]
-				}
-			]
-		},
-		"EVID-103": {
-			"speaker": "Arthur Vance",
-			"lines": [
-				"Puntung kretek Black Clove... aroma cengkeh selatan. Barang selundupan.",
-				"Seseorang baru saja lewat sini."
-			]
-		},
-		"EVID-104": {
-			"speaker": "Arthur Vance",
-			"lines": [
-				"Coretan fosfor di ventilasi: 0x4F5552 // T-CORE // SPARROW.",
-				"T-CORE... kode arsitektur kognitif rezim. Sparrow adalah nama sandi."
-			]
-		},
-		"EVID-105": {
-			"speaker": "Arthur Vance",
-			"lines": [
-				"Peta saluran air menuju Dok Whitehall Bawah.",
-				{
-					"name": "Arthur Vance",
-					"text": "Catatan untuk Thur: temui aku di batas air sebelum Graves menutup jaringnya. - Colin",
-					"choices": [
-						{
-							"text": "[Sembunyikan] Simpan catatan Thur di saku mantel",
-							"memory": 15,
-							"suspicion": 15,
-							"flag": "warehouse_evidence_hidden",
-							"next": [
-								"Aku meremas catatan itu ke saku dan melapor bahwa generator hanya korslet. Prescott menatap curiga."
-							]
-						},
-						{
-							"text": "[Lapor Resmi] Tunjukkan rute dok ke Prescott",
-							"memory": 0,
-							"suspicion": -15,
-							"next": [
-								"Prescott langsung mengontak divisi taktis dan mencatat kepatuhanku ke pusat."
-							]
-						}
-					]
-				}
-			]
-		}
-	}
+    "chapter": 1,
+    "title": "Kidung yang Hilang & Jejak Sub-Sektor 4",
+    "npcs": {
+        "miller": {
+            "speaker": "Miller",
+            "role": "TAHANAN 402 // BURUH SUB-SEKTOR 4",
+            "lines": [
+                "Tolong... jangan siksa saya, Tuan-Tuan Inspektur... Saya cuma buruh kasar di jalur perakitan turbin...",
+                "Saya bersumpah tidak tahu kalau kaset itu barang terlarang! Periksa pemutar kaset di meja itu jika Bapak tidak percaya..."
+            ]
+        },
+        "prescott": {
+            "speaker": "Detective Miles Prescott",
+            "role": "REKAN // UNIT V-09",
+            "lines": [
+                {
+                    "name": "Detective Miles Prescott",
+                    "text": "Ada yang perlu kau pastikan sebelum kita membongkar jaringan Miller ini, Vance?",
+                    "choices": [
+                        {
+                            "text": "[Tanya Situasi] Bagaimana kondisi distrik Sub-Sektor 4?",
+                            "next": [
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Distrik buruh industri kotor. Penuh pipa bocor dan jelaga. Belakangan ini kelompok pemberontak selatan makin aktif menyusup ke pabrik-pabrik."
+                                },
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Banyak buruh yang menolak suplemen penstabil kognitif. Rezim menyebutnya zona kontaminasi pemikiran kelas 3."
+                                }
+                            ]
+                        },
+                        {
+                            "text": "[Tanya Kaset] Kenapa kaset analog begitu ditakuti birokrasi?",
+                            "next": [
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Karena kaset pita magnetik tidak punya jejak data digital, Vance. Tidak bisa diaudit lewat satelit, tidak bisa dipindai oleh firewall pusat."
+                                },
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Dan yang paling berbahaya: rekaman suara organik membangkitkan resonansi memori lama warga sebelum restrukturisasi Tabula Rasa."
+                                }
+                            ]
+                        },
+                        {
+                            "text": "[Kembali Tugas] Siap menyelesaikan interogasi Miller",
+                            "next": [
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Bagus. Miller sudah gemetar ketakutan di kursinya. Buka suaranya sekarang."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "interactables": {
+        "CH1_WAKING": {
+            "speaker": "Arthur Vance",
+            "lines": [
+                "Kepalaku berdenyut hebat... Nafasku tersengal. Kilatan rumah panggung kayu, serbuan pasukan, dan senandung kidung ayah... Kenapa mimpi masa kecil itu terasa begitu nyata?",
+                "HUD di korneaku berkedip merah mencatat lonjakan detak jantung. Aku harus menenangkan diri dan memeriksa catatan sebelum melangkah keluar.",
+                "[color=#00f0ff]Tekan TAB untuk membuka Buku Catatan Detektif (Identitas, Catatan, dan Arsip Bukti).[/color]",
+                "[color=#00f0ff]Dekati objek (seperti Cermin Biometrik di dinding atau Meja Dinas) dan tekan E saat kotak biru muncul untuk berinteraksi.[/color]"
+            ]
+        },
+        "CH1_BED": {
+            "speaker": "Arthur Vance",
+            "lines": [
+                "Ranjang kapsul minimalis jatah birokrasi. Udara kabinnya dingin dan berbau ozon sintetis.",
+                "Tidurku tidak pernah tenang sejak ditugaskan di Unit V-09. Bayangan masa lalu selalu mengoyak batas kesadaranku."
+            ]
+        },
+        "CH1_WARDROBE": {
+            "speaker": "Arthur Vance",
+            "lines": [
+                "Mantel dinas kelabu tahan hujan asam dan lencana logam Unit V-09 The Registry.",
+                "Aku menyematkan lencana elit ini di dada. Komunikator saku berdesing singkat: panggilan darurat dari Prescott di pos penjagaan Sub-Sektor 4.",
+                "Perlengkapan dinas sudah siap. Saatnya berangkat."
+            ]
+        },
+        "CH1_PRESCOTT_INTRO": {
+            "speaker": "Detective Miles Prescott",
+            "lines": [
+                "Akhirnya kau tiba juga, Vance. Kupikir kau tersesat di labirin pipa pembuangan Sub-Sektor 4.",
+                "Lihat wajahmu... Pucat seperti mayat beku. Jangan bilang kau lupa menenggak jatah penstabil kognitif pagimu lagi?",
+                {
+                    "name": "Arthur Vance",
+                    "text": "Bagaimana situasinya di pos pemeriksaan ini, Prescott?",
+                    "choices": [
+                        {
+                            "text": "[Santai] Mengeluhkan cuaca dan kopi dinas",
+                            "next": [
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Hujan asam di sini bisa melarutkan sol sepatu botmu dalam dua jam, dan kopi jatah biro ini makin mirip oli trafo dingin."
+                                },
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Tapi bukan itu urusan kita. Pria yang diborgol di kursi itu—Miller, buruh pabrik turbin. Tertangkap basah di pos membawa pita kaset magnetik ilegal zaman purba."
+                                },
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Selesaikan interogasinya di meja itu, lalu kita sisir gudang suku cadang lama. Ingat protokol: jangan biarkan sentimen mengganggu objektivitasmu."
+                                }
+                            ]
+                        },
+                        {
+                            "text": "[Fokus SOP] Langsung tanyakan detail pelanggaran Miller",
+                            "next": [
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Selalu dingin dan fokus regulasi, heh? Baguslah kalau obat pagimu bekerja."
+                                },
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Tahanan 402, namanya Miller. Membawa kaset radio analog terlarang tanpa segel audit The Registry."
+                                },
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Putar rekamannya di pemutar kaset meja itu dan buat dia buka mulut sebelum divisi pembersihan tiba."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "CH1_TONIC": {
+            "speaker": "HUD-Mirror Biometrik",
+            "lines": [
+                "[ANOMALI KOGNITIF: DETAK JANTUNG +38 BPM // MEMORI TIDAK STABIL]",
+                {
+                    "name": "Arthur Vance",
+                    "text": "Ampul emas The Tonic (Cognitive Stabilizer No. 9) tersedia di meja cermin.",
+                    "choices": [
+                        {
+                            "text": "Telan The Tonic sesuai protokol biro",
+                            "memory": 0,
+                            "suspicion": -10,
+                            "flag": "tonic_taken_ch1",
+                            "next": [
+                                "Rasa logam dingin menjalar di tenggorokan. Detak jantung kembali datar dan hampa."
+                            ]
+                        },
+                        {
+                            "text": "Biarkan ampul di meja dan pertahankan ingatan",
+                            "memory": 10,
+                            "suspicion": 10,
+                            "flag": "tonic_skipped_ch1",
+                            "next": [
+                                "Kilatan rumah kayu dan suara kidung ayah berkelebat di kepala, memicu log audit biometrik."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "EVID-101": {
+            "speaker": "Arthur Vance",
+            "lines": [
+                "Kaset magnetik berpelindung timbal yang disita dari Miller (Tahanan 402).",
+                "Melodi lagu tidur tradisional Nusantara di dalamnya identik dengan kidung dalam mimpiku."
+            ]
+        },
+        "EVID-102": {
+            "speaker": "Miller",
+            "lines": [
+                {
+                    "name": "Miller",
+                    "text": "Ampun, Pak Inspektur! Jangan tembak saya! Saya cuma buruh kasar di Sub-Sektor 4... Saya tidak tahu apa-apa soal politik perlawanan!"
+                },
+                {
+                    "name": "Arthur Vance",
+                    "text": "Lalu kenapa kau menyelundupkan kaset analog kuno berpelindung timbal ini menembus gerbang sensor biometrik pos pemeriksaan, Miller?"
+                },
+                {
+                    "name": "Arthur Vance",
+                    "text": "Arthur menekan tombol Play pada pemutar kaset analog di meja."
+                },
+                {
+                    "name": "Arthur Vance",
+                    "text": "Suara desis pita magnetik tua mengudara... disusul alunan merdu seorang ibu melantunkan tembang tidur tradisional Nusantara yang begitu syahdu."
+                },
+                {
+                    "name": "Arthur Vance",
+                    "text": "Deg! Jantung Arthur berdenyut kencang. Struktur nada dan harmoni lagu ini sama persis dengan kidung yang dinyanyikan ayahnya dalam mimpi subuh tadi! [BPM: 108]"
+                },
+                {
+                    "name": "Miller",
+                    "text": "Itu... itu suara ibu saya... Sebelum proyek restrukturisasi birokrasi menghapus namanya dari data kota... Saat mendengar kaset ini, saya ingat bahwa saya pernah punya keluarga, Pak..."
+                },
+                {
+                    "name": "Detective Miles Prescott",
+                    "text": "Wajahmu tegang sekali, Vance. Terpikat oleh racun sentimental buronan ini? Bagaimana kita menangani tahanan 402 ini?",
+                    "choices": [
+                        {
+                            "text": "[Empati] Tanya asal pemutar kaset berpelindung timbal",
+                            "memory": 10,
+                            "suspicion": 10,
+                            "flag": "miller_interrogated",
+                            "evidence": "EVID-102",
+                            "next": [
+                                {
+                                    "name": "Arthur Vance",
+                                    "text": "Kaset ini dilindungi pelat timbal khusus agar lolos pemindai biometrik. Dari mana kau mendapatkannya, Miller? Jawab dengan jujur."
+                                },
+                                {
+                                    "name": "Miller",
+                                    "text": "Gudang suku cadang lama di Sub-Sektor 4... Pria bernama Colin yang memberikannya pada kami... Dia bilang kaset ini bisa menyelamatkan ingatan kami yang dirampas rezim..."
+                                },
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Prescott mencatat keraguanmu di tablet biometriknya. Namun nama 'Colin' memberi petunjuk penting ke lokasi gudang suku cadang."
+                                }
+                            ]
+                        },
+                        {
+                            "text": "[SOP Keras] Ancam kirim Miller ke unit lobotomi Sektor 0",
+                            "memory": 0,
+                            "suspicion": -15,
+                            "flag": "miller_interrogated",
+                            "evidence": "EVID-102",
+                            "next": [
+                                {
+                                    "name": "Arthur Vance",
+                                    "text": "Cukup! Sentimentalitas masa lalu adalah pelanggaran subversif tingkat satu. Kau akan dikirim ke unit lobotomi Sektor 0 jika tidak bicara sekarang juga!"
+                                },
+                                {
+                                    "name": "Miller",
+                                    "text": "Ampun, Pak! Saya cuma mengambilnya dari pria bernama Colin di gudang suku cadang Sub-Sektor 4! Dia selalu meninggalkan tanda di ventilasi! Tolong jangan hapus otak saya!"
+                                },
+                                {
+                                    "name": "Detective Miles Prescott",
+                                    "text": "Bagus, Vance. Dingin dan efisien tanpa kompromi seperti biasa. Unit taktis baru saja mengonfirmasi alarm sabotase di gudang tersebut."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "EVID-103": {
+            "speaker": "Arthur Vance",
+            "lines": [
+                "Puntung kretek Black Clove... aroma cengkeh manis kawasan selatan. Barang selundupan non-sintetis.",
+                {
+                    "name": "Detective Miles Prescott",
+                    "text": "Sialan... Tembakau kotor jaringan pemberontak selatan. Bau cengkehnya masih menyengat. Seseorang baru saja berdiri di sini."
+                }
+            ]
+        },
+        "EVID-104": {
+            "speaker": "Arthur Vance",
+            "lines": [
+                "Coretan cat fosfor di kisi ventilasi: 0x4F5552 // T-CORE // SPARROW.",
+                {
+                    "name": "Arthur Vance",
+                    "text": "(Dalam batin: T-CORE... Itu arsitektur logika komputasi elit birokrasi ciptaanku! Bagaimana peretas jalanan bisa mengetahuinya?)"
+                },
+                {
+                    "name": "Detective Miles Prescott",
+                    "text": "Hah, grafiti peretas amatir. Mengira deretan huruf heksadesimal bisa menggulingkan Concord. Jangan buang waktu, Vance."
+                }
+            ]
+        },
+        "EVID-105": {
+            "speaker": "Arthur Vance",
+            "lines": [
+                "Peta saluran air menuju Dok Whitehall Bawah.",
+                {
+                    "name": "Arthur Vance",
+                    "text": "Catatan untuk Thur: temui aku di batas air sebelum Graves menutup jaringnya. - Colin",
+                    "choices": [
+                        {
+                            "text": "[Sembunyikan] Simpan catatan Thur di saku mantel",
+                            "memory": 10,
+                            "suspicion": 15,
+                            "flag": "warehouse_evidence_hidden",
+                            "next": [
+                                "Aku meremas catatan itu ke saku dan melapor bahwa generator hanya korslet. Prescott menatap tajam penuh curiga."
+                            ]
+                        },
+                        {
+                            "text": "[Lapor Resmi] Tunjukkan rute dok ke Prescott",
+                            "memory": 0,
+                            "suspicion": -15,
+                            "next": [
+                                "Prescott langsung mengontak divisi taktis dan mencatat kepatuhanku ke pusat."
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "CH1_SYNTHESIS_TUTORIAL": {
+            "speaker": "Arthur Vance",
+            "lines": [
+                "Tunggu... Testimoni Miller menyebut nama Colin di gudang ini, dan bukti-bukti fisik yang kutemukan di gudang saling berkaitan secara logis.",
+                "Aku bisa menganalisis dan menghubungkan potongan-potongan petunjuk ini di kepalaku untuk menarik kesimpulan deduksi baru.",
+                "[color=#00f0ff]Tekan C untuk membuka Analisis & Sintesis Bukti. Pilih 2 bukti yang berkorelasi untuk menggabungkannya.[/color]"
+            ]
+        }
+    }
 }

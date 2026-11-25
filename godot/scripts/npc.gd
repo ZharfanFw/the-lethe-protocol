@@ -26,7 +26,7 @@ func _ready() -> void:
 		prompt_label = get_node_or_null("PromptLabel")
 	if prompt_label:
 		prompt_label.visible = false
-		prompt_label.text = "[E] Bicara"
+		_style_keycap(prompt_label)
 	
 	if not animated_sprite:
 		animated_sprite = get_node_or_null("AnimatedSprite2D")
@@ -89,6 +89,9 @@ func _unhandled_input(event: InputEvent) -> void:
 					var json_lines: Variant = entry.get("lines", [])
 					if json_lines is Array and not json_lines.is_empty():
 						active_lines = json_lines
+			GameManager.unlock_profile_by_name(active_speaker)
+			if not npc_id.is_empty():
+				GameManager.unlock_profile(npc_id)
 			dlg.start_dialogue(active_speaker, active_lines)
 			get_viewport().set_input_as_handled()
 func _on_body_entered(body: Node2D) -> void:
@@ -142,3 +145,23 @@ func _play_direction(primary_anim: StringName, fallback_anim: StringName) -> voi
 		animated_sprite.play(fallback_anim)
 	elif animated_sprite.sprite_frames.has_animation(&"idle"):
 		animated_sprite.play(&"idle")
+
+func _style_keycap(lbl: Label) -> void:
+	lbl.text = "E"
+	lbl.size = Vector2(16, 16)
+	lbl.position = Vector2(-8, -42)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 9)
+	lbl.add_theme_color_override("font_color", Color("#00f0ff"))
+	lbl.add_theme_color_override("font_outline_color", Color(0.01, 0.04, 0.07, 0.95))
+	lbl.add_theme_constant_override("outline_size", 2)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.04, 0.12, 0.22, 0.92)
+	style.set_border_width_all(1)
+	style.border_color = Color("#00f0ff")
+	style.set_corner_radius_all(3)
+	style.shadow_color = Color(0.0, 0.94, 1.0, 0.35)
+	style.shadow_size = 2
+	lbl.add_theme_stylebox_override("normal", style)
+

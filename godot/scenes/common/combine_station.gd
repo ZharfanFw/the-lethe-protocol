@@ -17,14 +17,23 @@ func _ready() -> void:
 
 func _build_prompt() -> void:
 	_prompt = Label.new()
-	_prompt.text = prompt_message
-	_prompt.position = Vector2(-120, -50)
-	_prompt.size = Vector2(240, 14)
+	_prompt.text = "E"
+	_prompt.position = Vector2(-8, -36)
+	_prompt.size = Vector2(16, 16)
 	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_prompt.add_theme_font_size_override("font_size", 7)
+	_prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_prompt.add_theme_font_size_override("font_size", 9)
 	_prompt.add_theme_color_override("font_color", Color("#00f0ff"))
 	_prompt.add_theme_color_override("font_outline_color", Color(0.01, 0.04, 0.07, 0.95))
-	_prompt.add_theme_constant_override("outline_size", 4)
+	_prompt.add_theme_constant_override("outline_size", 2)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.04, 0.12, 0.22, 0.92)
+	style.set_border_width_all(1)
+	style.border_color = Color("#00f0ff")
+	style.set_corner_radius_all(3)
+	style.shadow_color = Color(0.0, 0.94, 1.0, 0.35)
+	style.shadow_size = 2
+	_prompt.add_theme_stylebox_override("normal", style)
 	_prompt.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_prompt.visible = false
 	add_child(_prompt)

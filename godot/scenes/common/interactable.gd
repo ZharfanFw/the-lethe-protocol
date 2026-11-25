@@ -28,14 +28,23 @@ func _ready() -> void:
 
 func _build_prompt() -> void:
 	_prompt = Label.new()
-	_prompt.text = prompt_text
-	_prompt.position = Vector2(-44, -46)
-	_prompt.size = Vector2(88, 14)
+	_prompt.text = "E"
+	_prompt.position = Vector2(-8, -36)
+	_prompt.size = Vector2(16, 16)
 	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_prompt.add_theme_font_size_override("font_size", 7)
+	_prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_prompt.add_theme_font_size_override("font_size", 9)
 	_prompt.add_theme_color_override("font_color", Color("#00f0ff"))
 	_prompt.add_theme_color_override("font_outline_color", Color(0.01, 0.04, 0.07, 0.95))
-	_prompt.add_theme_constant_override("outline_size", 4)
+	_prompt.add_theme_constant_override("outline_size", 2)
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color(0.04, 0.12, 0.22, 0.92)
+	style.set_border_width_all(1)
+	style.border_color = Color("#00f0ff")
+	style.set_corner_radius_all(3)
+	style.shadow_color = Color(0.0, 0.94, 1.0, 0.35)
+	style.shadow_size = 2
+	_prompt.add_theme_stylebox_override("normal", style)
 	_prompt.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_prompt.visible = false
 	add_child(_prompt)
@@ -79,6 +88,24 @@ func interact() -> void:
 	var active_speaker: String = speaker_name
 	var active_lines: Array = lines
 	var lookup_id: String = dialogue_id if not dialogue_id.is_empty() else evidence_id
+
+	if lookup_id == "CH1_TONIC":
+		if GameManager.has_flag("tonic_taken_ch1"):
+			UIManager.say("HUD-Mirror Biometrik", [
+				"Denyut nadi terpantau stabil [BPM: 72]. Log biometrik mencatat suplemen The Tonic telah diserap tubuh."
+			])
+			return
+		elif GameManager.has_flag("tonic_skipped_ch1"):
+			UIManager.say("HUD-Mirror Biometrik", [
+				"Denyut nadi masih fluktuatif [BPM: 94]. Ampul The Tonic masih tergeletak di atas meja, belum diminum."
+			])
+			return
+	elif lookup_id == "CH1_WARDROBE":
+		if GameManager.has_flag("vance_equipped_ch1"):
+			UIManager.say("Arthur Vance", [
+				"Mantel dinas dan lencana Unit V-09 sudah kupakai. Aku siap menuju pos pemeriksaan Sub-Sektor 4."
+			])
+			return
 	if not lookup_id.is_empty():
 		var entry := GameManager.get_interactable_dialogue(lookup_id)
 		if not entry.is_empty():
@@ -87,6 +114,7 @@ func interact() -> void:
 			if json_lines is Array and not json_lines.is_empty():
 				active_lines = json_lines
 	if not active_lines.is_empty():
+		GameManager.unlock_profile_by_name(active_speaker)
 		UIManager.say(active_speaker, active_lines)
 	collected.emit(evidence_id)
 	if one_shot:

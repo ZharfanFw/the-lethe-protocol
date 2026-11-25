@@ -84,9 +84,6 @@ func _ready() -> void:
 	base_scale = Vector2(fit, fit)
 	main_panel.scale = base_scale
 	
-	if GameManager.collected_evidence.is_empty():
-		GameManager.reset_to_new_game(1)
-	
 	_sync_inventory_from_game_manager()
 	GameManager.inventory_updated.connect(_sync_inventory_from_game_manager)
 	
@@ -257,7 +254,19 @@ func _toggle_item_slot(item_idx: int) -> void:
 	_refresh_ui()
 
 func _refresh_ui() -> void:
-	if inventory.is_empty(): return
+	if inventory.is_empty():
+		for r_i in range(rows.size()):
+			rows[r_i].visible = false
+		if selector and selector.get_parent():
+			selector.visible = false
+		if scroll_handle: scroll_handle.visible = false
+		if scroll_track: scroll_track.visible = false
+		if icon_a: icon_a.texture = null
+		if icon_b: icon_b.texture = null
+		if status_text: status_text.text = "[color=#88d4e8]Belum ada barang bukti yang dapat dianalisis.[/color]"
+		return
+	if selector:
+		selector.visible = true
 	idx = clampi(idx, 0, inventory.size() - 1)
 	if idx < scroll_off: scroll_off = idx
 	elif idx >= scroll_off + 6: scroll_off = idx - 5

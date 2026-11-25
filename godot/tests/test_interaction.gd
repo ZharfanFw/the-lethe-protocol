@@ -21,11 +21,36 @@ func _ready() -> void:
 	print("Notebook: ", notebook)
 	print("Combiner: ", combiner)
 	
+	# 0. Verify Apartment start & elements
+	var tonic_mirror = ch1.find_child("TonicMirror", true, false)
+	var wardrobe = ch1.find_child("DeskInteractable", true, false)
+	assert(tonic_mirror != null, "TonicMirror must exist in apartment!")
+	assert(wardrobe != null, "DeskInteractable must exist in apartment!")
+	print("Apartment verified: TonicMirror and DeskInteractable present.")
+
+	# Transition from Apartment to Sub-Sector 4
+	var world = ch1.find_child("World", true, false)
+	world._load_map("ch1_subsector4", Vector2(480, 320))
+	for i in range(15):
+		await get_tree().physics_frame
+	player = ch1.find_child("Player", true, false)
+
 	# 1. Verify Chapter 1 only has Miller & Prescott (no Lucian/Garrick/Edward)
 	assert(ch1.find_child("NPCLucian", true, false) == null, "NPCLucian must be removed from Chapter 1!")
 	assert(ch1.find_child("NPCMilesPrescott", true, false) != null, "NPCMilesPrescott must exist in Chapter 1!")
 	var miller = ch1.find_child("NPCMiller", true, false)
 	assert(miller != null, "NPCMiller must exist in Chapter 1!")
+	
+	# Wait for Prescott intro timer to start, then dismiss it
+	await get_tree().create_timer(0.5).timeout
+	while dlg.is_active:
+		if dlg.waiting_for_choice:
+			dlg._on_choice_clicked(0, "")
+		else:
+			dlg._show_next_line()
+		await get_tree().create_timer(0.04).timeout
+	await get_tree().create_timer(0.1).timeout
+	
 	player.global_position = miller.global_position
 	for i in range(10):
 		await get_tree().physics_frame

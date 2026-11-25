@@ -15,6 +15,12 @@ const MAPS := {
 		"zoom": Vector2(0.85, 0.85),
 		"follow": false,
 	},
+	"ch1_apartment": {
+		"scene": preload("res://scenes/maps/apartment_vance.tscn"),
+		"size": Vector2(640, 340),
+		"zoom": Vector2(0.85, 0.85),
+		"follow": false,
+	},
 	"ch1_subsector4": {
 		"scene": preload("res://scenes/maps/sub_sector_4.tscn"),
 		"size": Vector2(1408, 960),

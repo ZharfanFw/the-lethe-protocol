@@ -34,6 +34,7 @@ const C_GREEN := Color("#00ff88")
 
 
 var dialogue_queue: Array[Dictionary] = []
+var current_active_line: Dictionary = {}
 var is_active: bool = false
 var is_typing: bool = false
 var waiting_for_choice: bool = false
@@ -211,13 +212,32 @@ func _setup_layout_with_original_assets() -> void:
 		choice_container.add_theme_constant_override("separation", 6 if is_small else 8)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not main_container or not main_container.visible or waiting_for_choice:
+	if not main_container or not main_container.visible:
+		return
+
+	if waiting_for_choice:
+		if event is InputEventKey and event.is_pressed() and not event.is_echo():
+			var choice_idx: int = -1
+			if event.keycode == KEY_1 or event.keycode == KEY_KP_1:
+				choice_idx = 0
+			elif event.keycode == KEY_2 or event.keycode == KEY_KP_2:
+				choice_idx = 1
+			elif event.keycode == KEY_3 or event.keycode == KEY_KP_3:
+				choice_idx = 2
+			elif event.keycode == KEY_4 or event.keycode == KEY_KP_4:
+				choice_idx = 3
+			if choice_idx >= 0 and choice_idx < _active_choices.size():
+				get_viewport().set_input_as_handled()
+				var btn_text: String = ""
+				if _active_choices[choice_idx] is Dictionary:
+					btn_text = _active_choices[choice_idx].get("text", "")
+				_on_choice_clicked(choice_idx, btn_text)
 		return
 
 	var is_advance: bool = false
 	if event.is_action_pressed("ui_accept"):
 		is_advance = true
-	elif event is InputEventKey and event.is_pressed() and not event.is_echo() and (event.keycode == KEY_E or event.keycode == KEY_ENTER):
+	elif event is InputEventKey and event.is_pressed() and not event.is_echo() and (event.keycode == KEY_E or event.keycode == KEY_ENTER or event.keycode == KEY_SPACE):
 		is_advance = true
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		is_advance = true
@@ -263,11 +283,9 @@ func start_dialogue(arg1: Variant, arg2: Variant = null) -> void:
 	is_active = true
 	dialogue_started.emit()
 
-	if main_container and not main_container.visible:
+	if main_container:
 		main_container.visible = true
-		main_container.modulate.a = 0.0
-		var open_tween := create_tween()
-		open_tween.tween_property(main_container, "modulate:a", 1.0, 0.2)
+		main_container.modulate.a = 1.0
 
 	_show_next_line()
 
@@ -277,22 +295,16 @@ func _show_next_line() -> void:
 		next_indicator.visible = false
 
 	if dialogue_queue.is_empty():
+		current_active_line = {}
 		if main_container:
-			var close_tween := create_tween()
-			close_tween.tween_property(main_container, "modulate:a", 0.0, 0.18)
-			close_tween.finished.connect(func():
-				main_container.visible = false
-				is_active = false
-				dialogue_ended.emit()
-				dialogue_finished.emit()
-			)
-		else:
-			is_active = false
-			dialogue_ended.emit()
-			dialogue_finished.emit()
+			main_container.visible = false
+		is_active = false
+		dialogue_ended.emit()
+		dialogue_finished.emit()
 		return
 
 	var current_line: Dictionary = dialogue_queue.pop_front()
+	current_active_line = current_line
 
 	var s_name: String = _sanitize_speaker_name(str(current_line.get("name", "UNKNOWN")))
 	if speaker_name:
@@ -341,13 +353,13 @@ func _play_shake_effect() -> void:
 	shake_tween.tween_property(main_container, "position:x", base_container_pos.x, 0.04)
 
 func _finish_typing_immediately() -> void:
-	if typing_tween:
+	if typing_tween and typing_tween.is_valid():
 		typing_tween.kill()
+		typing_tween = null
 	if dialogue_text:
 		dialogue_text.visible_ratio = 1.0
 	is_typing = false
-	if next_indicator:
-		next_indicator.visible = true
+	_on_typing_finished(current_active_line)
 
 func _on_typing_finished(current_line: Dictionary) -> void:
 	is_typing = false

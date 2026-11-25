@@ -101,6 +101,42 @@
 - **Per-Chapter Map Slots & AudioManager**: `world.gd` registers `ch1_subsector4`, `ch2_dock`, `ch3_sector0`, `ch3_undercity`, and `ch4_office_top` for conflict-free parallel map editing. Added `default_bus_layout.tres` and `AudioManager` autoload (`play_bgm`, `stop_bgm`, `play_sfx`).
 - **Chapter 1–5 Dialogues, Branching Choices & Evidence Interactables**: `dialogue_box.gd` supports Dictionary choice entries inside `start_dialogue(speaker, lines)`, `data/dialogues/chapter_1..5_dialogue.json` contains full branching choices affecting `memory_meter`, `suspicion_meter`, `story_flags`, and `collected_evidence`, and `chapter_1..5.tscn` includes all chapter evidence interactables (`EVID-101..105`, `EVID-201..205`, `EVID-301..304`, `EVID-401..404`) and briefing/moral choice triggers.
 
+### Chapter 1 Extended Dialogues, Apartment Map, & Aesthetic Keycaps (2026-11-24)
+- **Apartemen Dinas Vance (`scenes/maps/apartment_vance.tscn`)**:
+  - Chapter 1 kini dimulai secara natural di dalam apartemen kapsul dinas Arthur Vance (bukan langsung terlempar ke gudang Sub-Sektor 4).
+  - Memiliki Ranjang Kapsul (`CH1_BED`), Cermin Biometrik HUD (`CH1_TONIC`), Meja/Lemari Dinas (`CH1_WARDROBE`), dan Pintu Keluar (`scripts/apartment_door.gd`).
+  - **Pintu Keluar Gated**: Arthur tidak bisa keluar sebelum memeriksa Cermin Biometrik (The Tonic) dan menyematkan lencana/mantel dinas Unit V-09 di meja kerja.
+  - **Transisi Atmosferik**: Begitu keluar, ada narasi transisi mobil dinas meluncur membelah guyuran hujan asam Concord menuju Sub-Sektor 4.
+- **Tutorial Diegetik Alami**:
+  - **Tutorial `[TAB]` (Catatan Detektif)**: Terpicu saat monolog batin bangun tidur ketika Arthur merasakan disorientasi kognitif dan denyut nadi melonjak.
+  - **Tutorial `[E]` (Interaksi Objek)**: Mengarahkan Arthur mendekati Cermin Biometrik dan Meja Dinas saat keycap biru muncul.
+  - **Tutorial `[C]` (Sintesis Bukti)**: Terpicu secara otomatis saat Arthur menemukan korelasi bukti pertama antara testimoni Miller dan temuan di gudang.
+- **Perluasan Interaksi & Basa-Basi Prescott**:
+  - **Dialog Pembuka Otomatis**: Prescott menyindir wajah pucat Vance pasca-amnesia, mengeluhkan kopi sintetis dingin rasa oli trafo, dan menggerutu soal hujan asam Sub-Sektor 4 yang melarutkan sepatu bot.
+  - **Menu Topik Manual `[E]`**: Percakapan bebas dengan pilihan topik seputar distrik buruh Sub-Sektor 4, alasan rezim memusuhi kaset analog, dan briefing interogasi.
+- **Interogasi Bertahap Miller**:
+  - Miller gemetar membela diri sebagai buruh biasa sebelum kaset diputar.
+  - Kaset analog (EVID-101) diputar memicu kidung tradisional Nusantara yang membuat Miller menangis mengingat ibunya, serta memicu lonjakan emosi Vance.
+  - Pilihan taktik interogasi: **[Empati]** ($memory +10, $suspicion +10) vs **[SOP Keras]** ($suspicion -15).
+- **Komentar Prescott di TKP Gudang**:
+  - Prescott ikut menanggapi temuan puntung kretek Black Clove (EVID-103) dan coretan heksadesimal T-CORE (EVID-104).
+- **Aesthetic Blue Keycap Prompt `[E]`**:
+  - Menghapus tulisan panjang seperti `[E] Bicara` atau `[E] Periksa`.
+  - Menggantinya dengan keycaps kotak biru cyberpunk elegan berisi huruf **"E"** dengan border cyan neon, background navy gelap, bayangan glow lembut, dan sudut melengkung di seluruh NPC dan interactables (`npc.gd`, `interactable.gd`, `exit_trigger.gd`, `ending_terminal.gd`, `combine_station.gd`).
+- **Verifikasi Otomatis**:
+  - `tests/test_interaction.tscn` dan `tests/test_chapter1_extended.tscn` berjalan headless dan lolos 100% tanpa error.
+- **Perbaikan Dialogue Choice Skip & Keyboard Selection**:
+  - Memperbaiki bug pada `dialogue_box.gd` di mana menekan tombol (E, Enter, Space, Klik) saat teks sedang mengetik (`_finish_typing_immediately()`) melewatkan pemanggilan `_on_typing_finished()`, sehingga tombol pilihan pada Cermin The Tonic tidak sempat muncul dan langsung menutup dialog.
+  - Pilihan dialog kini tampil bersih tanpa awalan nomor atau tag bracket, dengan dukungan pintasan angka keyboard `[1]`, `[2]`, `[3]`, `[4]` di latar belakang.
+  - Menambahkan feedback status pada Cermin Biometrik dan Meja Dinas ketika diperiksa ulang setelah pilihan/perlengkapan diambil.
+- **Tutorial Natural & Misteri Prolog**:
+  - Menghapus label teks `[TUTORIAL]` pada dialog intro dan sintesis bukti agar narasi mengalir alami.
+  - Nama Lucian Graves pada cutscene prolog slide 2 disamarkan menjadi `???` agar identitas antagonis tidak langsung terungkap sejak awal.
+- **Progressive Empty Inventory & Profiles**:
+  - Game baru dimulai dengan inventori kosong (`collected_evidence = []`). Arthur memperoleh lencana resmi `lencana` saat berinteraksi dengan meja/lemari dinas di apartemen.
+  - Menambahkan sistem `unlocked_profiles` di `GameManager.gd` yang tersimpan permanen di Save/Load slot. Tab Profil Buku Catatan Detektif kini mulai kosong dan secara dinamis mencatat karakter begitu pemain pertama kali bertemu atau berinteraksi dengan mereka (misal: Prescott saat tiba di pos, Miller saat diinterogasi).
+  - Notebook dan ItemCombiner menangani status kosong secara elegan tanpa fallback dummy item.
+
 ### Next Steps for Team
 1. Refine building/prop collision shapes in `scenes/maps/sub_sector_4.tscn` (Chapter 1 now uses `npc_miller.tscn` and `npc_prescott.tscn`) and polish the 5 ending presentations (`scenes/endings/ending_screen.gd`).
 2. Build dedicated chapter map `.tscn` files for Chapters 2–4 (`ch2_dock`, `ch3_sector0`, `ch3_undercity`, `ch4_office_top`) and wire them in `world.gd`.

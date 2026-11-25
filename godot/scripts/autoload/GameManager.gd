@@ -4,6 +4,7 @@ signal memory_changed(new_value: int)
 signal suspicion_changed(new_value: int)
 signal inventory_updated()
 signal deduction_unlocked(deduction_id: String)
+signal profile_unlocked(character_id: String)
 signal chapter_transition_started(target_chapter: int)
 signal ending_reached(ending_id: int)
 
@@ -43,6 +44,7 @@ var suspicion_meter: int = 0:
 
 var collected_evidence: Array[String] = []
 var unlocked_deductions: Array[String] = []
+var unlocked_profiles: Array[String] = []
 var story_flags: Dictionary = {}
 var evidence_db: Dictionary = {}
 var deductions_db: Dictionary = {}
@@ -176,12 +178,9 @@ func reset_to_new_game(slot_id: int) -> void:
 	saved_player_position = Vector2.ZERO
 	has_saved_position = false
 	saved_map_id = ""
-	collected_evidence = [
-		"lencana",
-		"EVID-001",
-		"EVID-002"
-	]
+	collected_evidence.clear()
 	unlocked_deductions.clear()
+	unlocked_profiles.clear()
 	story_flags = _default_story_flags()
 	inventory_updated.emit()
 
@@ -219,6 +218,32 @@ func add_evidence(evidence_id: String) -> bool:
 
 func has_evidence(evidence_id: String) -> bool:
 	return collected_evidence.has(evidence_id)
+
+func unlock_profile(character_id: String) -> bool:
+	var clean_id := character_id.to_lower().strip_edges()
+	if clean_id.is_empty() or unlocked_profiles.has(clean_id):
+		return false
+	unlocked_profiles.append(clean_id)
+	profile_unlocked.emit(clean_id)
+	inventory_updated.emit()
+	return true
+
+func has_profile(character_id: String) -> bool:
+	return unlocked_profiles.has(character_id.to_lower().strip_edges())
+
+func unlock_profile_by_name(raw_name: String) -> bool:
+	var lower := raw_name.to_lower()
+	if lower.contains("graves") or lower.contains("lucian"):
+		return unlock_profile("lucian")
+	elif lower.contains("prescott") or lower.contains("miles"):
+		return unlock_profile("prescott")
+	elif lower.contains("sparrow") or lower.contains("colin"):
+		return unlock_profile("colin")
+	elif lower.contains("garrick") or lower.contains("shaw"):
+		return unlock_profile("garrick")
+	elif lower.contains("miller"):
+		return unlock_profile("miller")
+	return false
 
 func remove_evidence(evidence_id: String) -> bool:
 	var idx := collected_evidence.find(evidence_id)
@@ -389,6 +414,7 @@ func to_save_dict() -> Dictionary:
 		"inventory": {
 			"evidence_collected": collected_evidence.duplicate(),
 			"unlocked_deductions": unlocked_deductions.duplicate(),
+			"unlocked_profiles": unlocked_profiles.duplicate(),
 		},
 		"story_flags": story_flags.duplicate(true),
 	}
@@ -419,6 +445,7 @@ func apply_save_data(data: Dictionary) -> bool:
 
 	_set_string_array(collected_evidence, _migrate_legacy_evidence(inventory.get("evidence_collected", [])))
 	_set_string_array(unlocked_deductions, unlocked_deductions if not inventory.has("unlocked_deductions") else inventory.get("unlocked_deductions", []))
+	_set_string_array(unlocked_profiles, inventory.get("unlocked_profiles", []))
 	story_flags = _default_story_flags()
 	for key in flags:
 		story_flags[key] = flags[key]

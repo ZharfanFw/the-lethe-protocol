@@ -90,30 +90,35 @@ var db := {
 	],
 	2: [ # PROFIL (Tokoh Utama, Saksi, dan Target Investigasi)
 		{
+			"id": "lucian",
 			"name": "Direktur Lucian Graves", "qty": "Direktur",
 			"desc": "Pemimpin tertinggi The Registry di Menara Eksekutif\nLt. 80. Mengendalikan distribusi The Tonic.",
 			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMengawasi langsung operasi perburuan buronan Sparrow.",
 			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Menembak mati Edward Vance pada peristiwa 2068.\n• Mengatur failsafe neurotoksin jarak jauh birokrasi."
 		},
 		{
+			"id": "prescott",
 			"name": "Miles Prescott", "qty": "Rekan",
 			"desc": "Detektif lapangan Unit V-09 dengan kacamata\nanalitik biometrik pemantau kepatuhan.",
 			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMendampingi Arthur dalam interogasi dan olah TKP.",
 			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Mencatat setiap anomali emosi dan kecurigaan Arthur.\n• Melaporkan penyimpangan langsung ke Direktur Graves."
 		},
 		{
+			"id": "colin",
 			"name": "Colin Ward (Sparrow)", "qty": "Buronan",
 			"desc": "Peretas pembobol Deep Vault dengan algoritma\nVance-Cipher Rev3. Sahabat masa kecil Arthur.",
 			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMenyebarkan kaset lagu tidur Nusantara ke buruh.",
 			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Meninggalkan pesan darah SEKTOR 0 // LACI 884-B.\n• Mengetahui identitas asli Arthur sebagai Arsitek Kognitif."
 		},
 		{
+			"id": "garrick",
 			"name": "Garrick Shaw", "qty": "Komandan",
 			"desc": "Mantan perwira keamanan biro yang membelot dan\nmemimpin perlawanan di Stasiun Maglev Undercity.",
 			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nMemegang modul titanium Dead Drop #2.",
 			"extra": "[color=#ff66aa][b][KETERKAITAN KASUS][/b][/color]\n• Rekan seperjuangan mendiang Edward Vance.\n• Mengisap rokok kretek Black Clove khas selatan."
 		},
 		{
+			"id": "miller",
 			"name": "Miller (Tahanan 402)", "qty": "Saksi",
 			"desc": "Buruh pabrik Sub-Sektor 4 yang tertangkap\nmembawa kaset analog lagu tidur Nusantara.",
 			"note": "[color=#00f0ff][b][ALIBI & STATUS][/b][/color]\nDitahan di ruang interogasi Whitehall Complex.",
@@ -464,7 +469,7 @@ func _switch_tab(t: int) -> void:
 		var ev_items: Array = []
 		for ev_id in GameManager.collected_evidence:
 			ev_items.append(GameManager.get_evidence_display_dict(ev_id))
-		items = ev_items if not ev_items.is_empty() else db[0]
+		items = ev_items
 	elif tab == 1:
 		var note_items: Array = []
 		for ded_id in GameManager.unlocked_deductions:
@@ -480,13 +485,40 @@ func _switch_tab(t: int) -> void:
 			})
 		note_items.append_array(db[1])
 		items = note_items
+	elif tab == 2:
+		var prof_items: Array = []
+		for p in db[2]:
+			var pid: String = str(p.get("id", "")).to_lower()
+			if GameManager.has_profile(pid):
+				prof_items.append(p)
+		items = prof_items
 	else:
 		items = db[tab]
 	scroll_off = 0
 	_select(0)
 
 func _select(i: int) -> void:
-	if items.is_empty(): return
+	if items.is_empty():
+		for r_i in range(6):
+			rows[r_i].visible = false
+		if selector and selector.get_parent():
+			selector.visible = false
+		if handle: handle.visible = false
+		if scroll_track: scroll_track.visible = false
+		if preview_icon: preview_icon.texture = null
+		if item_name: item_name.text = ""
+		if item_desc:
+			if tab == 0:
+				item_desc.text = "[color=#88d4e8]Belum ada barang bukti yang ditemukan.[/color]"
+			elif tab == 2:
+				item_desc.text = "[color=#88d4e8]Belum ada profil karakter yang tercatat.\n\nTemui atau ajak bicara karakter untuk mencatat data profil mereka ke dalam arsip.[/color]"
+			else:
+				item_desc.text = "[color=#88d4e8]Belum ada catatan.[/color]"
+		if note_lbl: note_lbl.text = ""
+		if extra_lbl: extra_lbl.text = ""
+		return
+	if selector:
+		selector.visible = true
 	idx = clamp(i, 0, items.size() - 1)
 	if idx < scroll_off: scroll_off = idx
 	elif idx >= scroll_off + 6: scroll_off = idx - 5
