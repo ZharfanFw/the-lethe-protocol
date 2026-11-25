@@ -62,30 +62,90 @@ var db := {
 			"extra": "[color=#00ff88][b][CATATAN TAMBAHAN][/b][/color]\n• Selaras dengan rekaman kaset analog milik buruh pabrik Miller."
 		}
 	],
-	1: [ # CATATAN (Kronologi Kejadian & Rangkuman Penyelidikan)
+	1: [ # CATATAN (Kronologi Kejadian & Rangkuman Pembahasan Penyelidikan)
 		{
-			"name": "Malam Hujan 2068", "qty": "",
-			"desc": "Pasukan bersenjata dipimpin Lucian Graves muda\nmenyerbu rumah panggung kayu ulin di desa adat.",
-			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nEdward Vance ditembak mati demi buku besar tanah ulayat.",
-			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Simpan ukiran aksara kayu peninggalan ayah sebagai kunci ingatan."
+			"id": "mimpi_masa_kecil",
+			"name": "Mimpi Rumah Kayu 2068", "qty": "",
+			"desc": "Pasukan bersenjata dipimpin sosok misterius (???)\nmenyerbu rumah panggung kayu ulin di desa adat.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nEdward Vance ditembak mati sambil berpesan agar mengingat kidung dan nama 'Thur'.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Cari tahu kenapa ingatan masa kecil itu kembali muncul."
 		},
 		{
+			"id": "anomali_biometrik",
 			"name": "Anomali HUD-Mirror 2084", "qty": "",
-			"desc": "Pemindai biometrik apartemen mencatat lonjakan\ndetak jantung +38 BPM dan air mata pasca mimpi buruk.",
-			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nEfek penekan memori The Tonic mulai melemah.",
+			"desc": "Pemindai biometrik apartemen mencatat lonjakan\ndetak jantung +38 BPM dan memori tidak stabil.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nEfek penekan memori The Tonic mulai goyah saat emosi memuncak.",
 			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Jaga kestabilan emosi agar tidak memicu audit Detective Prescott."
 		},
 		{
-			"name": "Kaset Kargo Miller", "qty": "",
-			"desc": "Tahanan 402 tertangkap membawa kaset berpelindung\ntimbal berisi lagu tidur tradisional Nusantara.",
-			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nKaset berasal dari pria bernama Colin di Sub-Sektor 4.",
-			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Sisir gudang suku cadang terbengkalai di Sub-Sektor 4."
+			"id": "kasus_miller",
+			"name": "Kasus Tahanan 402 (Miller)", "qty": "",
+			"desc": "Buruh pabrik turbin Sub-Sektor 4 tertangkap di pos\nmembawa pita kaset magnetik ilegal tanpa segel audit.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nPrescott menugaskan interogasi Miller dan penyisiran gudang lama.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Putar kaset dan interogasi Miller di meja pos pemeriksaan."
 		},
 		{
+			"id": "kaset_analog",
+			"name": "Kenapa Kaset Analog Dilarang", "qty": "",
+			"desc": "Menurut Prescott, pita magnetik tidak punya jejak\ndigital sehingga lolos firewall pusat & audit satelit.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nRekaman suara organik memicu resonansi memori pra-Tabula Rasa.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Waspadai efek emosional saat memutar rekaman kaset Miller."
+		},
+		{
+			"id": "jejak_colin",
+			"name": "Petunjuk Colin di Gudang", "qty": "",
+			"desc": "Kaset berisi lagu tidur ibu Miller. Miller mengaku\nmendapatkannya dari pria bernama Colin di gudang.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nPemasok kaset berpelindung timbal beroperasi di gudang Sub-Sektor 4.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Sisir gudang suku cadang terbengkalai dan periksa ventilasinya."
+		},
+		{
+			"id": "jejak_kretek",
+			"name": "Kretek Black Clove Selatan", "qty": "",
+			"desc": "Puntung rokok cengkeh manis khas selatan ditemukan\ndi dekat gudang Sub-Sektor 4.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nAnggota jaringan pemberontak selatan baru saja berada di area ini.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Hubungkan temuan lapangan dengan bukti rute pelarian (tekan C)."
+		},
+		{
+			"id": "jejak_tcore",
 			"name": "Jejak Kode T-CORE", "qty": "",
 			"desc": "Coretan fosfor 0x4F5552 // T-CORE // SPARROW\nditemukan di kisi ventilasi gudang Sub-Sektor 4.",
-			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nPelaku memiliki akses arsitektur komputasi tingkat tinggi rezim.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nPelaku memakai kode arsitektur komputasi elit ciptaan Arthur.",
 			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Gabungkan bukti TKP di Item Combiner untuk melacak rute Sparrow."
+		},
+		{
+			"id": "catatan_thur",
+			"name": "Pesan untuk 'Thur' di Dok", "qty": "",
+			"desc": "Peta saluran air menuju Dok Whitehall Bawah\nbertuliskan: 'Temui aku di batas air. - Colin'.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nColin memanggil Arthur dengan nama panggilan lama 'Thur'.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Sintesis bukti puntung kretek dan peta dok lewat Item Combiner [C]."
+		},
+		{
+			"id": "pencurian_vault",
+			"name": "Pembobolan Deep Vault", "qty": "",
+			"desc": "Deep Vault ditembus 40ms dengan VANCE-CIPHER_REV3;\nDirektur Graves mengarahkannya ke Dok Whitehall Bawah.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nAlgoritma pembobol memakai nama belakang Arthur sendiri.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Selidiki Dok Whitehall Bawah untuk membekuk Sparrow."
+		},
+		{
+			"id": "identitas_thur",
+			"name": "Kebenaran Nama 'Thur'", "qty": "",
+			"desc": "Colin Ward mengungkap Arthur adalah 'Thur', Arsitek\nKognitif perancang Protokol Jayabaya.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nArthur menanam pintu belakang bersandi aksara mendiang ayahnya.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Periksa petunjuk terakhir Colin: SEKTOR 0 // LACI 884-B."
+		},
+		{
+			"id": "sektor_0_laci",
+			"name": "Laci 884-B Sektor 0", "qty": "",
+			"desc": "Dial 1-2-0-9-4 membuka Laci 884-B berisi ukiran kayu\nEdward Vance serta rekaman suara Arthur sendiri.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nKunci logika ada di ukiran kayu; modul fisiknya dipegang Garrick Shaw.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Segera menuju Stasiun Maglev Tua Undercity sebelum pasukan Graves."
+		},
+		{
+			"id": "undercity_shaw",
+			"name": "Tabung Dead Drop #2", "qty": "",
+			"desc": "Pertemuan tegang dengan Komandan Garrick Shaw di\nperon Stasiun Maglev Tua Undercity.",
+			"note": "[color=#00f0ff][b][KESIMPULAN SEMENTARA][/b][/color]\nKomponen fisik dan kunci logika Protokol Jayabaya telah ditemukan.",
+			"extra": "[color=#ffcc00][b][TINDAK LANJUT][/b][/color]\n• Rakit Master Override Key dan susupkan ke Menara Lt. 80."
 		}
 	],
 	2: [ # PROFIL (Tokoh Utama, Saksi, dan Target Investigasi)
@@ -447,7 +507,7 @@ func _build_map_panel() -> void:
 	map_info_lbl.add_theme_font_size_override("bold_font_size", 9); map_info_lbl.add_theme_constant_override("line_separation", 6); map_panel.add_child(map_info_lbl)
 
 func _on_inventory_updated() -> void:
-	if tab == 0 or tab == 1:
+	if tab in [0, 1, 2]:
 		_switch_tab(tab)
 
 func _switch_tab(t: int) -> void:
@@ -483,7 +543,10 @@ func _switch_tab(t: int) -> void:
 				"note": "[color=#00ff88][b][DEDUKSI TERBUKA][/b][/color]\nID: %s (+%d%% Memori)" % [ded_id, int(ded_info.get("memory_bonus", 10))],
 				"extra": "[color=#00f0ff][b][KOMPONEN BUKTI][/b][/color]\n• " + "\n• ".join(reqs)
 			})
-		note_items.append_array(db[1])
+		for note_entry in db[1]:
+			var nid: String = str(note_entry.get("id", "")).to_lower()
+			if GameManager.has_note(nid):
+				note_items.append(note_entry)
 		items = note_items
 	elif tab == 2:
 		var prof_items: Array = []
@@ -501,22 +564,34 @@ func _select(i: int) -> void:
 	if items.is_empty():
 		for r_i in range(6):
 			rows[r_i].visible = false
-		if selector and selector.get_parent():
+		if selector:
 			selector.visible = false
 		if handle: handle.visible = false
 		if scroll_track: scroll_track.visible = false
 		if preview_icon: preview_icon.texture = null
-		if item_name: item_name.text = ""
-		if item_desc:
-			if tab == 0:
-				item_desc.text = "[color=#88d4e8]Belum ada barang bukti yang ditemukan.[/color]"
-			elif tab == 2:
-				item_desc.text = "[color=#88d4e8]Belum ada profil karakter yang tercatat.\n\nTemui atau ajak bicara karakter untuk mencatat data profil mereka ke dalam arsip.[/color]"
-			else:
-				item_desc.text = "[color=#88d4e8]Belum ada catatan.[/color]"
-		if note_lbl: note_lbl.text = ""
+		if note_box: note_box.visible = true
+		if extra_box: extra_box.visible = false
+		if tab == 0:
+			if item_name: item_name.text = "Arsip Bukti Kosong"
+			if item_desc: item_desc.text = "[color=#88d4e8]Belum ada barang bukti yang ditemukan.[/color]"
+			if note_lbl: note_lbl.text = "[color=#00f0ff][b][PETUNJUK][/b][/color]\nDekati objek investigasi dan tekan [b]E[/b] untuk mengumpulkan barang bukti."
+		elif tab == 1:
+			if item_name: item_name.text = "Belum Ada Catatan"
+			if item_desc: item_desc.text = "[color=#88d4e8]Belum ada topik penyelidikan yang dicatat.[/color]"
+			if note_lbl: note_lbl.text = "[color=#00f0ff][b][PETUNJUK][/b][/color]\nCatatan akan otomatis bertambah setiap kali petunjuk penting dibahas."
+		elif tab == 2:
+			if item_name: item_name.text = "Belum Ada Profil"
+			if item_desc: item_desc.text = "[color=#88d4e8]Belum ada profil karakter yang tercatat.[/color]"
+			if note_lbl: note_lbl.text = "[color=#00f0ff][b][PETUNJUK][/b][/color]\nTemui atau ajak bicara karakter untuk menyimpan data profil mereka."
+		else:
+			if item_name: item_name.text = ""
+			if item_desc: item_desc.text = ""
+			if note_lbl: note_lbl.text = ""
 		if extra_lbl: extra_lbl.text = ""
 		return
+	var is_map := (tab == 3)
+	for n in [preview_frame, detail_box, note_box, extra_box]:
+		if n: n.visible = not is_map
 	if selector:
 		selector.visible = true
 	idx = clamp(i, 0, items.size() - 1)
@@ -561,14 +636,16 @@ func _unhandled_input(e: InputEvent) -> void:
 		toggle_notebook()
 		return
 		
-	if not visible or items.is_empty(): return
+	if not visible: return
+	if e.is_action_pressed("ui_right"): get_viewport().set_input_as_handled(); _switch_tab((tab + 1) % 4); return
+	elif e.is_action_pressed("ui_left"): get_viewport().set_input_as_handled(); _switch_tab((tab - 1 + 4) % 4); return
+	elif e.is_action_pressed("ui_cancel") or (e is InputEventKey and e.is_pressed() and not e.is_echo() and e.keycode == KEY_ESCAPE):
+		get_viewport().set_input_as_handled(); close_notebook(); return
+
+	if items.is_empty(): return
 	if e.is_action_pressed("ui_down"): get_viewport().set_input_as_handled(); _select((idx + 1) % items.size())
 	elif e.is_action_pressed("ui_up"): get_viewport().set_input_as_handled(); _select((idx - 1 + items.size()) % items.size())
-	elif e.is_action_pressed("ui_right"): get_viewport().set_input_as_handled(); _switch_tab((tab + 1) % 4)
-	elif e.is_action_pressed("ui_left"): get_viewport().set_input_as_handled(); _switch_tab((tab - 1 + 4) % 4)
 	elif e is InputEventMouseButton and e.pressed and e.button_index in [MOUSE_BUTTON_WHEEL_DOWN, MOUSE_BUTTON_WHEEL_UP]:
 		get_viewport().set_input_as_handled(); _select(idx + (1 if e.button_index == MOUSE_BUTTON_WHEEL_DOWN else -1))
 	elif e.is_action_pressed("ui_accept"):
 		get_viewport().set_input_as_handled(); item_used.emit(items[idx])
-	elif e.is_action_pressed("ui_cancel") or (e is InputEventKey and e.is_pressed() and not e.is_echo() and e.keycode == KEY_ESCAPE):
-		get_viewport().set_input_as_handled(); close_notebook()

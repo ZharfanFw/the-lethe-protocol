@@ -24,10 +24,43 @@ func _ready() -> void:
 	await _advance_dialogue(dlg)
 	print("Waking dialogue completed.")
 	
-	# Verify inventory & profiles start empty
+	# Verify inventory & profiles start empty, and only waking dream note is unlocked
 	assert(GameManager.collected_evidence.is_empty(), "Inventory must start empty!")
 	assert(GameManager.unlocked_profiles.is_empty(), "Profiles must start empty!")
-	print("Progressive empty inventory and profiles verified upon wake up.")
+	assert(GameManager.has_note("mimpi_masa_kecil"), "Waking dream note must unlock after waking monologue!")
+	assert(not GameManager.has_note("kasus_miller"), "Later notes must NOT be unlocked yet!")
+	
+	# Verify empty-state notebook navigation & ESC close works when Bukti & Profil are empty
+	var nb_early = ch1.find_child("DetectiveNotebook", true, false)
+	var comb_early = ch1.find_child("ItemCombiner", true, false)
+	assert(nb_early != null and comb_early != null, "Notebook and Combiner must exist!")
+	nb_early.open_notebook()
+	await get_tree().create_timer(0.35).timeout
+	assert(nb_early.tab == 0 and nb_early.items.is_empty(), "Bukti tab must be empty initially!")
+	var ev_right = InputEventAction.new()
+	ev_right.action = "ui_right"
+	ev_right.pressed = true
+	nb_early._unhandled_input(ev_right)
+	assert(nb_early.tab == 1, "ui_right MUST switch tabs even when Bukti tab is empty!")
+	assert(nb_early.items.size() == 1 and nb_early.items[0]["id"] == "mimpi_masa_kecil", "Notes tab must show only waking note!")
+	assert(not nb_early.items[0]["desc"].contains("Lucian Graves"), "Initial waking note must NOT spoil Lucian Graves!")
+	nb_early._unhandled_input(ev_right)
+	assert(nb_early.tab == 2 and nb_early.items.is_empty(), "Profil tab must be empty initially!")
+	var ev_esc = InputEventKey.new()
+	ev_esc.pressed = true
+	ev_esc.keycode = KEY_ESCAPE
+	nb_early._unhandled_input(ev_esc)
+	await get_tree().create_timer(0.3).timeout
+	assert(not nb_early.visible, "ESC MUST close notebook even when active tab (Profil) is empty!")
+	
+	# Verify empty-state ItemCombiner can close with ESC
+	comb_early.open_combiner()
+	await get_tree().create_timer(0.55).timeout
+	assert(comb_early.visible and comb_early.inventory.is_empty(), "Combiner must open cleanly when empty!")
+	comb_early._unhandled_input(ev_esc)
+	await get_tree().create_timer(0.5).timeout
+	assert(not comb_early.visible, "ESC MUST close ItemCombiner even when inventory is empty!")
+	print("Progressive empty inventory, profiles, notes, and empty-state keyboard handling verified.")
 	
 	# 2. Check Keycap Prompt on Apartment objects
 	var mirror = ch1.find_child("TonicMirror", true, false)
@@ -140,10 +173,12 @@ func _ready() -> void:
 	while not dlg.waiting_for_choice:
 		dlg._show_next_line()
 		await get_tree().create_timer(0.04).timeout
-	# Select topic 0: [Tanya Situasi]
-	dlg._on_choice_clicked(0, "[Tanya Situasi]")
+	# Select topic 1: Kenapa kaset analog begitu ditakuti birokrasi?
+	dlg._on_choice_clicked(1, "")
 	await _advance_dialogue(dlg)
-	print("Prescott manual topic branching verified.")
+	assert(GameManager.has_note("kasus_miller"), "Prescott briefing note must be unlocked!")
+	assert(GameManager.has_note("kaset_analog"), "Analog cassette note must unlock when discussed with Prescott!")
+	print("Prescott manual topic branching & note unlock verified.")
 	
 	# 9. Interrogate Miller (Evidence102)
 	var evid102 = ch1.find_child("Evidence102", true, false)
@@ -187,9 +222,11 @@ func _ready() -> void:
 	await get_tree().create_timer(0.45).timeout
 	
 	assert(GameManager.has_flag("combiner_tutorial_done"), "Flag combiner_tutorial_done must be set!")
+	assert(GameManager.has_note("jejak_colin"), "Colin clue note must be unlocked from Miller interrogation!")
+	assert(GameManager.has_note("jejak_kretek"), "Kretek clue note must be unlocked from Evidence103!")
 	assert(dlg.is_active, "Synthesis tutorial dialogue must be playing!")
 	await _advance_dialogue(dlg)
-	print("Synthesis tutorial [C] correctly triggered upon clue correlation.")
+	print("Synthesis tutorial & progressive notes verified.")
 	
 	print("--- ALL CHAPTER 1 EXTENDED TESTS PASSED SUCCESSFULLY! ---")
 	get_tree().quit()

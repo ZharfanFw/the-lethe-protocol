@@ -19,7 +19,7 @@
                     "text": "Ada yang perlu kau pastikan sebelum kita membongkar jaringan Miller ini, Vance?",
                     "choices": [
                         {
-                            "text": "[Tanya Situasi] Bagaimana kondisi distrik Sub-Sektor 4?",
+                            "text": "Bagaimana kondisi distrik Sub-Sektor 4?",
                             "next": [
                                 {
                                     "name": "Detective Miles Prescott",
@@ -32,7 +32,8 @@
                             ]
                         },
                         {
-                            "text": "[Tanya Kaset] Kenapa kaset analog begitu ditakuti birokrasi?",
+                            "text": "Kenapa kaset analog begitu ditakuti birokrasi?",
+                            "note": "kaset_analog",
                             "next": [
                                 {
                                     "name": "Detective Miles Prescott",
@@ -45,7 +46,7 @@
                             ]
                         },
                         {
-                            "text": "[Kembali Tugas] Siap menyelesaikan interogasi Miller",
+                            "text": "Siap menyelesaikan interogasi Miller",
                             "next": [
                                 {
                                     "name": "Detective Miles Prescott",
@@ -61,6 +62,7 @@
     "interactables": {
         "CH1_WAKING": {
             "speaker": "Arthur Vance",
+            "note": "mimpi_masa_kecil",
             "lines": [
                 "Kepalaku berdenyut hebat... Nafasku tersengal. Kilatan rumah panggung kayu, serbuan pasukan, dan senandung kidung ayah... Kenapa mimpi masa kecil itu terasa begitu nyata?",
                 "HUD di korneaku berkedip merah mencatat lonjakan detak jantung. Aku harus menenangkan diri dan memeriksa catatan sebelum melangkah keluar.",
@@ -85,6 +87,7 @@
         },
         "CH1_PRESCOTT_INTRO": {
             "speaker": "Detective Miles Prescott",
+            "note": "kasus_miller",
             "lines": [
                 "Akhirnya kau tiba juga, Vance. Kupikir kau tersesat di labirin pipa pembuangan Sub-Sektor 4.",
                 "Lihat wajahmu... Pucat seperti mayat beku. Jangan bilang kau lupa menenggak jatah penstabil kognitif pagimu lagi?",
@@ -93,7 +96,7 @@
                     "text": "Bagaimana situasinya di pos pemeriksaan ini, Prescott?",
                     "choices": [
                         {
-                            "text": "[Santai] Mengeluhkan cuaca dan kopi dinas",
+                            "text": "Mengeluhkan cuaca dan kopi dinas",
                             "next": [
                                 {
                                     "name": "Detective Miles Prescott",
@@ -110,7 +113,7 @@
                             ]
                         },
                         {
-                            "text": "[Fokus SOP] Langsung tanyakan detail pelanggaran Miller",
+                            "text": "Langsung tanyakan detail pelanggaran Miller",
                             "next": [
                                 {
                                     "name": "Detective Miles Prescott",
@@ -132,6 +135,7 @@
         },
         "CH1_TONIC": {
             "speaker": "HUD-Mirror Biometrik",
+            "note": "anomali_biometrik",
             "lines": [
                 "[ANOMALI KOGNITIF: DETAK JANTUNG +38 BPM // MEMORI TIDAK STABIL]",
                 {
@@ -169,6 +173,7 @@
         },
         "EVID-102": {
             "speaker": "Miller",
+            "note": "jejak_colin",
             "lines": [
                 {
                     "name": "Miller",
@@ -199,7 +204,7 @@
                     "text": "Wajahmu tegang sekali, Vance. Terpikat oleh racun sentimental buronan ini? Bagaimana kita menangani tahanan 402 ini?",
                     "choices": [
                         {
-                            "text": "[Empati] Tanya asal pemutar kaset berpelindung timbal",
+                            "text": "Tanya asal pemutar kaset berpelindung timbal",
                             "memory": 10,
                             "suspicion": 10,
                             "flag": "miller_interrogated",
@@ -220,7 +225,7 @@
                             ]
                         },
                         {
-                            "text": "[SOP Keras] Ancam kirim Miller ke unit lobotomi Sektor 0",
+                            "text": "Ancam kirim Miller ke unit lobotomi Sektor 0",
                             "memory": 0,
                             "suspicion": -15,
                             "flag": "miller_interrogated",
@@ -246,6 +251,7 @@
         },
         "EVID-103": {
             "speaker": "Arthur Vance",
+            "note": "jejak_kretek",
             "lines": [
                 "Puntung kretek Black Clove... aroma cengkeh manis kawasan selatan. Barang selundupan non-sintetis.",
                 {
@@ -256,6 +262,7 @@
         },
         "EVID-104": {
             "speaker": "Arthur Vance",
+            "note": "jejak_tcore",
             "lines": [
                 "Coretan cat fosfor di kisi ventilasi: 0x4F5552 // T-CORE // SPARROW.",
                 {
@@ -270,6 +277,7 @@
         },
         "EVID-105": {
             "speaker": "Arthur Vance",
+            "note": "catatan_thur",
             "lines": [
                 "Peta saluran air menuju Dok Whitehall Bawah.",
                 {
@@ -277,7 +285,7 @@
                     "text": "Catatan untuk Thur: temui aku di batas air sebelum Graves menutup jaringnya. - Colin",
                     "choices": [
                         {
-                            "text": "[Sembunyikan] Simpan catatan Thur di saku mantel",
+                            "text": "Simpan catatan Thur di saku mantel",
                             "memory": 10,
                             "suspicion": 15,
                             "flag": "warehouse_evidence_hidden",
@@ -286,7 +294,7 @@
                             ]
                         },
                         {
-                            "text": "[Lapor Resmi] Tunjukkan rute dok ke Prescott",
+                            "text": "Tunjukkan rute dok ke Prescott",
                             "memory": 0,
                             "suspicion": -15,
                             "next": [

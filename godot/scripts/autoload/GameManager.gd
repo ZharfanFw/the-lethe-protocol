@@ -5,6 +5,7 @@ signal suspicion_changed(new_value: int)
 signal inventory_updated()
 signal deduction_unlocked(deduction_id: String)
 signal profile_unlocked(character_id: String)
+signal note_unlocked(note_id: String)
 signal chapter_transition_started(target_chapter: int)
 signal ending_reached(ending_id: int)
 
@@ -45,6 +46,7 @@ var suspicion_meter: int = 0:
 var collected_evidence: Array[String] = []
 var unlocked_deductions: Array[String] = []
 var unlocked_profiles: Array[String] = []
+var unlocked_notes: Array[String] = []
 var story_flags: Dictionary = {}
 var evidence_db: Dictionary = {}
 var deductions_db: Dictionary = {}
@@ -181,6 +183,7 @@ func reset_to_new_game(slot_id: int) -> void:
 	collected_evidence.clear()
 	unlocked_deductions.clear()
 	unlocked_profiles.clear()
+	unlocked_notes.clear()
 	story_flags = _default_story_flags()
 	inventory_updated.emit()
 
@@ -219,17 +222,26 @@ func add_evidence(evidence_id: String) -> bool:
 func has_evidence(evidence_id: String) -> bool:
 	return collected_evidence.has(evidence_id)
 
-func unlock_profile(character_id: String) -> bool:
-	var clean_id := character_id.to_lower().strip_edges()
-	if clean_id.is_empty() or unlocked_profiles.has(clean_id):
+func _unlock_unique_entry(target: Array[String], raw_id: String, sig: Signal) -> bool:
+	var clean_id := raw_id.to_lower().strip_edges()
+	if clean_id.is_empty() or target.has(clean_id):
 		return false
-	unlocked_profiles.append(clean_id)
-	profile_unlocked.emit(clean_id)
+	target.append(clean_id)
+	sig.emit(clean_id)
 	inventory_updated.emit()
 	return true
 
+func unlock_profile(character_id: String) -> bool:
+	return _unlock_unique_entry(unlocked_profiles, character_id, profile_unlocked)
+
 func has_profile(character_id: String) -> bool:
 	return unlocked_profiles.has(character_id.to_lower().strip_edges())
+
+func unlock_note(note_id: String) -> bool:
+	return _unlock_unique_entry(unlocked_notes, note_id, note_unlocked)
+
+func has_note(note_id: String) -> bool:
+	return unlocked_notes.has(note_id.to_lower().strip_edges())
 
 func unlock_profile_by_name(raw_name: String) -> bool:
 	var lower := raw_name.to_lower()
@@ -415,6 +427,7 @@ func to_save_dict() -> Dictionary:
 			"evidence_collected": collected_evidence.duplicate(),
 			"unlocked_deductions": unlocked_deductions.duplicate(),
 			"unlocked_profiles": unlocked_profiles.duplicate(),
+			"unlocked_notes": unlocked_notes.duplicate(),
 		},
 		"story_flags": story_flags.duplicate(true),
 	}
@@ -446,6 +459,7 @@ func apply_save_data(data: Dictionary) -> bool:
 	_set_string_array(collected_evidence, _migrate_legacy_evidence(inventory.get("evidence_collected", [])))
 	_set_string_array(unlocked_deductions, unlocked_deductions if not inventory.has("unlocked_deductions") else inventory.get("unlocked_deductions", []))
 	_set_string_array(unlocked_profiles, inventory.get("unlocked_profiles", []))
+	_set_string_array(unlocked_notes, inventory.get("unlocked_notes", []))
 	story_flags = _default_story_flags()
 	for key in flags:
 		story_flags[key] = flags[key]

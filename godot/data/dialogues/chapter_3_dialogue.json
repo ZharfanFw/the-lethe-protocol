@@ -22,19 +22,19 @@
 					"text": "Berikan laporanmu sebelum kita masuk ke Arsip Sektor 0.",
 					"choices": [
 						{
-							"text": "[Tenang] Failsafe racun memutus interogasi sebelum selnya terbongkar",
+							"text": "Failsafe racun memutus interogasi sebelum selnya terbongkar",
 							"memory": 0,
 							"suspicion": 0,
 							"flag": "ch3_alibi_cleared"
 						},
 						{
-							"text": "[Agresif] Gunakan kewenangan Surat Perintah Eksekutif Graves",
+							"text": "Gunakan kewenangan Surat Perintah Eksekutif Graves",
 							"memory": 0,
 							"suspicion": -10,
 							"flag": "ch3_alibi_cleared"
 						},
 						{
-							"text": "[Gugup] Jawab terbata-bata sambil menyeka keringat dingin",
+							"text": "Jawab terbata-bata sambil menyeka keringat dingin",
 							"memory": 0,
 							"suspicion": 25,
 							"flag": "ch3_alibi_cleared"
@@ -45,6 +45,7 @@
 		},
 		"EVID-301": {
 			"speaker": "Arthur Vance",
+			"note": "sektor_0_laci",
 			"lines": [
 				"Dial kunci 1-2-0-9-4 membuka Laci 884-B. Ukiran kayu ulin ayah ada di dalamnya!",
 				"Struktur gelombang fonetik kuno tersimpan utuh di setiap lekukannya."
@@ -52,6 +53,7 @@
 		},
 		"EVID-302": {
 			"speaker": "Arthur Vance",
+			"note": "undercity_shaw",
 			"lines": [
 				"Rekaman suaraku sendiri: Kunci logikanya ada pada ukiran kayu ayahmu, tapi modul fisiknya ada pada Komandan Garrick Shaw.",
 				"Graves sedang mengirim pasukan ke Stasiun Maglev Tua Undercity. Aku harus segera ke sana."
@@ -72,7 +74,7 @@
 					"text": "Peluncur granat fosfor siap, Inspektur! Beri perintah untuk meratakan peron pemberontak ini!",
 					"choices": [
 						{
-							"text": "[Sabotase] Teriakkan peringatan ranjau palsu & bisikkan sandi 12094 ke Shaw",
+							"text": "Teriakkan peringatan ranjau palsu & bisikkan sandi 12094 ke Shaw",
 							"memory": 25,
 							"suspicion": 30,
 							"flag": "garrick_shaw_spared",
@@ -81,7 +83,7 @@
 							]
 						},
 						{
-							"text": "[Taat] Perintahkan tembak fosfor demi menjaga penyamaran",
+							"text": "Perintahkan tembak fosfor demi menjaga penyamaran",
 							"memory": 10,
 							"suspicion": -25,
 							"flag": "garrick_shaw_killed",

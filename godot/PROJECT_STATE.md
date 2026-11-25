@@ -132,10 +132,11 @@
 - **Tutorial Natural & Misteri Prolog**:
   - Menghapus label teks `[TUTORIAL]` pada dialog intro dan sintesis bukti agar narasi mengalir alami.
   - Nama Lucian Graves pada cutscene prolog slide 2 disamarkan menjadi `???` agar identitas antagonis tidak langsung terungkap sejak awal.
-- **Progressive Empty Inventory & Profiles**:
-  - Game baru dimulai dengan inventori kosong (`collected_evidence = []`). Arthur memperoleh lencana resmi `lencana` saat berinteraksi dengan meja/lemari dinas di apartemen.
-  - Menambahkan sistem `unlocked_profiles` di `GameManager.gd` yang tersimpan permanen di Save/Load slot. Tab Profil Buku Catatan Detektif kini mulai kosong dan secara dinamis mencatat karakter begitu pemain pertama kali bertemu atau berinteraksi dengan mereka (misal: Prescott saat tiba di pos, Miller saat diinterogasi).
-  - Notebook dan ItemCombiner menangani status kosong secara elegan tanpa fallback dummy item.
+- **Progressive Empty Inventory, Notes & Profiles (2026-11-25)**:
+  - Menghapus awalan `[...]` pada seluruh opsi pilihan dialog di `chapter_1..3_dialogue.json` sehingga langsung menampilkan kalimat tindakan polos.
+  - Game baru dimulai dengan inventori, catatan (`unlocked_notes`), dan profil (`unlocked_profiles`) kosong di `GameManager.gd` serta tersimpan permanen di Save/Load slot.
+  - Catatan di tab `Catatan` terbuka secara progresif ketika topik dibahas dalam dialog atau ditemukan di TKP (mimpi rumah kayu tanpa spoiler Lucian Graves, anomali biometrik, kasus Miller, bahaya kaset analog, jejak Colin, kretek, T-CORE, catatan Thur, hingga Chapter 2–3).
+  - Memperbaiki bug empty state di `detective_notebook.gd` dan `item_combiner.gd` sehingga navigasi tab (`ui_left`/`ui_right`), `Esc`, dan `C` tetap bekerja saat tab/inventori kosong dan tampilan kanan tidak bertumpuk.
 
 ### Next Steps for Team
 1. Refine building/prop collision shapes in `scenes/maps/sub_sector_4.tscn` (Chapter 1 now uses `npc_miller.tscn` and `npc_prescott.tscn`) and polish the 5 ending presentations (`scenes/endings/ending_screen.gd`).

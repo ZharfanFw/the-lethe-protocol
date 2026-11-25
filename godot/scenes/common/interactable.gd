@@ -110,6 +110,9 @@ func interact() -> void:
 		var entry := GameManager.get_interactable_dialogue(lookup_id)
 		if not entry.is_empty():
 			active_speaker = str(entry.get("speaker", active_speaker))
+			var json_note: String = str(entry.get("note", ""))
+			if not json_note.is_empty():
+				GameManager.unlock_note(json_note)
 			var json_lines: Variant = entry.get("lines", [])
 			if json_lines is Array and not json_lines.is_empty():
 				active_lines = json_lines

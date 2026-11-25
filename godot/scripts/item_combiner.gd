@@ -263,6 +263,12 @@ func _refresh_ui() -> void:
 		if scroll_track: scroll_track.visible = false
 		if icon_a: icon_a.texture = null
 		if icon_b: icon_b.texture = null
+		if icon_result: icon_result.texture = null
+		if mystery_lbl: mystery_lbl.visible = true
+		if result_slot: result_slot.self_modulate = C_CARD
+		if combine_btn: combine_btn.self_modulate = C_CARD
+		for b in [beam_left, beam_right, beam_down]:
+			if b: b.color = C_DIM
 		if status_text: status_text.text = "[color=#88d4e8]Belum ada barang bukti yang dapat dianalisis.[/color]"
 		return
 	if selector:
@@ -369,12 +375,12 @@ func _unhandled_input(e: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 			open_requested.emit()
 		return
-	if is_animating or inventory.is_empty(): return
-	if e.is_action_pressed("toggle_combiner") or e.is_action_pressed("ui_cancel"):
+	if is_animating: return
+	if e.is_action_pressed("toggle_combiner") or e.is_action_pressed("ui_cancel") or (e is InputEventKey and e.is_pressed() and not e.is_echo() and e.keycode == KEY_ESCAPE):
 		get_viewport().set_input_as_handled()
 		close_combiner()
 		return
-	if is_game_over: return
+	if is_game_over or inventory.is_empty(): return
 	if e.is_action_pressed("ui_down"): get_viewport().set_input_as_handled(); idx = (idx + 1) % inventory.size(); _refresh_ui()
 	elif e.is_action_pressed("ui_up"): get_viewport().set_input_as_handled(); idx = (idx - 1 + inventory.size()) % inventory.size(); _refresh_ui()
 	elif e is InputEventMouseButton and e.pressed and e.button_index in [MOUSE_BUTTON_WHEEL_DOWN, MOUSE_BUTTON_WHEEL_UP]:

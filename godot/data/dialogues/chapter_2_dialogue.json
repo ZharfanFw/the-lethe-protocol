@@ -31,6 +31,7 @@
 		},
 		"EVID-202": {
 			"speaker": "Direktur Lucian Graves",
+			"note": "pencurian_vault",
 			"lines": [
 				"Deep Vault ditembus selama 40 milidetik memakai VANCE-CIPHER_REV3. Buronan Sparrow terdeteksi di Dok Whitehall Bawah.",
 				{
@@ -38,7 +39,7 @@
 					"text": "Ambil token penyerbuan ini, Vance. Pimpin pasukan elit dan bawa dia hidup-hidup.",
 					"choices": [
 						{
-							"text": "[Dingin & Analitis] Terima token tanpa mempertanyakan asal kode",
+							"text": "Terima token tanpa mempertanyakan asal kode",
 							"memory": 15,
 							"suspicion": 0,
 							"flag": "graves_token_issued",
@@ -47,7 +48,7 @@
 							]
 						},
 						{
-							"text": "[Kritis] Pertanyakan kenapa algoritma itu memakai namamu",
+							"text": "Pertanyakan kenapa algoritma itu memakai namamu",
 							"memory": 15,
 							"suspicion": 20,
 							"flag": "graves_token_issued",
@@ -61,6 +62,7 @@
 		},
 		"EVID-203": {
 			"speaker": "Colin Ward",
+			"note": "identitas_thur",
 			"lines": [
 				"Thur...? Kita tumbuh besar di desa adat sebelum Graves membunuh ayahmu, Edward Vance!",
 				"Kamu yang merancang The Lethe Protocol dan menanam pintu belakang Protokol Jayabaya dengan sandi aksara ayahmu!",

@@ -305,6 +305,9 @@ func _show_next_line() -> void:
 
 	var current_line: Dictionary = dialogue_queue.pop_front()
 	current_active_line = current_line
+	var line_note: String = str(current_line.get("note", ""))
+	if not line_note.is_empty():
+		GameManager.unlock_note(line_note)
 
 	var s_name: String = _sanitize_speaker_name(str(current_line.get("name", "UNKNOWN")))
 	if speaker_name:
@@ -450,6 +453,7 @@ func _on_choice_clicked(index: int, text: String) -> void:
 		var sus_delta: int = int(chosen_data.get("suspicion", 0))
 		var flag_name: String = str(chosen_data.get("flag", ""))
 		var ev_id: String = str(chosen_data.get("evidence", ""))
+		var note_id: String = str(chosen_data.get("note", ""))
 		if mem_delta != 0:
 			GameManager.add_memory(mem_delta)
 		if sus_delta != 0:
@@ -458,6 +462,8 @@ func _on_choice_clicked(index: int, text: String) -> void:
 			GameManager.set_flag(flag_name, true)
 		if not ev_id.is_empty():
 			GameManager.add_evidence(ev_id)
+		if not note_id.is_empty():
+			GameManager.unlock_note(note_id)
 		var follow_lines: Variant = chosen_data.get("next", [])
 		if follow_lines is Array and not follow_lines.is_empty():
 			for j in range(follow_lines.size() - 1, -1, -1):

@@ -36,6 +36,9 @@ func _trigger_waking_dialogue() -> void:
 		await get_tree().create_timer(0.4).timeout
 		var entry := GameManager.get_interactable_dialogue("CH1_WAKING")
 		if not entry.is_empty():
+			var note_id: String = str(entry.get("note", ""))
+			if not note_id.is_empty():
+				GameManager.unlock_note(note_id)
 			var speaker: String = str(entry.get("speaker", "Arthur Vance"))
 			var lines: Array = entry.get("lines", [])
 			UIManager.say(speaker, lines)
@@ -49,6 +52,9 @@ func _on_subsector4_loaded() -> void:
 	await get_tree().create_timer(0.4).timeout
 	var entry := GameManager.get_interactable_dialogue("CH1_PRESCOTT_INTRO")
 	if not entry.is_empty():
+		var note_id: String = str(entry.get("note", ""))
+		if not note_id.is_empty():
+			GameManager.unlock_note(note_id)
 		var speaker: String = str(entry.get("speaker", "Detective Miles Prescott"))
 		var lines: Array = entry.get("lines", [])
 		UIManager.say(speaker, lines)
