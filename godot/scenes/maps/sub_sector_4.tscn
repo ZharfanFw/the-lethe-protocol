@@ -1,85 +1,802 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=19 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/map/sub_sector.png" id="1_map_texture"]
-[ext_resource type="PackedScene" path="res://scenes/npc_miller.tscn" id="2_miller_scene"]
-[ext_resource type="PackedScene" path="res://scenes/npc_prescott.tscn" id="3_prescott_scene"]
-[ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="4_interactable"]
-[ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="5_exit"]
+[ext_resource type="PackedScene" path="res://scenes/npc_miller.tscn" id="1_miller_scene"]
+[ext_resource type="PackedScene" path="res://scenes/npc_prescott.tscn" id="2_prescott_scene"]
+[ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="3_interactable"]
+[ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="4_exit"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_outer_h"]
-size = Vector2(1448, 40)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_top_left"]
+size = Vector2(600, 48)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_outer_v"]
-size = Vector2(40, 1000)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_top_right"]
+size = Vector2(648, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_bottom_left"]
+size = Vector2(600, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_bottom_right"]
+size = Vector2(648, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_outer_side"]
+size = Vector2(32, 560)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_div_upper"]
+size = Vector2(24, 202)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_div_lower"]
+size = Vector2(24, 102)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_corridor_wall"]
+size = Vector2(88, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interrogation_desk"]
+size = Vector2(130, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_small_table"]
+size = Vector2(84, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_coffee_counter"]
+size = Vector2(56, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_patrol_van"]
+size = Vector2(150, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rack"]
+size = Vector2(140, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oil_drum"]
+size = Vector2(48, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vent_unit"]
+size = Vector2(86, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_generator"]
+size = Vector2(92, 52)
 
 [node name="SubSector4" type="Node2D"]
 y_sort_enabled = true
 
-[node name="MapBackground" type="Sprite2D" parent="."]
-texture = ExtResource("1_map_texture")
-centered = false
+[node name="VoidBackdrop" type="ColorRect" parent="."]
+offset_right = 1360.0
+offset_bottom = 560.0
+mouse_filter = 2
+color = Color(0.03, 0.04, 0.06, 1)
 
-[node name="Boundaries" type="StaticBody2D" parent="."]
+[node name="PosFloor" type="ColorRect" parent="."]
+offset_left = 32.0
+offset_top = 48.0
+offset_right = 600.0
+offset_bottom = 512.0
+mouse_filter = 2
+color = Color(0.07, 0.09, 0.13, 1)
+
+[node name="PosFloorGrid" type="ColorRect" parent="."]
+offset_left = 48.0
+offset_top = 64.0
+offset_right = 584.0
+offset_bottom = 496.0
+mouse_filter = 2
+color = Color(0, 0.94, 1, 0.025)
+
+[node name="HoldingCellFloor" type="ColorRect" parent="."]
+offset_left = 260.0
+offset_top = 120.0
+offset_right = 420.0
+offset_bottom = 260.0
+mouse_filter = 2
+color = Color(0.05, 0.12, 0.18, 0.55)
+
+[node name="HoldingCellBorder" type="ColorRect" parent="."]
+offset_left = 260.0
+offset_top = 120.0
+offset_right = 420.0
+offset_bottom = 122.0
+mouse_filter = 2
+color = Color(0, 0.94, 1, 0.3)
+
+[node name="AlleyFloor" type="ColorRect" parent="."]
+offset_left = 600.0
+offset_top = 250.0
+offset_right = 736.0
+offset_bottom = 410.0
+mouse_filter = 2
+color = Color(0.04, 0.05, 0.08, 1)
+
+[node name="AlleyPuddle1" type="ColorRect" parent="."]
+offset_left = 636.0
+offset_top = 285.0
+offset_right = 684.0
+offset_bottom = 315.0
+mouse_filter = 2
+color = Color(0, 0.65, 0.85, 0.1)
+
+[node name="AlleyPuddle2" type="ColorRect" parent="."]
+offset_left = 656.0
+offset_top = 345.0
+offset_right = 702.0
+offset_bottom = 372.0
+mouse_filter = 2
+color = Color(0, 0.65, 0.85, 0.08)
+
+[node name="WarehouseFloor" type="ColorRect" parent="."]
+offset_left = 736.0
+offset_top = 48.0
+offset_right = 1328.0
+offset_bottom = 512.0
+mouse_filter = 2
+color = Color(0.075, 0.075, 0.095, 1)
+
+[node name="WarehouseGrate1" type="ColorRect" parent="."]
+offset_left = 768.0
+offset_top = 148.0
+offset_right = 1296.0
+offset_bottom = 472.0
+mouse_filter = 2
+color = Color(0.95, 0.55, 0.15, 0.02)
+
+[node name="HazardPath" type="ColorRect" parent="."]
+offset_left = 736.0
+offset_top = 296.0
+offset_right = 1328.0
+offset_bottom = 364.0
+mouse_filter = 2
+color = Color(0.14, 0.13, 0.11, 0.45)
+
+[node name="Walls" type="StaticBody2D" parent="."]
 collision_layer = 1
 collision_mask = 1
 
-[node name="OuterTop" type="CollisionShape2D" parent="Boundaries"]
-position = Vector2(704, -20)
-shape = SubResource("RectangleShape2D_outer_h")
+[node name="PosTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(300, 24)
+shape = SubResource("RectangleShape2D_wall_top_left")
 
-[node name="OuterBottom" type="CollisionShape2D" parent="Boundaries"]
-position = Vector2(704, 980)
-shape = SubResource("RectangleShape2D_outer_h")
+[node name="WarehouseTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1036, 24)
+shape = SubResource("RectangleShape2D_wall_top_right")
 
-[node name="OuterLeft" type="CollisionShape2D" parent="Boundaries"]
-position = Vector2(-20, 480)
-shape = SubResource("RectangleShape2D_outer_v")
+[node name="PosBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(300, 536)
+shape = SubResource("RectangleShape2D_wall_bottom_left")
 
-[node name="OuterRight" type="CollisionShape2D" parent="Boundaries"]
-position = Vector2(1428, 480)
-shape = SubResource("RectangleShape2D_outer_v")
+[node name="WarehouseBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1036, 536)
+shape = SubResource("RectangleShape2D_wall_bottom_right")
 
-[node name="NPCMiller" parent="." instance=ExtResource("2_miller_scene")]
-position = Vector2(420, 270)
+[node name="OuterLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(16, 280)
+shape = SubResource("RectangleShape2D_wall_outer_side")
 
-[node name="NPCMilesPrescott" parent="." instance=ExtResource("3_prescott_scene")]
-position = Vector2(540, 250)
+[node name="OuterRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(1344, 280)
+shape = SubResource("RectangleShape2D_wall_outer_side")
 
-[node name="Evidence101" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(470, 210)
+[node name="PosRightUpper" type="CollisionShape2D" parent="Walls"]
+position = Vector2(612, 149)
+shape = SubResource("RectangleShape2D_div_upper")
+
+[node name="PosRightLower" type="CollisionShape2D" parent="Walls"]
+position = Vector2(612, 461)
+shape = SubResource("RectangleShape2D_div_lower")
+
+[node name="WarehouseLeftUpper" type="CollisionShape2D" parent="Walls"]
+position = Vector2(724, 149)
+shape = SubResource("RectangleShape2D_div_upper")
+
+[node name="WarehouseLeftLower" type="CollisionShape2D" parent="Walls"]
+position = Vector2(724, 461)
+shape = SubResource("RectangleShape2D_div_lower")
+
+[node name="AlleyWallTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(668, 238)
+shape = SubResource("RectangleShape2D_corridor_wall")
+
+[node name="AlleyWallBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(668, 422)
+shape = SubResource("RectangleShape2D_corridor_wall")
+
+[node name="WallVisuals" type="Node2D" parent="."]
+
+[node name="PosWallTop" type="ColorRect" parent="WallVisuals"]
+offset_right = 624.0
+offset_bottom = 48.0
+mouse_filter = 2
+color = Color(0.04, 0.055, 0.09, 1)
+
+[node name="PosWallGlow" type="ColorRect" parent="WallVisuals"]
+offset_left = 32.0
+offset_top = 46.0
+offset_right = 600.0
+offset_bottom = 48.0
+mouse_filter = 2
+color = Color(0, 0.94, 1, 0.45)
+
+[node name="PosSign" type="Label" parent="WallVisuals"]
+offset_left = 150.0
+offset_top = 14.0
+offset_right = 470.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 0.85)
+theme_override_font_sizes/font_size = 8
+text = "POS PEMERIKSAAN UNIT V-09 // SUB-SEKTOR 4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WarehouseWallTop" type="ColorRect" parent="WallVisuals"]
+offset_left = 712.0
+offset_right = 1360.0
+offset_bottom = 48.0
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.07, 1)
+
+[node name="WarehouseWallGlow" type="ColorRect" parent="WallVisuals"]
+offset_left = 736.0
+offset_top = 46.0
+offset_right = 1328.0
+offset_bottom = 48.0
+mouse_filter = 2
+color = Color(1, 0.58, 0.15, 0.4)
+
+[node name="WarehouseSign" type="Label" parent="WallVisuals"]
+offset_left = 860.0
+offset_top = 14.0
+offset_right = 1200.0
+offset_bottom = 34.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 0.68, 0.25, 0.85)
+theme_override_font_sizes/font_size = 8
+text = "GUDANG SUKU CADANG LAMA // ZONA SABOTASE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PosWallLeft" type="ColorRect" parent="WallVisuals"]
+offset_bottom = 560.0
+offset_right = 32.0
+mouse_filter = 2
+color = Color(0.04, 0.055, 0.09, 1)
+
+[node name="WarehouseWallRight" type="ColorRect" parent="WallVisuals"]
+offset_left = 1328.0
+offset_right = 1360.0
+offset_bottom = 560.0
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.07, 1)
+
+[node name="PosWallBottom" type="ColorRect" parent="WallVisuals"]
+offset_top = 512.0
+offset_right = 624.0
+offset_bottom = 560.0
+mouse_filter = 2
+color = Color(0.04, 0.055, 0.09, 1)
+
+[node name="WarehouseWallBottom" type="ColorRect" parent="WallVisuals"]
+offset_left = 712.0
+offset_top = 512.0
+offset_right = 1360.0
+offset_bottom = 560.0
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.07, 1)
+
+[node name="DivPosUpper" type="ColorRect" parent="WallVisuals"]
+offset_left = 600.0
+offset_top = 48.0
+offset_right = 624.0
+offset_bottom = 250.0
+mouse_filter = 2
+color = Color(0.04, 0.055, 0.09, 1)
+
+[node name="DivPosLower" type="ColorRect" parent="WallVisuals"]
+offset_left = 600.0
+offset_top = 410.0
+offset_right = 624.0
+offset_bottom = 512.0
+mouse_filter = 2
+color = Color(0.04, 0.055, 0.09, 1)
+
+[node name="DivWhUpper" type="ColorRect" parent="WallVisuals"]
+offset_left = 712.0
+offset_top = 48.0
+offset_right = 736.0
+offset_bottom = 250.0
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.07, 1)
+
+[node name="DivWhLower" type="ColorRect" parent="WallVisuals"]
+offset_left = 712.0
+offset_top = 410.0
+offset_right = 736.0
+offset_bottom = 512.0
+mouse_filter = 2
+color = Color(0.05, 0.05, 0.07, 1)
+
+[node name="AlleyTopBar" type="ColorRect" parent="WallVisuals"]
+offset_left = 624.0
+offset_top = 226.0
+offset_right = 712.0
+offset_bottom = 250.0
+mouse_filter = 2
+color = Color(0.04, 0.05, 0.08, 1)
+
+[node name="AlleyBottomBar" type="ColorRect" parent="WallVisuals"]
+offset_left = 624.0
+offset_top = 410.0
+offset_right = 712.0
+offset_bottom = 434.0
+mouse_filter = 2
+color = Color(0.04, 0.05, 0.08, 1)
+
+[node name="AlleySign" type="Label" parent="WallVisuals"]
+offset_left = 620.0
+offset_top = 204.0
+offset_right = 716.0
+offset_bottom = 220.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.55, 0.85, 0.95, 0.75)
+theme_override_font_sizes/font_size = 7
+text = "KE GUDANG ->"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InterrogationDesk" type="StaticBody2D" parent="."]
+position = Vector2(340, 265)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="InterrogationDesk"]
+shape = SubResource("RectangleShape2D_interrogation_desk")
+
+[node name="Body" type="ColorRect" parent="InterrogationDesk"]
+offset_left = -65.0
+offset_top = -19.0
+offset_right = 65.0
+offset_bottom = 19.0
+mouse_filter = 2
+color = Color(0.11, 0.14, 0.19, 1)
+
+[node name="TopTrim" type="ColorRect" parent="InterrogationDesk"]
+offset_left = -65.0
+offset_top = -19.0
+offset_right = 65.0
+offset_bottom = -16.0
+mouse_filter = 2
+color = Color(0, 0.94, 1, 0.45)
+
+[node name="CassettePlayerBody" type="ColorRect" parent="InterrogationDesk"]
+offset_left = -22.0
+offset_top = -10.0
+offset_right = 22.0
+offset_bottom = 12.0
+mouse_filter = 2
+color = Color(0.18, 0.21, 0.26, 1)
+
+[node name="ReelLeft" type="ColorRect" parent="InterrogationDesk"]
+offset_left = -14.0
+offset_top = -5.0
+offset_right = -6.0
+offset_bottom = 3.0
+mouse_filter = 2
+color = Color(0.05, 0.07, 0.1, 1)
+
+[node name="ReelRight" type="ColorRect" parent="InterrogationDesk"]
+offset_left = 6.0
+offset_top = -5.0
+offset_right = 14.0
+offset_bottom = 3.0
+mouse_filter = 2
+color = Color(0.05, 0.07, 0.1, 1)
+
+[node name="PlayDot" type="ColorRect" parent="InterrogationDesk"]
+offset_left = -3.0
+offset_top = 6.0
+offset_right = 3.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0, 1, 0.55, 0.85)
+
+[node name="EvidenceTable" type="StaticBody2D" parent="."]
+position = Vector2(470, 165)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="EvidenceTable"]
+shape = SubResource("RectangleShape2D_small_table")
+
+[node name="Body" type="ColorRect" parent="EvidenceTable"]
+offset_left = -42.0
+offset_top = -18.0
+offset_right = 42.0
+offset_bottom = 18.0
+mouse_filter = 2
+color = Color(0.1, 0.13, 0.18, 1)
+
+[node name="Tray" type="ColorRect" parent="EvidenceTable"]
+offset_left = -26.0
+offset_top = -10.0
+offset_right = 26.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.05, 0.19, 0.27, 0.9)
+
+[node name="TapeCase" type="ColorRect" parent="EvidenceTable"]
+offset_left = -14.0
+offset_top = -6.0
+offset_right = 14.0
+offset_bottom = 6.0
+mouse_filter = 2
+color = Color(0.85, 0.65, 0.15, 0.95)
+
+[node name="TapeWindow" type="ColorRect" parent="EvidenceTable"]
+offset_left = -8.0
+offset_top = -2.0
+offset_right = 8.0
+offset_bottom = 2.0
+mouse_filter = 2
+color = Color(0.05, 0.08, 0.12, 1)
+
+[node name="CoffeeCounter" type="StaticBody2D" parent="."]
+position = Vector2(555, 165)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="CoffeeCounter"]
+shape = SubResource("RectangleShape2D_coffee_counter")
+
+[node name="Body" type="ColorRect" parent="CoffeeCounter"]
+offset_left = -28.0
+offset_top = -16.0
+offset_right = 28.0
+offset_bottom = 16.0
+mouse_filter = 2
+color = Color(0.1, 0.12, 0.17, 1)
+
+[node name="CoffeeMachine" type="ColorRect" parent="CoffeeCounter"]
+offset_left = -18.0
+offset_top = -12.0
+offset_right = 4.0
+offset_bottom = 6.0
+mouse_filter = 2
+color = Color(0.18, 0.2, 0.25, 1)
+
+[node name="Mug" type="ColorRect" parent="CoffeeCounter"]
+offset_left = 10.0
+offset_top = -4.0
+offset_right = 18.0
+offset_bottom = 4.0
+mouse_filter = 2
+color = Color(0.75, 0.85, 0.9, 0.9)
+
+[node name="PatrolVan" type="StaticBody2D" parent="."]
+position = Vector2(145, 445)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="PatrolVan"]
+shape = SubResource("RectangleShape2D_patrol_van")
+
+[node name="Chassis" type="ColorRect" parent="PatrolVan"]
+offset_left = -75.0
+offset_top = -28.0
+offset_right = 75.0
+offset_bottom = 28.0
+mouse_filter = 2
+color = Color(0.07, 0.11, 0.16, 1)
+
+[node name="Windshield" type="ColorRect" parent="PatrolVan"]
+offset_left = 36.0
+offset_top = -22.0
+offset_right = 66.0
+offset_bottom = 22.0
+mouse_filter = 2
+color = Color(0, 0.72, 0.9, 0.35)
+
+[node name="SirenStrip" type="ColorRect" parent="PatrolVan"]
+offset_left = -10.0
+offset_top = -24.0
+offset_right = 2.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0, 0.94, 1, 0.7)
+
+[node name="VanLabel" type="Label" parent="PatrolVan"]
+offset_left = -66.0
+offset_top = -10.0
+offset_right = 28.0
+offset_bottom = 10.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 0.7)
+theme_override_font_sizes/font_size = 7
+text = "UNIT V-09"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RackNorth1" type="StaticBody2D" parent="."]
+position = Vector2(850, 95)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="RackNorth1"]
+shape = SubResource("RectangleShape2D_rack")
+
+[node name="Body" type="ColorRect" parent="RackNorth1"]
+offset_left = -70.0
+offset_top = -18.0
+offset_right = 70.0
+offset_bottom = 18.0
+mouse_filter = 2
+color = Color(0.14, 0.12, 0.11, 1)
+
+[node name="Crate1" type="ColorRect" parent="RackNorth1"]
+offset_left = -56.0
+offset_top = -12.0
+offset_right = -12.0
+offset_bottom = 12.0
+mouse_filter = 2
+color = Color(0.24, 0.18, 0.14, 1)
+
+[node name="Crate2" type="ColorRect" parent="RackNorth1"]
+offset_left = 10.0
+offset_top = -10.0
+offset_right = 56.0
+offset_bottom = 12.0
+mouse_filter = 2
+color = Color(0.19, 0.2, 0.24, 1)
+
+[node name="RackNorth2" type="StaticBody2D" parent="."]
+position = Vector2(1140, 95)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="RackNorth2"]
+shape = SubResource("RectangleShape2D_rack")
+
+[node name="Body" type="ColorRect" parent="RackNorth2"]
+offset_left = -70.0
+offset_top = -18.0
+offset_right = 70.0
+offset_bottom = 18.0
+mouse_filter = 2
+color = Color(0.14, 0.12, 0.11, 1)
+
+[node name="Crate1" type="ColorRect" parent="RackNorth2"]
+offset_left = -52.0
+offset_top = -12.0
+offset_right = -4.0
+offset_bottom = 12.0
+mouse_filter = 2
+color = Color(0.22, 0.19, 0.15, 1)
+
+[node name="RackSouth" type="StaticBody2D" parent="."]
+position = Vector2(890, 465)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="RackSouth"]
+shape = SubResource("RectangleShape2D_rack")
+
+[node name="Body" type="ColorRect" parent="RackSouth"]
+offset_left = -70.0
+offset_top = -18.0
+offset_right = 70.0
+offset_bottom = 18.0
+mouse_filter = 2
+color = Color(0.14, 0.12, 0.11, 1)
+
+[node name="Pipes" type="ColorRect" parent="RackSouth"]
+offset_left = -58.0
+offset_top = -8.0
+offset_right = 58.0
+offset_bottom = 8.0
+mouse_filter = 2
+color = Color(0.32, 0.25, 0.16, 0.9)
+
+[node name="OilDrumProp" type="StaticBody2D" parent="."]
+position = Vector2(785, 300)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="OilDrumProp"]
+shape = SubResource("RectangleShape2D_oil_drum")
+
+[node name="OilSpill" type="ColorRect" parent="OilDrumProp"]
+offset_left = -30.0
+offset_top = 12.0
+offset_right = 26.0
+offset_bottom = 36.0
+mouse_filter = 2
+color = Color(0.02, 0.02, 0.03, 0.85)
+
+[node name="DrumBody" type="ColorRect" parent="OilDrumProp"]
+offset_left = -20.0
+offset_top = -22.0
+offset_right = 20.0
+offset_bottom = 18.0
+mouse_filter = 2
+color = Color(0.38, 0.18, 0.12, 1)
+
+[node name="DrumStripe" type="ColorRect" parent="OilDrumProp"]
+offset_left = -20.0
+offset_top = -4.0
+offset_right = 20.0
+offset_bottom = 4.0
+mouse_filter = 2
+color = Color(0.85, 0.55, 0.15, 0.9)
+
+[node name="KretekButt" type="ColorRect" parent="OilDrumProp"]
+offset_left = 10.0
+offset_top = 24.0
+offset_right = 20.0
+offset_bottom = 28.0
+mouse_filter = 2
+color = Color(0.88, 0.82, 0.72, 1)
+
+[node name="KretekEmber" type="ColorRect" parent="OilDrumProp"]
+offset_left = 20.0
+offset_top = 24.0
+offset_right = 24.0
+offset_bottom = 28.0
+mouse_filter = 2
+color = Color(1, 0.35, 0.1, 1)
+
+[node name="VentUnitProp" type="StaticBody2D" parent="."]
+position = Vector2(945, 215)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="VentUnitProp"]
+shape = SubResource("RectangleShape2D_vent_unit")
+
+[node name="Housing" type="ColorRect" parent="VentUnitProp"]
+offset_left = -43.0
+offset_top = -19.0
+offset_right = 43.0
+offset_bottom = 19.0
+mouse_filter = 2
+color = Color(0.14, 0.16, 0.2, 1)
+
+[node name="Grille1" type="ColorRect" parent="VentUnitProp"]
+offset_left = -35.0
+offset_top = -11.0
+offset_right = 35.0
+offset_bottom = -7.0
+mouse_filter = 2
+color = Color(0.04, 0.05, 0.07, 1)
+
+[node name="Grille2" type="ColorRect" parent="VentUnitProp"]
+offset_left = -35.0
+offset_top = -2.0
+offset_right = 35.0
+offset_bottom = 2.0
+mouse_filter = 2
+color = Color(0.04, 0.05, 0.07, 1)
+
+[node name="Grille3" type="ColorRect" parent="VentUnitProp"]
+offset_left = -35.0
+offset_top = 7.0
+offset_right = 35.0
+offset_bottom = 11.0
+mouse_filter = 2
+color = Color(0.04, 0.05, 0.07, 1)
+
+[node name="PhosphorTag" type="ColorRect" parent="VentUnitProp"]
+offset_left = -28.0
+offset_top = 14.0
+offset_right = 26.0
+offset_bottom = 17.0
+mouse_filter = 2
+color = Color(0.25, 1, 0.65, 0.75)
+
+[node name="OldGeneratorProp" type="StaticBody2D" parent="."]
+position = Vector2(1095, 330)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="OldGeneratorProp"]
+shape = SubResource("RectangleShape2D_generator")
+
+[node name="Chassis" type="ColorRect" parent="OldGeneratorProp"]
+offset_left = -46.0
+offset_top = -26.0
+offset_right = 46.0
+offset_bottom = 26.0
+mouse_filter = 2
+color = Color(0.14, 0.15, 0.18, 1)
+
+[node name="CopperCoil" type="ColorRect" parent="OldGeneratorProp"]
+offset_left = -36.0
+offset_top = -18.0
+offset_right = -4.0
+offset_bottom = 16.0
+mouse_filter = 2
+color = Color(0.65, 0.38, 0.16, 1)
+
+[node name="HoloPanelGlow" type="ColorRect" parent="OldGeneratorProp"]
+offset_left = 8.0
+offset_top = -14.0
+offset_right = 36.0
+offset_bottom = 12.0
+mouse_filter = 2
+color = Color(0, 0.85, 1, 0.35)
+
+[node name="MapPaperSlip" type="ColorRect" parent="OldGeneratorProp"]
+offset_left = 12.0
+offset_top = 18.0
+offset_right = 32.0
+offset_bottom = 28.0
+mouse_filter = 2
+color = Color(0.95, 0.92, 0.78, 0.95)
+
+[node name="DockGateVisual" type="Node2D" parent="."]
+position = Vector2(1312, 330)
+
+[node name="Frame" type="ColorRect" parent="DockGateVisual"]
+offset_left = -12.0
+offset_top = -48.0
+offset_right = 16.0
+offset_bottom = 48.0
+mouse_filter = 2
+color = Color(0.05, 0.18, 0.24, 1)
+
+[node name="Threshold" type="ColorRect" parent="DockGateVisual"]
+offset_left = -24.0
+offset_top = -40.0
+offset_right = -12.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0, 0.94, 1, 0.22)
+
+[node name="GateSign" type="Label" parent="DockGateVisual"]
+offset_left = -140.0
+offset_top = -68.0
+offset_right = 12.0
+offset_bottom = -50.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0.94, 1, 0.85)
+theme_override_font_sizes/font_size = 7
+text = "KE DOK WHITEHALL ->"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="NPCMiller" parent="." instance=ExtResource("1_miller_scene")]
+position = Vector2(340, 208)
+
+[node name="NPCMilesPrescott" parent="." instance=ExtResource("2_prescott_scene")]
+position = Vector2(545, 250)
+
+[node name="Evidence101" parent="." instance=ExtResource("3_interactable")]
+position = Vector2(470, 206)
 evidence_id = "EVID-101"
 prompt_text = "E"
 memory_bonus = 5
 
-[node name="Evidence102" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(350, 320)
+[node name="Evidence102" parent="." instance=ExtResource("3_interactable")]
+position = Vector2(340, 308)
 evidence_id = "EVID-102"
 flag_to_set = "miller_interrogated"
 prompt_text = "E"
 
-[node name="Evidence103" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(720, 360)
+[node name="Evidence103" parent="." instance=ExtResource("3_interactable")]
+position = Vector2(785, 352)
 evidence_id = "EVID-103"
 flag_to_set = "evid_103_collected"
 prompt_text = "E"
 memory_bonus = 10
 
-[node name="Evidence104" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(880, 320)
+[node name="Evidence104" parent="." instance=ExtResource("3_interactable")]
+position = Vector2(945, 260)
 evidence_id = "EVID-104"
 flag_to_set = "evid_104_collected"
 prompt_text = "E"
 memory_bonus = 10
 
-[node name="Evidence105" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(1040, 380)
+[node name="Evidence105" parent="." instance=ExtResource("3_interactable")]
+position = Vector2(1095, 384)
 evidence_id = "EVID-105"
 flag_to_set = "evid_105_collected"
 prompt_text = "E"
 memory_bonus = 10
 
-[node name="ExitTrigger" parent="." instance=ExtResource("5_exit")]
-position = Vector2(1240, 420)
+[node name="ExitTrigger" parent="." instance=ExtResource("4_exit")]
+position = Vector2(1265, 330)
 target_next_chapter = 2
 required_flags = Array[String](["miller_interrogated", "evid_103_collected", "evid_104_collected", "evid_105_collected"])
 prompt_message = "E"
