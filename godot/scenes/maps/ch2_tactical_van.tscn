@@ -1,0 +1,224 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/npc_colin.tscn" id="1_colin"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_top"]
+size = Vector2(640, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_side"]
+size = Vector2(16, 340)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_bottom"]
+size = Vector2(640, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pillar"]
+size = Vector2(28, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crate"]
+size = Vector2(56, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_monitor"]
+size = Vector2(36, 48)
+
+[node name="Ch2TacticalVan" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.065, 0.075, 0.095, 1)
+
+[node name="SteelBay" type="ColorRect" parent="."]
+offset_left = 100.0
+offset_top = 24.0
+offset_right = 540.0
+offset_bottom = 328.0
+mouse_filter = 2
+color = Color(0.085, 0.095, 0.12, 1)
+
+[node name="RedAmbient" type="ColorRect" parent="."]
+offset_left = 100.0
+offset_top = 24.0
+offset_right = 540.0
+offset_bottom = 328.0
+mouse_filter = 2
+color = Color(0.75, 0.08, 0.14, 0.07)
+
+[node name="FloorStripL" type="ColorRect" parent="."]
+offset_left = 160.0
+offset_top = 24.0
+offset_right = 164.0
+offset_bottom = 328.0
+mouse_filter = 2
+color = Color(0, 0.85, 1, 0.12)
+
+[node name="FloorStripR" type="ColorRect" parent="."]
+offset_left = 476.0
+offset_top = 24.0
+offset_right = 480.0
+offset_bottom = 328.0
+mouse_filter = 2
+color = Color(0, 0.85, 1, 0.12)
+
+[node name="DoorMat" type="ColorRect" parent="."]
+offset_left = 292.0
+offset_top = 310.0
+offset_right = 348.0
+offset_bottom = 328.0
+mouse_filter = 2
+color = Color(0.18, 0.06, 0.09, 0.9)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 1
+
+[node name="TopShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 12)
+shape = SubResource("RectangleShape2D_wall_top")
+
+[node name="LeftShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(108, 170)
+shape = SubResource("RectangleShape2D_wall_side")
+
+[node name="RightShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(532, 170)
+shape = SubResource("RectangleShape2D_wall_side")
+
+[node name="BottomShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 334)
+shape = SubResource("RectangleShape2D_wall_bottom")
+
+[node name="WallLeftOut" type="ColorRect" parent="."]
+offset_right = 116.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.03, 0.035, 0.05, 1)
+
+[node name="WallRightOut" type="ColorRect" parent="."]
+offset_left = 524.0
+offset_right = 640.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.03, 0.035, 0.05, 1)
+
+[node name="WallTopVisual" type="ColorRect" parent="."]
+offset_left = 100.0
+offset_right = 540.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.045, 0.055, 0.075, 1)
+
+[node name="WallBottomVisual" type="ColorRect" parent="."]
+offset_left = 100.0
+offset_top = 328.0
+offset_right = 540.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.045, 0.055, 0.075, 1)
+
+[node name="VanWindow" type="ColorRect" parent="."]
+offset_left = 230.0
+offset_top = 4.0
+offset_right = 410.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(0.04, 0.14, 0.2, 1)
+
+[node name="BloodSmudge" type="ColorRect" parent="."]
+offset_left = 342.0
+offset_top = 8.0
+offset_right = 378.0
+offset_bottom = 16.0
+mouse_filter = 2
+color = Color(0.65, 0.06, 0.1, 0.75)
+
+[node name="WallSign" type="Label" parent="."]
+offset_left = 130.0
+offset_top = 24.0
+offset_right = 510.0
+offset_bottom = 38.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.9, 0.35, 0.4, 0.85)
+theme_override_font_sizes/font_size = 7
+text = "VAN KOMANDO TAKTIS // DOK WHITEHALL BAWAH"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CuffPillar" type="StaticBody2D" parent="."]
+position = Vector2(292, 46)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="CuffPillar"]
+shape = SubResource("RectangleShape2D_pillar")
+
+[node name="Body" type="ColorRect" parent="CuffPillar"]
+offset_left = -14.0
+offset_top = -12.0
+offset_right = 14.0
+offset_bottom = 12.0
+mouse_filter = 2
+color = Color(0.16, 0.18, 0.23, 1)
+
+[node name="Light" type="ColorRect" parent="CuffPillar"]
+offset_left = -6.0
+offset_top = -8.0
+offset_right = 6.0
+offset_bottom = -4.0
+mouse_filter = 2
+color = Color(0.95, 0.2, 0.28, 0.9)
+
+[node name="FailsafeMonitor" type="StaticBody2D" parent="."]
+position = Vector2(142, 140)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="FailsafeMonitor"]
+shape = SubResource("RectangleShape2D_monitor")
+
+[node name="Body" type="ColorRect" parent="FailsafeMonitor"]
+offset_left = -18.0
+offset_top = -24.0
+offset_right = 18.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.11, 0.13, 0.17, 1)
+
+[node name="Screen" type="ColorRect" parent="FailsafeMonitor"]
+offset_left = -12.0
+offset_top = -16.0
+offset_right = 12.0
+offset_bottom = 8.0
+mouse_filter = 2
+color = Color(0.85, 0.12, 0.2, 0.8)
+
+[node name="TacticalCrate" type="StaticBody2D" parent="."]
+position = Vector2(486, 140)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Shape" type="CollisionShape2D" parent="TacticalCrate"]
+shape = SubResource("RectangleShape2D_crate")
+
+[node name="Body" type="ColorRect" parent="TacticalCrate"]
+offset_left = -28.0
+offset_top = -22.0
+offset_right = 28.0
+offset_bottom = 22.0
+mouse_filter = 2
+color = Color(0.13, 0.15, 0.19, 1)
+
+[node name="Strip" type="ColorRect" parent="TacticalCrate"]
+offset_left = -24.0
+offset_top = -4.0
+offset_right = 24.0
+offset_bottom = 0.0
+mouse_filter = 2
+color = Color(0, 0.85, 1, 0.35)
+
+[node name="NPCColin" parent="." instance=ExtResource("1_colin")]
+position = Vector2(292, 74)
+quest_evidence_id = "EVID-203"
+quest_flag = "colin_sparrow_met"
+quest_memory_bonus = 35

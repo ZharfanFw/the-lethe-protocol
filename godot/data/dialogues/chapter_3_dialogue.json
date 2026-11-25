@@ -16,28 +16,59 @@
 		"CH3_ALIBI": {
 			"speaker": "Detective Miles Prescott",
 			"lines": [
-				"Pintu van terkunci 10 menit dan Sparrow sudah tewas saat kubuka. Apa yang terjadi di dalam, Vance?",
+				{
+					"name": "Arthur Vance",
+					"text": "Pintu hidrolik van terbuka. Prescott melangkah ke ambang pintu dengan pistol terhunus, matanya menatap jasad Colin lalu beralih menatapku."
+				},
 				{
 					"name": "Detective Miles Prescott",
-					"text": "Berikan laporanmu sebelum kita masuk ke Arsip Sektor 0.",
+					"text": "Tahanan mati karena racun pengaman otomatis birokrasi. Tapi interogasimu berlangsung terlalu lama, Vance. Apa saja yang dibisikkan tikus perlawanan ini sebelum nyawanya melayang?",
 					"choices": [
 						{
-							"text": "Failsafe racun memutus interogasi sebelum selnya terbongkar",
-							"memory": 0,
-							"suspicion": 0,
-							"flag": "ch3_alibi_cleared"
+							"text": "Dia menolak bicara dan hanya meracau kutukan masa lalu",
+							"flags": ["ch3_alibi_cleared", "ch3_alibi_calm"],
+							"next": [
+								{
+									"name": "Arthur Vance",
+									"text": "Dia menolak berbicara sepatah kata pun mengenai sel pejuangnya. Sebelum racun Graves membunuhnya, dia hanya meracau tentang kutukan masa lalu. Bersihkan mayat ini."
+								},
+								{
+									"name": "Detective Miles Prescott",
+									"text": "Hmph... Racun failsafe memang cepat membungkam mereka. Baiklah, tim forensik akan membereskan sisanya. Tugas kita berlanjut ke Arsip Sektor 0."
+								}
+							]
 						},
 						{
-							"text": "Gunakan kewenangan Surat Perintah Eksekutif Graves",
-							"memory": 0,
-							"suspicion": -10,
-							"flag": "ch3_alibi_cleared"
+							"text": "Jangan pertanyakan kewenanganku di bawah Surat Perintah Eksekutif Graves!",
+							"flags": ["ch3_alibi_cleared", "ch3_alibi_aggressive"],
+							"next": [
+								{
+									"name": "Arthur Vance",
+									"text": "Kau berani menginterogasi caraku menjalankan tugas, Prescott? Sesuai Surat Perintah Eksekutif Direktur Graves, aku memegang kendali penuh atas operasi ini!"
+								},
+								{
+									"name": "Arthur Vance",
+									"text": "Jika kau meragukan kepatuhanku, laporkan ke Dewan Pengawas atau minggir dari jalanku!"
+								},
+								{
+									"name": "Detective Miles Prescott",
+									"text": "Santai saja, Vance. Aku hanya menjalankan prosedur pengawasan. Silakan lanjutkan... aku mundur dari jalanmu."
+								}
+							]
 						},
 						{
-							"text": "Jawab terbata-bata sambil menyeka keringat dingin",
-							"memory": 0,
-							"suspicion": 25,
-							"flag": "ch3_alibi_cleared"
+							"text": "Jawab terbata-bata mengingat masa kecil yang baru kau ingat",
+							"flags": ["ch3_alibi_cleared", "ch3_alibi_nervous"],
+							"next": [
+								{
+									"name": "Arthur Vance",
+									"text": "Dia... dia hanya bicara omong kosong... Tentang masa kecil... dan nama-nama yang tidak kukenal..."
+								},
+								{
+									"name": "Detective Miles Prescott",
+									"text": "Visor biometrikku baru saja mencatat anomali pupil dan detak nadimu, Vance. Kau terlihat pucat sekali... Ingat, aku selalu mengawasimu."
+								}
+							]
 						}
 					]
 				}

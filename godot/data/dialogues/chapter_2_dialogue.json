@@ -6,18 +6,16 @@
 			"speaker": "Direktur Lucian Graves",
 			"role": "PEMIMPIN THE REGISTRY",
 			"lines": [
-				"Inspektur Vance. Tepat waktu seperti biasa.",
-				"Kota ini hanya bertahan karena ingatan yang kita pilih untuk dihapus.",
-				"Jangan biarkan kidung lama ayahmu mengacaukan tugasmu."
+				"Buronan Sparrow sudah terdeteksi di dok kargo Whitehall Bawah.",
+				"Jangan buang waktu di sini, Inspektur. Pimpin pasukan elit dan bawa dia hidup-hidup ke van komando taktis."
 			]
 		},
 		"colin": {
-			"speaker": "Colin Ward",
-			"role": "BURONAN // T-CORE",
+			"speaker": "Arthur Vance",
+			"role": "INSPEKTUR // UNIT V-09",
 			"lines": [
-				"Arthur... kau yang merancang Protokol Jayabaya.",
-				"Kau menyusup untuk menanam sandi aksara ayahmu sendiri.",
-				"Laci 884-B... Sektor 0... jangan sampai Graves menutup jaringnya."
+				"Tubuh Colin sudah dingin di lantai van. Urat lehernya menghitam akibat neurotoksin.",
+				"Aku harus memeriksa residu racun di kerah tahanannya dan goresan darah di kaca jendela van sebelum Prescott membuka pintu."
 			]
 		}
 	},
@@ -25,35 +23,41 @@
 		"EVID-201": {
 			"speaker": "Arthur Vance",
 			"lines": [
-				"Log Vance-Cipher Rev3. Algoritma celah 40ms berbasis fonetik Nusantara.",
-				"Ini gayaku sendiri. Tidak mungkin orang lain yang menulis ini."
+				{
+					"name": "Proyeksi Terminal Kuantum",
+					"text": "[color=#00f0ff]ALGORITHM: VANCE-CIPHER_REV3[/color] // LATENCY: 0.040s\nASYMMETRIC LOGIC GATE // BASE: OLD NUSANTARA CHAR-MAP\n[color=#ffcc00]STATUS: PINTU BELAKANG KUDA TROYA TERDETEKSI[/color]"
+				},
+				"Vance-Cipher...? Algoritma ini menggunakan namaku sendiri! Struktur sintaksis dan efisiensi gerbang logikanya persis dengan gaya berpikirku sebelum memoriku dihapus.",
+				"Siapa sebenarnya diriku sebelum The Tonic menghapus ingatanku? Aku harus kembali melapor pada Direktur Graves."
 			]
 		},
 		"EVID-202": {
 			"speaker": "Direktur Lucian Graves",
 			"note": "pencurian_vault",
 			"lines": [
-				"Deep Vault ditembus selama 40 milidetik memakai VANCE-CIPHER_REV3. Buronan Sparrow terdeteksi di Dok Whitehall Bawah.",
+				"Dini hari tadi, Deep Vault ditembus selama 40 milidetik oleh buronan bernama sandi 'Sparrow'. Algoritma Vance-Cipher Rev3 itu memiliki tanda tangan intelektual yang sangat langka, Vance.",
 				{
 					"name": "Direktur Lucian Graves",
-					"text": "Ambil token penyerbuan ini, Vance. Pimpin pasukan elit dan bawa dia hidup-hidup.",
+					"text": "Kau mengenali struktur logika itu? Sparrow baru saja terdeteksi di dok kargo Whitehall Bawah. Ambil token penyerbuan ini. Pimpin pasukan elit, bawa dia hidup-hidup ke van komando taktis!",
 					"choices": [
 						{
-							"text": "Terima token tanpa mempertanyakan asal kode",
+							"text": "Jawab dingin dan analitis: kambinghitamkan mantan teknisi biro",
 							"memory": 15,
 							"suspicion": 0,
-							"flag": "graves_token_issued",
+							"flags": ["graves_token_issued", "graves_respon_dingin"],
 							"next": [
-								{"name": "Arthur Vance", "text": "Mengerti, Direktur. Tim taktis akan segera mengepung kanal bawah."}
+								{"name": "Arthur Vance", "text": "Ini adalah kode tingkat tinggi, Direktur. Pelaku pasti mantan teknisi senior yang membelot sebelum era restrukturisasi selesai. Pola 40 milidetik ini memanfaatkan celah sinkronisasi satelit pemancar."},
+								{"name": "Direktur Lucian Graves", "text": "Tepat sekali. Analisis yang tajam seperti biasa. Jangan biarkan peretas jalanan ini mempermalukan biro kita."}
 							]
 						},
 						{
-							"text": "Pertanyakan kenapa algoritma itu memakai namamu",
+							"text": "Pertanyakan apakah celah ini sengaja ditinggalkan arsitek masa lalu",
 							"memory": 15,
 							"suspicion": 20,
-							"flag": "graves_token_issued",
+							"flags": ["graves_token_issued", "graves_respon_membela"],
 							"next": [
-								{"name": "Direktur Lucian Graves", "text": "Jangan bertanya di luar yurisdiksimu, Inspektur. Jalankan perintahmu."}
+								{"name": "Arthur Vance", "text": "Bagaimana jika kode ini bukan pembobolan asing, melainkan celah uji coba yang sengaja ditinggalkan arsitek sistem masa lalu untuk menguji integritas data?"},
+								{"name": "Direktur Lucian Graves", "text": "Tidak ada celah yang sengaja ditinggalkan di bawah pengawasanku, Inspektur. Pertanyaanmu terdengar nyaris seperti sebuah pembenaran atas kejahatan teroris ini."}
 							]
 						}
 					]
@@ -64,23 +68,56 @@
 			"speaker": "Colin Ward",
 			"note": "identitas_thur",
 			"lines": [
-				"Thur...? Kita tumbuh besar di desa adat sebelum Graves membunuh ayahmu, Edward Vance!",
-				"Kamu yang merancang The Lethe Protocol dan menanam pintu belakang Protokol Jayabaya dengan sandi aksara ayahmu!",
-				{"name": "Arthur Vance", "text": "Colin... Ya Tuhan... semua ingatanku kembali..."}
+				"Thur...? Kamu benar-benar sudah lupa ya, Thur? Ini aku, Colin! Kita tumbuh besar bersama di desa adat sebelum digusur!",
+				{
+					"name": "Colin Ward",
+					"text": "Kita yang bersumpah di depan nisan ayahmu, EDWARD VANCE, untuk meruntuhkan rezim korup ini!",
+					"effect": "shake"
+				},
+				{
+					"name": "Arthur Vance",
+					"text": "Edward Vance...? Kepalaku—! Dinding kabut di ingatanku mendadak runtuh!"
+				},
+				"Graves membunuh ayahmu demi mencuri buku besar tanah ulayat! Elit birokrasi menjual hutan, emas, dan pulau-pulau kita ke pihak asing, lalu membagi-bagi triliunan kredit itu ke rekening mereka!",
+				"Dan agar rakyat tidak memberontak, mereka menciptakan The Lethe Protocol untuk mencuci otak warga! Kamu yang merancang sistem itu, Arthur! Kamu Kepala Arsitek Kognitifnya!",
+				"Kamu menanam pintu belakang Protokol Jayabaya dengan sandi aksara ayahmu! Tapi Graves mencium rencanamu dan mencuci otakmu dengan mesin ciptaanmu sendiri!",
+				{
+					"name": "Arthur Vance",
+					"text": "Colin... Ya Tuhan... Colin... Sahabatku..."
+				},
+				{
+					"name": "Sistem Van Taktis",
+					"text": "[color=#ff3366][OVERRIDE OTOMATIS // FAILSAFE PROTOKOL GRAVES DIJALANKAN][/color]",
+					"effect": "shake"
+				},
+				{
+					"name": "Arthur Vance",
+					"text": "Sirine failsafe berbunyi! Jarum mikro menyembul dari kerah baju tahanan Colin dan menyuntikkan racun saraf hijau pekat! Tidak—bertahanlah, Colin!"
+				},
+				"Uhuk...! Dengarkan aku, Thur... Selesaikan tugas ayahmu...",
+				{
+					"name": "Arthur Vance",
+					"text": "Dengan sisa tenaganya, jari Colin yang berlumuran darah menggoreskan pesan di kaca jendela van: SEKTOR 0 // LACI 884-B."
+				},
+				"Ambil ukiran ayahmu di laci itu... temui Garrick Shaw di Undercity... Bebaskan kota ini...",
+				{
+					"name": "Arthur Vance",
+					"text": "Kepala Colin terkulai di pundakku. Denyut nadinya berhenti selamanya... Aku harus memeriksa kerah tahanan dan goresan darah di kaca van sebelum Prescott membuka pintu."
+				}
 			]
 		},
 		"EVID-204": {
 			"speaker": "Arthur Vance",
 			"lines": [
-				"Goresan darah di kaca: SEKTOR 0 // LACI 884-B.",
-				"Colin meninggalkan petunjuk terakhirnya."
+				"Goresan darah di kaca jendela van: SEKTOR 0 // LACI 884-B.",
+				"Wasiat terakhir Colin jelas: ukiran kayu ayahku tersimpan di Laci 884-B Sektor 0, dan Komandan Garrick Shaw menungguku di Undercity."
 			]
 		},
 		"EVID-205": {
 			"speaker": "Arthur Vance",
 			"lines": [
-				"Jarum mikro hidrolik di kerah tahanan Colin menyuntikkan racun saraf hijau pekat.",
-				"Failsafe otomatis yang dikendalikan langsung dari jaringan pusat Direktur Graves."
+				"Jarum mikro hidrolik di kerah tahanan Colin menyuntikkan racun saraf neurotoksin hijau pekat.",
+				"Failsafe pembunuh otomatis yang dikendalikan langsung dari jaringan pusat Direktur Graves untuk membungkam Colin selamanya."
 			]
 		}
 	}

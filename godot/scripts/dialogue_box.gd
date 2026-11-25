@@ -452,6 +452,7 @@ func _on_choice_clicked(index: int, text: String) -> void:
 		var mem_delta: int = int(chosen_data.get("memory", 0))
 		var sus_delta: int = int(chosen_data.get("suspicion", 0))
 		var flag_name: String = str(chosen_data.get("flag", ""))
+		var flag_list: Variant = chosen_data.get("flags", [])
 		var ev_id: String = str(chosen_data.get("evidence", ""))
 		var note_id: String = str(chosen_data.get("note", ""))
 		if mem_delta != 0:
@@ -460,6 +461,11 @@ func _on_choice_clicked(index: int, text: String) -> void:
 			GameManager.add_suspicion(sus_delta)
 		if not flag_name.is_empty():
 			GameManager.set_flag(flag_name, true)
+		if flag_list is Array:
+			for f in flag_list:
+				var fs: String = str(f)
+				if not fs.is_empty():
+					GameManager.set_flag(fs, true)
 		if not ev_id.is_empty():
 			GameManager.add_evidence(ev_id)
 		if not note_id.is_empty():

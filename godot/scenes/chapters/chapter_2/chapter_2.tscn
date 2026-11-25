@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scenes/chapters/chapter_2/chapter_2.gd" id="1_chapter"]
 [ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
 [ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="3_exit"]
 [ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="4_interactable"]
+[ext_resource type="PackedScene" path="res://scenes/npc_lucian.tscn" id="5_lucian"]
+[ext_resource type="PackedScene" path="res://scenes/npc_prescott.tscn" id="6_prescott"]
 
 [node name="Chapter2" type="Node2D"]
 script = ExtResource("1_chapter")
@@ -11,44 +13,57 @@ chapter_number = 2
 
 [node name="World" parent="." instance=ExtResource("2_world")]
 start_map = "indoor"
-start_spawn = Vector2(320, 280)
+start_spawn = Vector2(320, 270)
 
-[node name="Evidence201" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(480, 210)
+[node name="OfficeNodes" type="Node2D" parent="."]
+
+[node name="NPCLucian" parent="OfficeNodes" instance=ExtResource("5_lucian")]
+position = Vector2(190, 145)
+npc_id = "graves"
+speaker_name = "Direktur Lucian Graves"
+dialogue_lines = Array[String](["Buronan Sparrow sudah terdeteksi di dok kargo Whitehall Bawah.", "Segera pimpin pasukan elit dan bawa dia hidup-hidup ke van komando taktis."])
+quest_evidence_id = "EVID-202"
+quest_flag = "graves_token_issued"
+quest_required_evidence = Array[String](["EVID-201"])
+quest_missing_req_lines = Array[String](["Dini hari tadi, Deep Vault ditembus selama 40 milidetik oleh buronan bernama sandi 'Sparrow'.", "Perhatikan dulu blok kode enkripsi di Terminal Kuantum meja kerjaku, Vance. Baru kita bicara soal penyerbuan."])
+
+[node name="Evidence201" parent="OfficeNodes" instance=ExtResource("4_interactable")]
+position = Vector2(320, 152)
 evidence_id = "EVID-201"
-prompt_text = "[E] Periksa terminal"
+prompt_text = "[E] Periksa Terminal Kuantum"
 memory_bonus = 10
 lines = Array[String](["Log Vance-Cipher Rev3. Algoritma celah 40ms berbasis fonetik Nusantara.", "Ini gayaku sendiri. Tidak mungkin orang lain yang menulis ini."])
 
+[node name="VanNodes" type="Node2D" parent="."]
+visible = false
+process_mode = 4
 
-[node name="Evidence202" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(360, 210)
-evidence_id = "EVID-202"
-prompt_text = "[E] Audiensi Direktur Graves"
-[node name="Evidence203" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(420, 250)
-evidence_id = "EVID-203"
-flag_to_set = "colin_sparrow_met"
-prompt_text = "[E] Dengarkan Colin"
-memory_bonus = 20
-lines = Array[String](["Kamu yang merancangnya, Arthur! Kamu Arsitek Kognitifnya!", "Kamu menyusup untuk menanam Protokol Jayabaya dengan sandi aksara ayahmu."])
-
-[node name="Evidence204" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(220, 180)
+[node name="Evidence204" parent="VanNodes" instance=ExtResource("4_interactable")]
+position = Vector2(364, 44)
 evidence_id = "EVID-204"
-prompt_text = "[E] Periksa kaca van"
+flag_to_set = "evid_204_collected"
+prompt_text = "[E] Periksa Kaca Van"
 memory_bonus = 10
+required_evidence = Array[String](["EVID-203"])
 lines = Array[String](["Goresan darah di kaca: SEKTOR 0 // LACI 884-B.", "Colin meninggalkan petunjuk terakhirnya."])
 
-
-[node name="Evidence205" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(280, 210)
+[node name="Evidence205" parent="VanNodes" instance=ExtResource("4_interactable")]
+position = Vector2(234, 84)
 evidence_id = "EVID-205"
+flag_to_set = "evid_205_collected"
 prompt_text = "[E] Periksa Kerah Tahanan Colin"
 memory_bonus = 10
 required_evidence = Array[String](["EVID-203"])
-[node name="ExitTrigger" parent="." instance=ExtResource("3_exit")]
-position = Vector2(120, 280)
+
+[node name="NPCPrescott" parent="VanNodes" instance=ExtResource("6_prescott")]
+position = Vector2(320, 282)
+npc_id = ""
+speaker_name = "Detective Miles Prescott"
+dialogue_lines = Array[String](["Tim forensik akan mengamankan van ini. Ayo bergerak ke Sektor 0."])
+
+[node name="ExitTrigger" parent="VanNodes" instance=ExtResource("3_exit")]
+position = Vector2(320, 316)
 target_next_chapter = 3
-required_flags = Array[String](["colin_sparrow_met"])
+required_flags = Array[String](["colin_sparrow_met", "evid_204_collected", "evid_205_collected", "ch3_alibi_cleared"])
 prompt_message = "[E] Menuju Sektor 0"
+skip_cutscene = true

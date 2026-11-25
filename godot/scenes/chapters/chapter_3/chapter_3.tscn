@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scenes/chapters/chapter_3/chapter_3.gd" id="1_chapter"]
 [ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
 [ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="3_exit"]
 [ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="4_interactable"]
+[ext_resource type="PackedScene" path="res://scenes/npc_prescott.tscn" id="5_prescott"]
 
 [node name="Chapter3" type="Node2D"]
 script = ExtResource("1_chapter")
@@ -13,12 +14,11 @@ chapter_number = 3
 start_map = "outdoor"
 start_spawn = Vector2(520, 550)
 
-
-[node name="AlibiCheck" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(460, 550)
-dialogue_id = "CH3_ALIBI"
-flag_to_set = "ch3_alibi_cleared"
-prompt_text = "[E] Laporan ke Prescott"
+[node name="NPCPrescott" parent="." instance=ExtResource("5_prescott")]
+position = Vector2(520, 500)
+npc_id = ""
+speaker_name = "Detective Miles Prescott"
+dialogue_lines = Array[String](["Pintu van terbuka, Vance. Berikan laporanmu sebelum kita bergerak ke Arsip Sektor 0."])
 [node name="Evidence301" parent="." instance=ExtResource("4_interactable")]
 position = Vector2(400, 550)
 evidence_id = "EVID-301"
