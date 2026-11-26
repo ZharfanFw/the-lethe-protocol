@@ -48,7 +48,7 @@ var recipes: Array[Dictionary] = [
 	{"a": "EVID-103", "b": "EVID-105", "result": {"id": "EVID-COMB-101", "name": "Rute Selundupan Colin", "qty": 1, "icon": preload("res://icon.svg"), "desc": "Puntung kretek Black Clove dan peta rute dok membuktikan jalur pelarian Colin Ward ke batas air!"}},
 	{"a": "EVID-102", "b": "EVID-104", "result": {"id": "EVID-COMB-102", "name": "Dekripsi Identitas Sparrow", "qty": 1, "icon": preload("res://icon.svg"), "desc": "Testimoni saksi dan coretan ventilasi mengonfirmasi Sparrow adalah Colin Ward!"}},
 	{"a": "EVID-104", "b": "EVID-201", "result": {"id": "EVID-COMB-201", "name": "Protokol Jayabaya Rancangan Arthur", "qty": 1, "icon": preload("res://icon.svg"), "desc": "Coretan T-CORE dan Log Vance-Cipher Rev3 membuktikan Protokol Jayabaya adalah pintu belakang buatan Arthur sendiri."}},
-	{"a": "EVID-203", "b": "EVID-204", "result": {"id": "EVID-COMB-202", "name": "Brankas Rahasia Sektor 0", "qty": 1, "icon": preload("res://icon.svg"), "desc": "Wasiat Colin dan goresan darah SEKTOR 0 // LACI 884-B mengarah pada penyimpanan peninggalan Edward Vance."}},
+	{"a": "EVID-203", "b": "EVID-204", "result": {"id": "EVID-COMB-202", "name": "Brankas Rahasia Sektor 0", "qty": 1, "icon": preload("res://icon.svg"), "desc": "Wasiat sandi Colin dan goresan darah kaca van membuka koordinat Laci 884-B di Arsip Sektor 0 dengan kombinasi 5 digit: 1-2-0-9-4."}},
 	{"a": "EVID-301", "b": "EVID-302", "result": {"id": "EVID-COMB-301", "name": "Kunci Enkripsi Ukiran Edward", "qty": 1, "icon": preload("res://icon.svg"), "desc": "Pola aksara Nusantara pada ukiran kayu Edward Vance adalah kunci dekripsi logika Protokol Jayabaya."}},
 	{"a": "EVID-302", "b": "EVID-303", "result": {"id": "EVID-COMB-302", "name": "Blueprint Master Override Key", "qty": 1, "icon": preload("res://icon.svg"), "desc": "Ukiran kayu Edward, kaset mikro, dan tabung titanium Shaw harus disatukan di konsol kuantum kantor Graves."}},
 	{"a": "EVID-402", "b": "EVID-403", "result": {"id": "EVID-COMB-401", "name": "Motif Tirani The Registry", "qty": 1, "icon": preload("res://icon.svg"), "desc": "Buku besar korupsi dan rekaman eksekusi Edward membuktikan amnesia warga dipakai menutupi perampokan tanah adat."}}
@@ -91,6 +91,8 @@ func _ready() -> void:
 	_build_circuit_and_decor()
 	_apply_ui_theme()
 	
+	combine_btn.focus_mode = Control.FOCUS_NONE
+	close_btn.focus_mode = Control.FOCUS_NONE
 	combine_btn.pressed.connect(_on_combine_pressed)
 	close_btn.pressed.connect(close_combiner)
 	
@@ -111,6 +113,11 @@ func _sync_inventory_from_game_manager() -> void:
 		_refresh_ui()
 
 func open_combiner() -> void:
+	if visible and not is_animating:
+		return
+	var focus_owner := get_viewport().gui_get_focus_owner()
+	if focus_owner:
+		focus_owner.release_focus()
 	_sync_inventory_from_game_manager()
 	visible = true; is_animating = true; _set_content_visible(false)
 	combiner_opened.emit()
@@ -125,6 +132,8 @@ func open_combiner() -> void:
 	)
 
 func close_combiner() -> void:
+	if not visible or is_animating:
+		return
 	is_animating = true; _set_content_visible(false)
 	if anim_tween and anim_tween.is_valid(): anim_tween.kill()
 	anim_tween = create_tween()
@@ -308,7 +317,19 @@ func _refresh_ui() -> void:
 	var ready := (slot_a_idx != -1 and slot_b_idx != -1)
 	combine_btn.self_modulate = C_TEAL if ready else C_CARD
 	for b in [beam_left, beam_right, beam_down]: b.color = C_CYAN if ready else C_DIM
-	status_text.text = "[color=#00f0ff][KOMPONEN SIAP DIANALISIS][/color]\nTekan tombol Proses Sintesis untuk menguji keterkaitan." if ready else "[color=#88d4e8]Pilih 2 barang bukti untuk digabung.[/color]\n[color=#ffb703]Perhatian: Kegagalan sintesis mengurangi bar HP![/color]"
+	status_text.text = _format_highlight_status(ready)
+
+func _format_highlight_status(ready: bool) -> String:
+	var cur: Dictionary = inventory[idx]
+	var cur_name: String = str(cur.get("name", ""))
+	var cur_clue: String = str(cur.get("clue_link", ""))
+	if cur_clue.is_empty():
+		cur_clue = str(cur.get("desc", "Pilih komponen kedua untuk dianalisis."))
+	if ready:
+		var name_a: String = str(inventory[slot_a_idx].get("name", "Komponen 01"))
+		var name_b: String = str(inventory[slot_b_idx].get("name", "Komponen 02"))
+		return "[color=#00f0ff][SIAP SINTESIS][/color] %s + %s\n[color=#88d4e8]%s[/color]" % [name_a, name_b, cur_clue]
+	return "[color=#00f0ff][%s][/color]\n[color=#e8fcff]%s[/color]" % [cur_name, cur_clue]
 
 func _trigger_game_over() -> void:
 	is_game_over = true
@@ -366,11 +387,13 @@ func _on_combine_pressed() -> void:
 	icon_result.texture = new_item.get("icon", default_icon)
 	result_slot.self_modulate = C_GREEN
 	for b in [beam_left, beam_right, beam_down]: b.color = C_GREEN
-	status_text.text = "[color=#00ff88][SINTESIS BERHASIL!][/color]\nBukti baru ditemukan: " + new_item["name"]
+	status_text.text = "[color=#00ff88][SINTESIS BERHASIL!] %s[/color]\n[color=#e8fcff]%s[/color]" % [new_item["name"], str(new_item.get("desc", ""))]
 	item_crafted.emit(new_item)
 
 func _unhandled_input(e: InputEvent) -> void:
 	if not visible:
+		if UIManager.is_cutscene_overlay_active() or UIManager.is_modal_overlay_open() or UIManager.is_paused():
+			return
 		if e.is_action_pressed("toggle_combiner"):
 			get_viewport().set_input_as_handled()
 			open_requested.emit()

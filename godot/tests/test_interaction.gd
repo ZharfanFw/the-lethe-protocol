@@ -119,6 +119,7 @@ func _ready() -> void:
 	print("Notebook Tab Bukti items: ", names_in_notebook)
 	assert("Puntung Kretek Black Clove" in names_in_notebook, "Puntung Kretek must appear in notebook!")
 	assert("Peta Rute Dok & Catatan Thur" in names_in_notebook, "Peta Rute Dok must appear in notebook!")
+	assert(str(notebook.items[0].get("extra", "")).contains("[PETUNJUK KETERKAITAN]"), "Notebook evidence must display contextual clue link!")
 	notebook.close_notebook()
 
 	# 6. Check ItemCombiner has both items
@@ -131,11 +132,28 @@ func _ready() -> void:
 	assert("EVID-105" in ids_in_combiner, "EVID-105 must appear in combiner!")
 
 	# 7. Perform combine on EVID-103 and EVID-105 in ItemCombiner
+	assert(combiner.combine_btn.focus_mode == Control.FOCUS_NONE, "CombineBtn must use FOCUS_NONE so focus cannot jump to CloseBtn!")
+	assert(combiner.close_btn.focus_mode == Control.FOCUS_NONE, "CloseBtn must use FOCUS_NONE so keyboard selection never closes combiner accidentally!")
 	var idx_103 = ids_in_combiner.find("EVID-103")
 	var idx_105 = ids_in_combiner.find("EVID-105")
+	combiner.idx = idx_103
+	combiner._refresh_ui()
+	assert(combiner.status_text.text.contains("Jejak biologis"), "ItemCombiner status_text must show highlighted item clue link!")
 	combiner.slot_a_idx = idx_103
 	combiner.slot_b_idx = idx_105
 	combiner._on_combine_pressed()
+
+	# Wait for open animation to settle, then verify navigating and selecting again keeps combiner open
+	await get_tree().create_timer(0.5).timeout
+	var ev_down := InputEventAction.new()
+	ev_down.action = "ui_down"
+	ev_down.pressed = true
+	combiner._unhandled_input(ev_down)
+	var ev_accept := InputEventAction.new()
+	ev_accept.action = "ui_accept"
+	ev_accept.pressed = true
+	combiner._unhandled_input(ev_accept)
+	assert(combiner.visible and not combiner.is_animating, "ItemCombiner must stay open when navigating/selecting after completing a synthesis!")
 	
 	print("After combine:")
 	print("GameManager has EVID-103: ", GameManager.has_evidence("EVID-103"))

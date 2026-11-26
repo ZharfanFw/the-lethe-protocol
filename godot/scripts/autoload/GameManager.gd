@@ -76,8 +76,8 @@ const KNOWN_ITEMS: Dictionary = {
 	},
 	"EVID-COMB-202": {
 		"name": "Brankas Rahasia Sektor 0",
-		"category": "Deduksi / Koordinat",
-		"desc": "Wasiat Colin dan goresan darah SEKTOR 0 // LACI 884-B mengarah pada penyimpanan peninggalan Edward Vance."
+		"category": "Deduksi / Koordinat & Sandi",
+		"desc": "Wasiat sandi Colin dan goresan darah kaca van membuka koordinat Laci 884-B di Arsip Sektor 0 dengan kombinasi 5 digit: 1-2-0-9-4."
 	},
 	"EVID-COMB-301": {
 		"name": "Kunci Enkripsi Ukiran Edward",
@@ -313,25 +313,30 @@ func get_evidence_display_dict(ev_id: String) -> Dictionary:
 	
 	if evidence_db.has(ev_id):
 		var info: Dictionary = evidence_db[ev_id]
+		var clue_link: String = str(info.get("clue_link", ""))
+		var extra_text: String = "[color=#00ff88][b][PETUNJUK KETERKAITAN][/b][/color]\n" + clue_link if not clue_link.is_empty() else "[color=#00ff88][b][STATUS BUKTI][/b][/color]\nTersimpan di inventaris forensik."
 		return {
 			"id": ev_id,
 			"name": str(info.get("name", ev_id)),
 			"qty": "x1",
 			"icon": custom_icon,
 			"desc": str(info.get("description", "")),
+			"clue_link": clue_link,
 			"note": "[color=#00f0ff][b][KATEGORI][/b][/color]\n" + str(info.get("category", "Bukti")),
-			"extra": "[color=#00ff88][b][STATUS BUKTI][/b][/color]\nTersimpan di inventaris forensik. Dapat diuji keterkaitannya di Item Combiner."
+			"extra": extra_text
 		}
 	elif KNOWN_ITEMS.has(ev_id):
 		var k: Dictionary = KNOWN_ITEMS[ev_id]
+		var k_desc: String = str(k.get("desc", ""))
 		return {
 			"id": ev_id,
 			"name": str(k.get("name", ev_id)),
 			"qty": "x1",
 			"icon": custom_icon,
-			"desc": str(k.get("desc", "")),
+			"desc": k_desc,
+			"clue_link": k_desc,
 			"note": "[color=#00f0ff][b][LOG ANALISIS][/b][/color]\n" + str(k.get("category", "Investigasi")),
-			"extra": "[color=#00ff88][b][CATATAN SINTESIS][/b][/color]\n" + str(k.get("desc", ""))
+			"extra": "[color=#00ff88][b][CATATAN SINTESIS][/b][/color]\n" + k_desc
 		}
 	else:
 		var clean_name := ev_id.replace("_", " ").capitalize()
@@ -351,6 +356,9 @@ func unlock_deduction(deduction_id: String, bonus_memory: int = 10) -> void:
 	unlocked_deductions.append(deduction_id)
 	memory_meter += bonus_memory
 	deduction_unlocked.emit(deduction_id)
+
+func has_deduction(deduction_id: String) -> bool:
+	return unlocked_deductions.has(deduction_id)
 
 func set_flag(flag: String, value: bool = true) -> void:
 	if flag.is_empty():

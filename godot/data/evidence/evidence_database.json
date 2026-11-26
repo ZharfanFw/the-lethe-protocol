@@ -19,27 +19,32 @@
 		"EVID-102": {
 			"name": "Testimoni Miller",
 			"category": "Testimoni",
-			"description": "Kaset itu bukan buatan saya! Saya hanya mengambilnya di gudang suku cadang lama Sub-Sektor 4 dari pria bernama Colin."
+			"description": "Kaset itu bukan buatan saya! Saya hanya mengambilnya di gudang suku cadang lama Sub-Sektor 4 dari pria bernama Colin yang selalu meninggalkan tanda di kisi ventilasi.",
+			"clue_link": "Menyebut Colin dan tanda khusus di kisi ventilasi gudang. Padankan dengan bukti fisik atau grafis yang ditemukan di ventilasi."
 		},
 		"EVID-103": {
 			"name": "Puntung Kretek Black Clove",
 			"category": "Fisik",
-			"description": "Puntung rokok dengan aroma cengkeh manis asli kawasan selatan. Tembakau non-sintetis ilegal berstatus barang selundupan perlawanan."
+			"description": "Puntung rokok cengkeh manis asli kawasan selatan. Tembakau non-sintetis ilegal selundupan perlawanan yang masih baru di lantai gudang.",
+			"clue_link": "Jejak biologis penyusup di gudang Sub-Sektor 4. Hubungkan dengan catatan atau peta arah kabur milik si pemilik jejak."
 		},
 		"EVID-104": {
 			"name": "Coretan Hex Ventilasi",
 			"category": "Digital / Teks",
-			"description": "Tulisan fosfor UV: 0x4F5552 // T-CORE // SPARROW. T-CORE adalah kode arsitektur komputasi tingkat arsitek kognitif rezim."
+			"description": "Tulisan fosfor UV di ventilasi: 0x4F5552 // T-CORE // SPARROW. T-CORE adalah kode arsitektur komputasi elit The Registry.",
+			"clue_link": "Tanda 'SPARROW' di ventilasi memakai arsitektur T-CORE. Cocok dipadankan dengan kesaksian soal tanda ventilasi, atau log peretasan berpola T-CORE."
 		},
 		"EVID-105": {
 			"name": "Peta Rute Dok & Catatan Thur",
 			"category": "Fisik / Dokumen",
-			"description": "Peta saluran air menuju Dok Pelabuhan Whitehall Bawah dengan catatan: Thur, temui aku di batas air sebelum Graves menutup jaringnya. - Colin"
+			"description": "Peta saluran air menuju Dok Whitehall Bawah dengan catatan: 'Thur, temui aku di batas air sebelum Graves menutup jaringnya. - Colin'",
+			"clue_link": "Menunjukkan jalur pelarian Colin ke batas air dok. Padankan dengan jejak fisik yang tertinggal di lokasi gudang."
 		},
 		"EVID-201": {
 			"name": "Log Vance-Cipher Rev3",
 			"category": "Digital / Kode",
-			"description": "Blok kode enkripsi pembobol Deep Vault dengan algoritma celah 40ms berbasis fonetik Nusantara."
+			"description": "Blok kode enkripsi pembobol Deep Vault dengan algoritma celah 40ms dan struktur gerbang logika T-CORE berbasis fonetik Nusantara.",
+			"clue_link": "Memakai pola arsitektur T-CORE milik perancang lama. Hubungkan dengan coretan fosfor T-CORE dari ventilasi Sub-Sektor 4."
 		},
 		"EVID-202": {
 			"name": "Token Otoritas Penyerbuan",
@@ -49,12 +54,14 @@
 		"EVID-203": {
 			"name": "Testimoni Colin Ward",
 			"category": "Testimoni",
-			"description": "Kamu yang merancangnya, Arthur! Kamu Arsitek Kognitifnya! Kamu menyusup untuk menanam Protokol Jayabaya."
+			"description": "Wasiat Colin Ward: Arthur adalah Kepala Arsitek Kognitif perancang Protokol Jayabaya. 'Sandi kuncinya... 12-09... generasi ke-4... jangan sampai Graves mendahuluimu!'",
+			"clue_link": "Memuat fragmen sandi warisan (12-09-4), tetapi koordinat lokasi penyimpanannya baru lengkap jika digabung dengan pesan darah terakhir Colin di kaca van."
 		},
 		"EVID-204": {
 			"name": "Goresan Darah Laci 884-B",
 			"category": "Fisik / Teks",
-			"description": "Pesan darah yang ditulis Colin menjelang ajal: SEKTOR 0 // LACI 884-B."
+			"description": "Pesan darah yang ditulis Colin menjelang ajal di kaca jendela van: SEKTOR 0 // LACI 884-B.",
+			"clue_link": "Menunjuk lokasi brankas Sektor 0 Laci 884-B. Gabungkan dengan kesaksian wasiat Colin untuk menyusun sandi 5 digit pembukanya."
 		},
 		"EVID-205": {
 			"name": "Residu Neurotoksin Hidrolik",
@@ -64,17 +71,20 @@
 		"EVID-301": {
 			"name": "Ukiran Kayu Edward Vance (Dead Drop #1)",
 			"category": "Fisik / Artefak",
-			"description": "Lempengan kayu ulin berukir aksara Nusantara peninggalan mendiang ayah Arthur yang menyimpan struktur gelombang fonetik kuno."
+			"description": "Lempengan kayu ulin berukir aksara Nusantara peninggalan mendiang ayah Arthur yang menyimpan struktur gelombang fonetik sandi Protokol Jayabaya.",
+			"clue_link": "Artefak kunci logika kuno dari Laci 884-B. Padankan dengan kaset instruksi milik Arthur yang ditemukan bersama ukiran ini."
 		},
 		"EVID-302": {
 			"name": "Kaset Mikro Rekaman Arthur (Dead Drop #1)",
 			"category": "Audio / Analog",
-			"description": "Rekaman suara Arthur masa lalu yang mengonfirmasi statusnya sebagai arsitek perlawanan dan mengarahkan ke Garrick Shaw."
+			"description": "Rekaman suara Arthur masa lalu: kunci logika Protokol Jayabaya ada pada ukiran ayahmu, sedangkan modul fisik peluncurnya dipegang Komandan Garrick Shaw.",
+			"clue_link": "Menghubungkan kunci logika (ukiran Edward) dengan modul fisik peluncur (tabung milik Garrick Shaw di Undercity)."
 		},
 		"EVID-303": {
 			"name": "Tabung Titanium (Dead Drop #2)",
 			"category": "Fisik / Modul",
-			"description": "Modul fisik otentikasi kuantum yang dibutuhkan untuk mengaktifkan terminal meja kerja Graves."
+			"description": "Modul fisik otentikasi kuantum dari Garrick Shaw yang dibutuhkan untuk mengaktifkan Master Key di meja kerja Graves.",
+			"clue_link": "Komponen fisik Dead Drop #2. Satukan dengan kaset rekaman petunjuk perakitan dari Dead Drop #1."
 		},
 		"EVID-304": {
 			"name": "Rokok Kretek Garrick Shaw",
@@ -89,12 +99,14 @@
 		"EVID-402": {
 			"name": "Buku Besar Rekening Graves",
 			"category": "Digital / Keuangan",
-			"description": "Aliran dana korupsi triliunan kredit hasil penjualan konsesi tambang dan pembalakan hutan adat Nusantara."
+			"description": "Aliran dana korupsi triliunan kredit hasil penjualan konsesi tambang dan pembalakan hutan adat oleh Direktur Graves.",
+			"clue_link": "Motif ekonomi kejahatan agraria Graves. Hubungkan dengan bukti visual eksekusi Edward Vance untuk menyibak kebenaran penuh."
 		},
 		"EVID-403": {
 			"name": "Rekaman Satelit Eksekusi Edward",
 			"category": "Digital / Video",
-			"description": "Rekaman video yang membuktikan Direktur Lucian Graves muda menembak mati Edward Vance demi menutupi kejahatan agraria rezim."
+			"description": "Rekaman video satelit 2068 yang membuktikan Lucian Graves muda menembak mati Edward Vance demi menutupi perampokan tanah ulayat.",
+			"clue_link": "Bukti kejahatan langsung Graves terhadap ayah Arthur. Padankan dengan buku besar rekening korupsi untuk mengunci motif The Registry."
 		},
 		"EVID-404": {
 			"name": "The Master Override Key",
@@ -119,9 +131,10 @@
 			"memory_bonus": 20
 		},
 		"DEDUKSI-202": {
-			"name": "Peninggalan Edward Tersimpan di Sektor 0",
+			"name": "Brankas Rahasia Sektor 0 (Sandi: 1-2-0-9-4)",
 			"requires": ["EVID-203", "EVID-204"],
-			"memory_bonus": 15
+			"memory_bonus": 15,
+			"desc": "Wasiat sandi warisan Colin (12-09-4) dipadukan dengan goresan darah kaca van menghasilkan akses penuh Laci 884-B Sektor 0. Kombinasi dial 5 digit: 1-2-0-9-4."
 		},
 		"DEDUKSI-301": {
 			"name": "Struktur Ukiran Edward",

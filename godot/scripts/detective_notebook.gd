@@ -544,10 +544,13 @@ func _switch_tab(t: int) -> void:
 			var ded_info: Dictionary = GameManager.get_deduction_info(ded_id)
 			var ded_title: String = str(ded_info.get("name", ded_id))
 			var reqs: Array = ded_info.get("requires", [])
+			var ded_desc: String = str(ded_info.get("desc", ""))
+			if ded_desc.is_empty():
+				ded_desc = "Kesimpulan investigasi terverifikasi dari sintesis bukti: %s." % ", ".join(reqs)
 			note_items.append({
 				"name": "[DEDUKSI] " + ded_title,
 				"qty": "",
-				"desc": "Kesimpulan investigasi terverifikasi dari sintesis bukti: %s." % ", ".join(reqs),
+				"desc": ded_desc,
 				"note": "[color=#00ff88][b][DEDUKSI TERBUKA][/b][/color]\nID: %s (+%d%% Memori)" % [ded_id, int(ded_info.get("memory_bonus", 10))],
 				"extra": "[color=#00f0ff][b][KOMPONEN BUKTI][/b][/color]\n• " + "\n• ".join(reqs)
 			})

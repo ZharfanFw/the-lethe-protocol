@@ -69,10 +69,11 @@ func _on_sector0_loaded() -> void:
 			sec_note = "Otoritasmu membuat Prescott mundur, tetapi dua drone keamanan tetap berpatroli di koridor arsip."
 		elif GameManager.has_flag("ch3_alibi_calm"):
 			sec_note = "Alibimu yang tenang meredam kecurigaan. Hanya satu drone patroli lambat yang aktif di Sektor 0."
+		var locker_hint := "Hindari sorotan merah drone patroli dan buka Laci 884-B dengan kombinasi 1-2-0-9-4 dari deduksimu." if (GameManager.has_evidence("EVID-COMB-202") or GameManager.has_deduction("DEDUKSI-202")) else "Hindari sorotan merah drone patroli. Gabungkan wasiat Colin dan goresan kaca van di Analisis Sintesis [C] untuk memecahkan sandi Laci 884-B."
 		UIManager.say("Arthur Vance", [
 			"Aku tiba di Arsip Sektor 0. Laci 884-B ada di pojok kanan atas ruangan.",
 			sec_note,
-			"Hindari sorotan merah drone patroli dan buka Laci 884-B dengan kombinasi 5 digit dari Colin."
+			locker_hint
 		])
 
 func _configure_sector0_drones(map_node: Node) -> void:
@@ -138,6 +139,18 @@ func _on_locker_interacted(_evidence_id: String = "") -> void:
 			"Laci 884-B sudah terbuka. Ukiran kayu ayah dan kaset mikro sudah kuamankan.",
 			"Saatnya menuju pintu akses Undercity di pojok kanan bawah."
 		])
+		return
+	var has_combo_clue: bool = GameManager.has_evidence("EVID-COMB-202") or GameManager.has_deduction("DEDUKSI-202")
+	if not has_combo_clue:
+		if GameManager.has_evidence("EVID-203") and GameManager.has_evidence("EVID-204"):
+			UIManager.say("Arthur Vance", [
+				"Laci 884-B ini terkunci 5 digit kombinasi.",
+				"Aku menyimpan wasiat sandi Colin dan goresan darah di kaca van—aku harus menggabungkan keduanya lewat Analisis Sintesis [C] untuk memecahkan kode pembukanya!"
+			])
+		else:
+			UIManager.say("Arthur Vance", [
+				"Laci 884-B ini terkunci 5 digit kombinasi. Periksa kembali hasil sintesis bukti dari Colin di Catatan [Tab] / Analisis [C]."
+			])
 		return
 	if _dial_ui and _dial_ui.has_method("open_dial"):
 		_dial_ui.open_dial()

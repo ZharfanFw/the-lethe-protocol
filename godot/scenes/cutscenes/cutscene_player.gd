@@ -81,7 +81,7 @@ const CUTSCENES: Dictionary = {
 				"lines": [
 					{"name": "Sistem Van Taktis", "text": "[color=#ff3366][OVERRIDE OTOMATIS // FAILSAFE PROTOKOL GRAVES DIJALANKAN][/color]", "effect": "shake"},
 					{"name": "Arthur Vance", "text": "Sirine failsafe berbunyi! Jarum mikro menyembul dari kerah tahanan Colin dan menyuntikkan neurotoksin hijau pekat! Tidak—bertahanlah, Colin!"},
-					{"name": "Colin Ward", "text": "Uhuk...! Dengarkan aku, Thur... Selesaikan tugas ayahmu..."},
+					{"name": "Colin Ward", "text": "Uhuk...! Dengarkan aku, Thur... Sandi kuncinya... 12-09... generasi ke-4... Selesaikan tugas ayahmu..."},
 					{"name": "Arthur Vance", "text": "Dengan sisa tenaganya, jari Colin yang berlumuran darah menggoreskan pesan di kaca jendela van: SEKTOR 0 // LACI 884-B."},
 					{"name": "Colin Ward", "text": "Ambil ukiran ayahmu di laci itu... temui Garrick Shaw di Undercity... Bebaskan kota ini..."},
 					{"name": "Arthur Vance", "text": "Kepala Colin terkulai di pundakku. Denyut nadinya berhenti selamanya... Aku harus memeriksa kerah tahanan dan goresan darah di kaca van sebelum Prescott membuka pintu."}

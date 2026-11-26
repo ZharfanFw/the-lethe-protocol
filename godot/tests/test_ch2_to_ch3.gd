@@ -55,13 +55,51 @@ func _run() -> void:
 
 	await _advance_dialogue(UIManager.get_dialogue_box())
 
-	# Test DialLockUI & modal guard
+	# 1. Interacting with Locker 884-B BEFORE combining EVID-203 + EVID-204 must prompt synthesis hint instead of opening DialLockUI
 	var locker: Node = ch3.world.current_map.get_node_or_null("Locker884BTrigger")
 	assert(locker != null, "Locker884BTrigger must exist in Ch3Sector0!")
 	locker.set("player_in_zone", true)
 	locker.interact()
 	await get_tree().create_timer(0.1).timeout
-	assert(UIManager.is_modal_overlay_open(), "DialLockUI must register as modal overlay!")
+	assert(not UIManager.is_modal_overlay_open(), "DialLockUI must stay locked before combining EVID-203 + EVID-204!")
+	var block_dlg: Node = UIManager.get_dialogue_box()
+	assert(block_dlg != null and block_dlg.is_active, "Locker must prompt synthesis hint when EVID-COMB-202 is missing!")
+	await _advance_dialogue(block_dlg)
+
+	# 2. Synthesize EVID-203 + EVID-204 in ItemCombiner -> reveals 1-2-0-9-4
+	var comb: Node = ch3.world.get_node_or_null("ItemCombiner")
+	assert(comb != null, "ItemCombiner must exist in Chapter3 World!")
+	comb._sync_inventory_from_game_manager()
+	var idx_203 := -1
+	var idx_204 := -1
+	for i in range(comb.inventory.size()):
+		if str(comb.inventory[i].get("id", "")) == "EVID-203":
+			idx_203 = i
+		elif str(comb.inventory[i].get("id", "")) == "EVID-204":
+			idx_204 = i
+	assert(idx_203 != -1 and idx_204 != -1, "EVID-203 and EVID-204 must both be in ItemCombiner!")
+	comb.idx = idx_203
+	comb._refresh_ui()
+	assert(comb.status_text.text.contains("12-09-4"), "ItemCombiner highlight must show clue_link for EVID-203!")
+	comb._toggle_item_slot(idx_203)
+	comb._toggle_item_slot(idx_204)
+	comb._on_combine_pressed()
+	assert(GameManager.has_evidence("EVID-COMB-202"), "EVID-COMB-202 must be crafted!")
+	assert(comb.status_text.text.contains("1-2-0-9-4"), "EVID-COMB-202 synthesis result must reveal 1-2-0-9-4!")
+
+	var nb: Node = ch3.world.get_node_or_null("DetectiveNotebook")
+	assert(nb != null, "DetectiveNotebook must exist!")
+	nb._switch_tab(1)
+	var found_code_note := false
+	for item in nb.items:
+		if str(item.get("name", "")).contains("1-2-0-9-4") and str(item.get("desc", "")).contains("1-2-0-9-4"):
+			found_code_note = true
+	assert(found_code_note, "Notebook Catatan tab DEDUKSI-202 must display 1-2-0-9-4 clue!")
+
+	# 3. Now Locker 884-B opens DialLockUI cleanly
+	locker.interact()
+	await get_tree().create_timer(0.1).timeout
+	assert(UIManager.is_modal_overlay_open(), "DialLockUI must open once EVID-COMB-202 is crafted!")
 	assert(UIManager._is_any_overlay_open(), "PauseMenu must be blocked while DialLockUI is open!")
 	assert(ch3.world.is_ui_blocking(), "World must block Notebook/Combiner while DialLockUI is open!")
 
