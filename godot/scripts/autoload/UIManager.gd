@@ -123,4 +123,8 @@ func _is_any_overlay_open() -> bool:
 	for a in scene.find_children("AffinePuzzle", "Area2D", true, false):
 		if a.get("_open") == true:
 			return true
+	# Generic modal overlays (e.g. DialLockUI)
+	for m in get_tree().get_nodes_in_group("modal_overlay"):
+		if m.get("_open") == true:
+			return true
 	return false

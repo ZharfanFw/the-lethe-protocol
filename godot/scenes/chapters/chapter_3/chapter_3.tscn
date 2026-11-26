@@ -1,54 +1,40 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scenes/chapters/chapter_3/chapter_3.gd" id="1_chapter"]
 [ext_resource type="PackedScene" path="res://scenes/world.tscn" id="2_world"]
 [ext_resource type="PackedScene" path="res://scenes/common/exit_trigger.tscn" id="3_exit"]
 [ext_resource type="PackedScene" path="res://scenes/common/interactable.tscn" id="4_interactable"]
-[ext_resource type="PackedScene" path="res://scenes/npc_prescott.tscn" id="5_prescott"]
 
 [node name="Chapter3" type="Node2D"]
 script = ExtResource("1_chapter")
 chapter_number = 3
 
 [node name="World" parent="." instance=ExtResource("2_world")]
-start_map = "outdoor"
-start_spawn = Vector2(520, 550)
+start_map = "ch3_sector0"
+start_spawn = Vector2(70, 286)
 
-[node name="NPCPrescott" parent="." instance=ExtResource("5_prescott")]
-position = Vector2(520, 500)
-npc_id = ""
-speaker_name = "Detective Miles Prescott"
-dialogue_lines = Array[String](["Pintu van terbuka, Vance. Berikan laporanmu sebelum kita bergerak ke Arsip Sektor 0."])
-[node name="Evidence301" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(400, 550)
-evidence_id = "EVID-301"
-prompt_text = "[E] Periksa laci 884-B"
-memory_bonus = 10
-lines = Array[String](["Ukiran kayu ulin ini... sama dengan yang ada di tangan ayah saat meninggal.", "Struktur gelombang fonetik kuno tersimpan di dalamnya."])
+[node name="Sector0Nodes" type="Node2D" parent="."]
 
-[node name="Evidence302" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(850, 550)
-evidence_id = "EVID-302"
-prompt_text = "[E] Putar kaset mikro"
-memory_bonus = 10
-lines = Array[String](["Rekaman suaraku sendiri. Aku terdengar seperti orang yang sudah lama lupa siapa dirinya.", "Garrick Shaw ada di Undercity."])
+[node name="Locker884BTrigger" parent="Sector0Nodes" instance=ExtResource("4_interactable")]
+position = Vector2(552, 86)
+evidence_id = ""
+one_shot = false
+prompt_text = "[E] Buka Laci 884-B"
+memory_bonus = 0
 
-[node name="Evidence303" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(700, 550)
-evidence_id = "EVID-303"
-flag_to_set = "garrick_shaw_saved"
-prompt_text = "[E] Periksa rompi Shaw"
-memory_bonus = 20
-lines = Array[String](["Tabung titanium di rompi Shaw. Modul otentikasi kuantum.", "Ini kunci untuk terminal meja kerja Graves."])
+[node name="UndercityNodes" type="Node2D" parent="."]
+visible = false
+process_mode = 4
 
-
-[node name="Evidence304" parent="." instance=ExtResource("4_interactable")]
-position = Vector2(780, 550)
+[node name="Evidence304" parent="UndercityNodes" instance=ExtResource("4_interactable")]
+position = Vector2(336, 250)
 evidence_id = "EVID-304"
-prompt_text = "[E] Periksa Puntung Kretek Shaw"
+flag_to_set = "evid_304_collected"
+prompt_text = "[E] Periksa Puntung Kretek"
 memory_bonus = 5
-[node name="ExitTrigger" parent="." instance=ExtResource("3_exit")]
-position = Vector2(520, 600)
+
+[node name="ExitTrigger" parent="UndercityNodes" instance=ExtResource("3_exit")]
+position = Vector2(577, 286)
 target_next_chapter = 4
 required_flags = Array[String](["garrick_shaw_saved"])
 prompt_message = "[E] Menuju Lantai 80"

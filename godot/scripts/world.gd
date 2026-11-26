@@ -34,16 +34,16 @@ const MAPS := {
 		"follow": false,
 	},
 	"ch3_sector0": {
-		"scene": preload("res://scenes/maps/indoor_office.tscn"),
+		"scene": preload("res://scenes/maps/ch3_sector0.tscn"),
 		"size": Vector2(640, 340),
 		"zoom": Vector2(0.85, 0.85),
 		"follow": false,
 	},
 	"ch3_undercity": {
-		"scene": preload("res://scenes/maps/outdoor_city.tscn"),
-		"size": Vector2(1280, 960),
+		"scene": preload("res://scenes/maps/ch3_undercity.tscn"),
+		"size": Vector2(640, 340),
 		"zoom": Vector2(0.85, 0.85),
-		"follow": true,
+		"follow": false,
 	},
 	"ch4_office_top": {
 		"scene": preload("res://scenes/maps/indoor_office.tscn"),
