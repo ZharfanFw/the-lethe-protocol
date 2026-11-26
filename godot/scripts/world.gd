@@ -34,16 +34,16 @@ const MAPS := {
 		"follow": false,
 	},
 	"ch3_sector0": {
-		"scene": preload("res://scenes/maps/indoor_office.tscn"),
+		"scene": preload("res://scenes/maps/ch3_sector0.tscn"),
 		"size": Vector2(640, 340),
 		"zoom": Vector2(0.85, 0.85),
 		"follow": false,
 	},
 	"ch3_undercity": {
-		"scene": preload("res://scenes/maps/outdoor_city.tscn"),
-		"size": Vector2(1280, 960),
+		"scene": preload("res://scenes/maps/ch3_undercity.tscn"),
+		"size": Vector2(640, 340),
 		"zoom": Vector2(0.85, 0.85),
-		"follow": true,
+		"follow": false,
 	},
 	"ch4_office_top": {
 		"scene": preload("res://scenes/maps/indoor_office.tscn"),
@@ -93,7 +93,7 @@ func _ready() -> void:
 	_set_fade(0.0, 0.25)
 
 func _request_open_combiner() -> void:
-	if ui_transitioning or UIManager.is_cutscene_overlay_active():
+	if ui_transitioning or UIManager.is_cutscene_overlay_active() or UIManager.is_modal_overlay_open():
 		return
 	var combiner = get_node_or_null("ItemCombiner")
 	var notebook = get_node_or_null("DetectiveNotebook")
@@ -108,7 +108,7 @@ func _request_open_combiner() -> void:
 	ui_transitioning = false
 
 func _request_open_notebook() -> void:
-	if ui_transitioning or UIManager.is_cutscene_overlay_active():
+	if ui_transitioning or UIManager.is_cutscene_overlay_active() or UIManager.is_modal_overlay_open():
 		return
 	var combiner = get_node_or_null("ItemCombiner")
 	var notebook = get_node_or_null("DetectiveNotebook")
@@ -123,7 +123,7 @@ func _request_open_notebook() -> void:
 	ui_transitioning = false
 
 func is_ui_blocking() -> bool:
-	if ui_transitioning or UIManager.is_cutscene_overlay_active():
+	if ui_transitioning or UIManager.is_cutscene_overlay_active() or UIManager.is_modal_overlay_open():
 		return true
 	var combiner = get_node_or_null("ItemCombiner")
 	if combiner and combiner.visible:

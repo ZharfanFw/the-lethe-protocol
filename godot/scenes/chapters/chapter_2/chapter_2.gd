@@ -8,6 +8,7 @@ extends "res://scenes/chapters/chapter_base.gd"
 var _current_exit_door: Area2D = null
 var _door_transitioning: bool = false
 var _prescott_van_triggered: bool = false
+var _advancing_to_ch3: bool = false
 
 func _ready() -> void:
 	super._ready()
@@ -149,7 +150,10 @@ func _on_van_loaded() -> void:
 func _on_van_dialogue_ended() -> void:
 	if not world or str(world.get("current_map_id")) != "ch2_dock":
 		return
-	if _prescott_van_triggered or GameManager.has_flag("ch3_alibi_cleared"):
+	if GameManager.has_flag("ch3_alibi_cleared"):
+		_go_to_chapter_3.call_deferred()
+		return
+	if _prescott_van_triggered:
 		return
 	var all_colin_done: bool = (
 		GameManager.has_flag("colin_sparrow_met")
@@ -179,12 +183,26 @@ func _trigger_prescott_van_entry() -> void:
 		var lines: Array = entry.get("lines", [])
 		UIManager.say(speaker, lines)
 		var dlg := UIManager.get_dialogue_box()
-		if dlg and is_instance_valid(dlg):
+		if dlg and is_instance_valid(dlg) and dlg.get("is_active") == true:
 			await dlg.dialogue_ended
 
 	if prescott and is_instance_valid(prescott):
 		prescott.position = Vector2(264, 282)
 		_refresh_prescott_van_lines(prescott)
+
+	if GameManager.has_flag("ch3_alibi_cleared"):
+		_go_to_chapter_3()
+
+func _go_to_chapter_3() -> void:
+	if _advancing_to_ch3 or not is_inside_tree():
+		return
+	_advancing_to_ch3 = true
+	GameManager.set_flag("chapter_2_completed", true)
+	var player_node := world.get("player") as Node
+	if player_node:
+		player_node.set("can_move", false)
+	await UIManager.play_fade_transition(true, 0.35)
+	GameManager.advance_to_chapter(3, true, true)
 
 func _refresh_prescott_van_lines(prescott: Node) -> void:
 	if GameManager.has_flag("ch3_alibi_aggressive"):

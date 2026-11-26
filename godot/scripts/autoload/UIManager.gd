@@ -56,6 +56,15 @@ func reset_fade() -> void:
 func is_cutscene_overlay_active() -> bool:
 	return _cutscene_overlay != null and is_instance_valid(_cutscene_overlay)
 
+func is_modal_overlay_open() -> bool:
+	var tree := get_tree()
+	if tree == null:
+		return false
+	for m in tree.get_nodes_in_group("modal_overlay"):
+		if m.get("_open") == true:
+			return true
+	return false
+
 func play_overlay_cutscene(cutscene_id_arg: String) -> void:
 	if is_cutscene_overlay_active():
 		return
@@ -165,4 +174,7 @@ func _is_any_overlay_open() -> bool:
 	for a in scene.find_children("AffinePuzzle", "Area2D", true, false):
 		if a.get("_open") == true:
 			return true
+	# Generic modal overlays (e.g. DialLockUI)
+	if is_modal_overlay_open():
+		return true
 	return false

@@ -1,0 +1,244 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/npc_garrick.tscn" id="1_garrick"]
+[ext_resource type="PackedScene" path="res://scenes/npc_prescott.tscn" id="2_officer"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
+size = Vector2(640, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
+size = Vector2(24, 340)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wagon_l"]
+size = Vector2(220, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wagon_r"]
+size = Vector2(228, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crate"]
+size = Vector2(52, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barricade"]
+size = Vector2(88, 24)
+
+[node name="Ch3Undercity" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Floor" type="ColorRect" parent="."]
+offset_right = 640.0
+offset_bottom = 340.0
+mouse_filter = 2
+color = Color(0.06, 0.065, 0.08, 1)
+
+[node name="TrackBed" type="ColorRect" parent="."]
+offset_left = 24.0
+offset_top = 144.0
+offset_right = 616.0
+offset_bottom = 200.0
+mouse_filter = 2
+color = Color(0.035, 0.04, 0.05, 1)
+
+[node name="RailTop" type="ColorRect" parent="."]
+offset_left = 24.0
+offset_top = 158.0
+offset_right = 616.0
+offset_bottom = 162.0
+mouse_filter = 2
+color = Color(0.28, 0.34, 0.42, 1)
+
+[node name="RailBottom" type="ColorRect" parent="."]
+offset_left = 24.0
+offset_top = 184.0
+offset_right = 616.0
+offset_bottom = 188.0
+mouse_filter = 2
+color = Color(0.28, 0.34, 0.42, 1)
+
+[node name="CrossingBridge" type="ColorRect" parent="."]
+offset_left = 272.0
+offset_top = 140.0
+offset_right = 356.0
+offset_bottom = 204.0
+mouse_filter = 2
+color = Color(0.16, 0.18, 0.22, 1)
+
+[node name="SewerGrate" type="ColorRect" parent="."]
+offset_left = 534.0
+offset_top = 24.0
+offset_right = 604.0
+offset_bottom = 54.0
+mouse_filter = 2
+color = Color(0.09, 0.13, 0.14, 1)
+
+[node name="SewerLabel" type="Label" parent="."]
+offset_left = 516.0
+offset_top = 56.0
+offset_right = 622.0
+offset_bottom = 70.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.45, 0.78, 0.72, 0.85)
+theme_override_font_sizes/font_size = 6
+text = "GORONG-GORONG"
+horizontal_alignment = 1
+
+[node name="ExitMat" type="ColorRect" parent="."]
+offset_left = 550.0
+offset_top = 264.0
+offset_right = 604.0
+offset_bottom = 310.0
+mouse_filter = 2
+color = Color(0.14, 0.26, 0.18, 0.85)
+
+[node name="ExitLabel" type="Label" parent="."]
+offset_left = 544.0
+offset_top = 250.0
+offset_right = 610.0
+offset_bottom = 264.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.6, 0.95, 0.7, 0.9)
+theme_override_font_sizes/font_size = 6
+text = "LANTAI 80"
+horizontal_alignment = 1
+
+[node name="StationSign" type="Label" parent="."]
+offset_left = 30.0
+offset_top = 26.0
+offset_right = 340.0
+offset_bottom = 42.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.7, 0.82, 0.95, 0.8)
+theme_override_font_sizes/font_size = 7
+text = "UNDERCITY // STASIUN MAGLEV TUA"
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 1
+
+[node name="TopShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 12)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="BottomShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 328)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="LeftShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(12, 170)
+shape = SubResource("RectangleShape2D_wall_v")
+
+[node name="RightShape" type="CollisionShape2D" parent="Walls"]
+position = Vector2(628, 170)
+shape = SubResource("RectangleShape2D_wall_v")
+
+[node name="MaglevWagonL" type="StaticBody2D" parent="."]
+position = Vector2(142, 172)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Body" type="ColorRect" parent="MaglevWagonL"]
+offset_left = -110.0
+offset_top = -24.0
+offset_right = 110.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.14, 0.16, 0.2, 1)
+
+[node name="Stripe" type="ColorRect" parent="MaglevWagonL"]
+offset_left = -106.0
+offset_top = -4.0
+offset_right = 106.0
+offset_bottom = 4.0
+mouse_filter = 2
+color = Color(0.0, 0.65, 0.85, 0.55)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MaglevWagonL"]
+shape = SubResource("RectangleShape2D_wagon_l")
+
+[node name="MaglevWagonR" type="StaticBody2D" parent="."]
+position = Vector2(494, 172)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Body" type="ColorRect" parent="MaglevWagonR"]
+offset_left = -114.0
+offset_top = -24.0
+offset_right = 114.0
+offset_bottom = 24.0
+mouse_filter = 2
+color = Color(0.14, 0.16, 0.2, 1)
+
+[node name="Stripe" type="ColorRect" parent="MaglevWagonR"]
+offset_left = -110.0
+offset_top = -4.0
+offset_right = 110.0
+offset_bottom = 4.0
+mouse_filter = 2
+color = Color(0.85, 0.35, 0.2, 0.55)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MaglevWagonR"]
+shape = SubResource("RectangleShape2D_wagon_r")
+
+[node name="CoverCrateS" type="StaticBody2D" parent="."]
+position = Vector2(175, 240)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Visual" type="ColorRect" parent="CoverCrateS"]
+offset_left = -26.0
+offset_top = -16.0
+offset_right = 26.0
+offset_bottom = 16.0
+mouse_filter = 2
+color = Color(0.22, 0.2, 0.17, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CoverCrateS"]
+shape = SubResource("RectangleShape2D_crate")
+
+[node name="BarricadeNorth" type="StaticBody2D" parent="."]
+position = Vector2(450, 118)
+collision_layer = 1
+collision_mask = 1
+
+[node name="Visual" type="ColorRect" parent="BarricadeNorth"]
+offset_left = -44.0
+offset_top = -12.0
+offset_right = 44.0
+offset_bottom = 12.0
+mouse_filter = 2
+color = Color(0.24, 0.18, 0.15, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BarricadeNorth"]
+shape = SubResource("RectangleShape2D_barricade")
+
+[node name="PhosphorFireGroup" type="Node2D" parent="."]
+visible = false
+
+[node name="FireGlow1" type="ColorRect" parent="PhosphorFireGroup"]
+offset_left = 390.0
+offset_top = 52.0
+offset_right = 510.0
+offset_bottom = 122.0
+mouse_filter = 2
+color = Color(1.0, 0.35, 0.08, 0.28)
+
+[node name="FireGlow2" type="ColorRect" parent="PhosphorFireGroup"]
+offset_left = 415.0
+offset_top = 66.0
+offset_right = 485.0
+offset_bottom = 110.0
+mouse_filter = 2
+color = Color(1.0, 0.65, 0.15, 0.42)
+
+[node name="TacticalOfficer" parent="." instance=ExtResource("2_officer")]
+position = Vector2(175, 282)
+npc_id = ""
+speaker_name = "Perwira Taktis Biro"
+dialogue_lines = Array[String](["Peluncur granat fosfor siap, Inspektur. Menunggu perintah Anda di peron utara."])
+
+[node name="NPCGarrick" parent="." instance=ExtResource("1_garrick")]
+position = Vector2(450, 80)
+npc_id = "garrick"
+speaker_name = "Garrick Shaw"
+quest_evidence_id = "EVID-303"
+quest_flag = "garrick_shaw_resolved"
+quest_memory_bonus = 0

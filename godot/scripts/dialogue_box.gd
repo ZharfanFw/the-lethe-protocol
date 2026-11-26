@@ -43,6 +43,10 @@ var typing_tween: Tween
 var arrow_tween: Tween
 var base_container_pos: Vector2
 var ui_small: bool = false
+var showing_cutscene_image: bool = false
+var _cutscene_overlay: Control = null
+var _cutscene_texture_rect: TextureRect = null
+var _cutscene_caption_label: Label = null
 
 func _ready() -> void:
 	add_to_group("dialogue_box")
@@ -218,6 +222,17 @@ func _setup_layout_with_original_assets() -> void:
 		choice_container.add_theme_constant_override("separation", 6 if is_small else 8)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if showing_cutscene_image:
+		var is_close: bool = event.is_action_pressed("ui_accept") \
+			or event.is_action_pressed("interact") \
+			or (event is InputEventKey and event.is_pressed() and not event.echo and event.keycode in [KEY_E, KEY_ENTER, KEY_KP_ENTER, KEY_SPACE]) \
+			or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT)
+		if is_close:
+			get_viewport().set_input_as_handled()
+			_hide_inline_cutscene()
+			_show_next_line()
+		return
+
 	if not main_container or not main_container.visible:
 		return
 
@@ -311,6 +326,11 @@ func _show_next_line() -> void:
 
 	var current_line: Dictionary = dialogue_queue.pop_front()
 	current_active_line = current_line
+	var cutscene_path: String = str(current_line.get("cutscene_image", ""))
+	if not cutscene_path.is_empty():
+		var cap: String = str(current_line.get("caption", "[Tekan E / Enter / Klik untuk melanjutkan]"))
+		_show_inline_cutscene(cutscene_path, cap)
+		return
 	var line_note: String = str(current_line.get("note", ""))
 	if not line_note.is_empty():
 		GameManager.unlock_note(line_note)
@@ -503,3 +523,53 @@ func _animate_next_arrow() -> void:
 	arrow_tween = create_tween().set_loops()
 	arrow_tween.tween_property(next_indicator, "modulate:a", 0.35, 0.45)
 	arrow_tween.tween_property(next_indicator, "modulate:a", 1.0, 0.45)
+
+func _show_inline_cutscene(image_path: String, caption_text: String) -> void:
+	if _cutscene_overlay == null:
+		_cutscene_overlay = Control.new()
+		_cutscene_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+		add_child(_cutscene_overlay)
+
+		var bg := ColorRect.new()
+		bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+		bg.color = Color(0.01, 0.015, 0.025, 1.0)
+		_cutscene_overlay.add_child(bg)
+
+		_cutscene_texture_rect = TextureRect.new()
+		_cutscene_texture_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_cutscene_texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		_cutscene_texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		_cutscene_overlay.add_child(_cutscene_texture_rect)
+
+		var cap_bg := ColorRect.new()
+		cap_bg.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+		cap_bg.offset_top = -36
+		cap_bg.color = Color(0.02, 0.03, 0.05, 0.84)
+		_cutscene_overlay.add_child(cap_bg)
+
+		_cutscene_caption_label = Label.new()
+		_cutscene_caption_label.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_cutscene_caption_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_cutscene_caption_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		_cutscene_caption_label.add_theme_color_override("font_color", C_TEXT)
+		_cutscene_caption_label.add_theme_font_size_override("font_size", 7)
+		cap_bg.add_child(_cutscene_caption_label)
+
+	var tex := ResourceLoader.load(image_path) as Texture2D
+	if _cutscene_texture_rect:
+		_cutscene_texture_rect.texture = tex
+	if _cutscene_caption_label:
+		_cutscene_caption_label.text = caption_text
+	if main_container:
+		main_container.visible = false
+	if choice_container:
+		choice_container.visible = false
+	_cutscene_overlay.visible = true
+	showing_cutscene_image = true
+
+func _hide_inline_cutscene() -> void:
+	showing_cutscene_image = false
+	if _cutscene_overlay:
+		_cutscene_overlay.visible = false
+	if main_container:
+		main_container.visible = true

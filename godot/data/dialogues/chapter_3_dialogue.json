@@ -108,18 +108,26 @@
 							"text": "Teriakkan peringatan ranjau palsu & bisikkan sandi 12094 ke Shaw",
 							"memory": 25,
 							"suspicion": 30,
-							"flag": "garrick_shaw_spared",
+							"flags": ["garrick_shaw_resolved", "garrick_shaw_saved", "garrick_shaw_spared"],
 							"next": [
-								{"name": "Garrick Shaw", "text": "Gema Nusantara di atas batu karang... Ambil tabung titanium ini, Thur. Bebaskan Concord!"}
+								{"name": "Arthur Vance", "text": "TAHAN TEMBAKAN! Ada ranjau tekanan di bawah rel! Pasukan, mundur ke koridor belakang sekarang!"},
+								{"name": "Perwira Taktis Biro", "text": "Siap, Inspektur! Seluruh regu mundur ke koridor penyangga!"},
+								{"name": "Arthur Vance", "text": "(Berbisik cepat) Gema Nusantara... 1-2-0-9-4. Aku dengar kasetku, Komandan. Aku ingat semuanya."},
+								{"cutscene_image": "res://assets/cutscenes/chapter3-slide2.jpg", "caption": "[Tekan E / Enter / Klik untuk melanjutkan]"},
+								{"name": "Garrick Shaw", "text": "Gema Nusantara di atas batu karang... Jadi Arthur yang dulu benar-benar kembali. Ambil tabung titanium ini, Thur."},
+								{"name": "Garrick Shaw", "text": "Aku dan para penyintas akan lari lewat gorong-gorong timur. Buat ayahmu bangga!"}
 							]
 						},
 						{
 							"text": "Perintahkan tembak fosfor demi menjaga penyamaran",
 							"memory": 10,
 							"suspicion": -25,
-							"flag": "garrick_shaw_killed",
+							"flags": ["garrick_shaw_resolved", "garrick_shaw_saved", "garrick_shaw_killed"],
 							"next": [
-								{"name": "Arthur Vance", "text": "Peron terbakar. Aku mengambil tabung titanium Dead Drop #2 dari jasad Shaw dengan tangan dingin."}
+								{"name": "Arthur Vance", "text": "Tembak! Ratakan barikade itu sekarang!"},
+								{"name": "Perwira Taktis Biro", "text": "Granat fosfor meluncur! Target di peron utara lumpuh!"},
+								{"name": "Garrick Shaw", "text": "Uhuk... kau... benar-benar sudah menjadi monster milik Graves, Thur..."},
+								{"name": "Arthur Vance", "text": "Di tengah asap fosfor yang membakar, aku mengambil tabung titanium Dead Drop #2 dari jasad Shaw dengan tangan dingin."}
 							]
 						}
 					]
