@@ -800,3 +800,4 @@ position = Vector2(1265, 330)
 target_next_chapter = 2
 required_flags = Array[String](["miller_interrogated", "evid_103_collected", "evid_104_collected", "evid_105_collected"])
 prompt_message = "E"
+cutscene_id = "chapter_1"

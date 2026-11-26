@@ -1,7 +1,10 @@
 extends Control
 
+signal cutscene_finished
+
 @export var cutscene_id: String = ""
 @export var next_scene_path: String = ""
+@export var overlay_mode: bool = false
 
 const DIALOGUE_BOX_SCENE_PATH := "res://scenes/dialogue_box.tscn"
 
@@ -44,22 +47,17 @@ const CUTSCENES: Dictionary = {
 		"hint": "[KLIK / SPASI] LANJUT   [ESC] LEWATI CUTSCENE",
 		"slides": [
 			{
-				"image": "res://assets/cutscenes/chapter1-slide1.jpg",
-				"lines": [
-					{"name": "Detective Miles Prescott", "text": "Miller tertangkap di pos pemeriksaan membawa pita magnetik ilegal zaman purba, Vance."},
-					{"name": "Miller", "text": "Itu... itu suara ibu saya... Sebelum proyek restrukturisasi menghapus namanya dari data kota..."}
-				]
-			},
-			{
-				"image": "res://assets/cutscenes/chapter1-slide2.jpg",
-				"lines": [
-					{"name": "Arthur Vance", "text": "Sub-Sektor 4. Jejak kaset Miller mengarah ke gudang suku cadang terbengkalai di balik kabut hujan asam."}
-				]
-			},
-			{
 				"image": "res://assets/cutscenes/chapter1-slide3.jpg",
 				"lines": [
-					{"name": "Arthur Vance", "text": "Puntung kretek Black Clove, coretan fosfor T-CORE // SPARROW, dan catatan untuk Thur... Seseorang menungguku di sini."}
+					{"name": "Arthur Vance", "text": "Jejak di gudang Sub-Sektor 4 menunjuk pada satu nama: Colin—peretas berjuluk 'Sparrow' yang entah bagaimana mengenal nama sandi lamaku, Thur."},
+					{"name": "Arthur Vance", "text": "Di balik peta dok itu terselip peringatan mendesak sebelum jaringan Direktur Graves menutup seluruh akses pelabuhan."}
+				]
+			},
+			{
+				"image": "res://assets/cutscenes/chapter4-slide1.jpg",
+				"lines": [
+					{"name": "Sistem Biro", "text": "[SIAGA MERAH // PEMBOBOLAN DEEP VAULT TERDETEKSI // PANGGILAN EKSEKUTIF LANTAI 80]"},
+					{"name": "Arthur Vance", "text": "Belum sempat aku bergerak ke Dok Whitehall, panggilan darurat memaksaku menghadap Direktur Lucian Graves di Lantai 80 Menara Eksekutif."}
 				]
 			}
 		]
@@ -68,23 +66,25 @@ const CUTSCENES: Dictionary = {
 		"hint": "[KLIK / SPASI] LANJUT   [ESC] LEWATI CUTSCENE",
 		"slides": [
 			{
-				"image": "res://assets/cutscenes/chapter2-slide1.jpg",
-				"lines": [
-					{"name": "Arthur Vance", "text": "Dok Whitehall Bawah. Peti kargo bertanda JAYABAYA telah dibobol dan selongsong peluru berserakan di dermaga."}
-				]
-			},
-			{
 				"image": "res://assets/cutscenes/chapter2-slide2.jpg",
 				"lines": [
-					{"name": "Colin Ward", "text": "Thur...? Kamu yang merancang Protokol Jayabaya, Arthur! Kamu menanam pintu belakang dengan sandi aksara ayahmu, Edward Vance!"},
-					{"name": "Arthur Vance", "text": "Colin... Ya Tuhan... Semua ingatanku kembali..."}
+					{"name": "Colin Ward", "text": "Thur...? Kamu benar-benar sudah lupa ya, Thur? Ini aku, Colin! Kita tumbuh besar bersama di desa adat sebelum digusur!"},
+					{"name": "Colin Ward", "text": "Kita yang bersumpah di depan nisan ayahmu, EDWARD VANCE, untuk meruntuhkan rezim korup ini!", "effect": "shake"},
+					{"name": "Arthur Vance", "text": "Edward Vance...? Kepalaku—! Dinding kabut di ingatanku mendadak runtuh!"},
+					{"name": "Colin Ward", "text": "Graves membunuh ayahmu demi buku besar tanah ulayat! Dan agar rakyat tak memberontak, mereka menciptakan The Lethe Protocol—KAMU Kepala Arsitek Kognitifnya, Arthur!"},
+					{"name": "Colin Ward", "text": "Kamu menanam pintu belakang Protokol Jayabaya dengan sandi aksara ayahmu! Tapi Graves mencium rencanamu dan mencuci otakmu dengan mesin ciptaanmu sendiri!"},
+					{"name": "Arthur Vance", "text": "Colin... Ya Tuhan... Colin... Sahabatku..."}
 				]
 			},
 			{
 				"image": "res://assets/cutscenes/chapter2-slide3.jpg",
 				"lines": [
-					{"name": "Sistem Biro", "text": "[OVERRIDE OTOMATIS // FAILSAFE NEUROTOXIN GRAVES DIJALANKAN]"},
-					{"name": "Colin Ward", "text": "Selesaikan... tugas ayahmu, Thur... Sektor 0... Laci 884-B... Bebaskan kota ini..."}
+					{"name": "Sistem Van Taktis", "text": "[color=#ff3366][OVERRIDE OTOMATIS // FAILSAFE PROTOKOL GRAVES DIJALANKAN][/color]", "effect": "shake"},
+					{"name": "Arthur Vance", "text": "Sirine failsafe berbunyi! Jarum mikro menyembul dari kerah tahanan Colin dan menyuntikkan neurotoksin hijau pekat! Tidak—bertahanlah, Colin!"},
+					{"name": "Colin Ward", "text": "Uhuk...! Dengarkan aku, Thur... Selesaikan tugas ayahmu..."},
+					{"name": "Arthur Vance", "text": "Dengan sisa tenaganya, jari Colin yang berlumuran darah menggoreskan pesan di kaca jendela van: SEKTOR 0 // LACI 884-B."},
+					{"name": "Colin Ward", "text": "Ambil ukiran ayahmu di laci itu... temui Garrick Shaw di Undercity... Bebaskan kota ini..."},
+					{"name": "Arthur Vance", "text": "Kepala Colin terkulai di pundakku. Denyut nadinya berhenti selamanya... Aku harus memeriksa kerah tahanan dan goresan darah di kaca van sebelum Prescott membuka pintu."}
 				]
 			}
 		]
@@ -242,11 +242,13 @@ func _ready() -> void:
 	_build_ui()
 	_hint.text = str(data.get("hint", "[KLIK / SPASI] LANJUT   [ESC] LEWATI"))
 	_ensure_dialogue_box()
-	UIManager.show_hud(false)
+	if not overlay_mode:
+		UIManager.show_hud(false)
 	_show_slide(0)
-	UIManager.fade_in(0.5)
-	modulate.a = 0.0
-	create_tween().tween_property(self, "modulate:a", 1.0, 0.5)
+	if not overlay_mode:
+		UIManager.fade_in(0.5)
+		modulate.a = 0.0
+		create_tween().tween_property(self, "modulate:a", 1.0, 0.5)
 
 func _ensure_dialogue_box() -> void:
 	_dialogue_box = get_node_or_null("DialogueBox") as CanvasLayer
@@ -254,8 +256,12 @@ func _ensure_dialogue_box() -> void:
 		var packed: PackedScene = load(DIALOGUE_BOX_SCENE_PATH)
 		if packed:
 			_dialogue_box = packed.instantiate() as CanvasLayer
-			_dialogue_box.name = "DialogueBox"
+			_dialogue_box.name = "CutsceneDialogueBox" if overlay_mode else "DialogueBox"
 			add_child(_dialogue_box)
+	elif overlay_mode:
+		_dialogue_box.name = "CutsceneDialogueBox"
+	if overlay_mode and _dialogue_box:
+		_dialogue_box.layer = 81
 	if _dialogue_box and not _dialogue_box.dialogue_finished.is_connected(_on_dialogue_finished):
 		_dialogue_box.dialogue_finished.connect(_on_dialogue_finished)
 
@@ -370,6 +376,9 @@ func _finish_cutscene() -> void:
 	var flag_name: String = str(data.get("flag", ""))
 	if not flag_name.is_empty():
 		GameManager.set_flag(flag_name, true)
+	if overlay_mode:
+		cutscene_finished.emit()
+		return
 	await UIManager.play_fade_transition(true, 0.6)
 	var target_scene: String = next_scene_path if not next_scene_path.is_empty() else GameManager.pending_cutscene_next_scene
 	if target_scene.is_empty():

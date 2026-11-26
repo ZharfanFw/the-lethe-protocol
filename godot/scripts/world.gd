@@ -93,7 +93,7 @@ func _ready() -> void:
 	_set_fade(0.0, 0.25)
 
 func _request_open_combiner() -> void:
-	if ui_transitioning:
+	if ui_transitioning or UIManager.is_cutscene_overlay_active():
 		return
 	var combiner = get_node_or_null("ItemCombiner")
 	var notebook = get_node_or_null("DetectiveNotebook")
@@ -108,7 +108,7 @@ func _request_open_combiner() -> void:
 	ui_transitioning = false
 
 func _request_open_notebook() -> void:
-	if ui_transitioning:
+	if ui_transitioning or UIManager.is_cutscene_overlay_active():
 		return
 	var combiner = get_node_or_null("ItemCombiner")
 	var notebook = get_node_or_null("DetectiveNotebook")
@@ -123,7 +123,7 @@ func _request_open_notebook() -> void:
 	ui_transitioning = false
 
 func is_ui_blocking() -> bool:
-	if ui_transitioning:
+	if ui_transitioning or UIManager.is_cutscene_overlay_active():
 		return true
 	var combiner = get_node_or_null("ItemCombiner")
 	if combiner and combiner.visible:

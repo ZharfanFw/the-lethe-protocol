@@ -1,8 +1,12 @@
 extends CanvasLayer
 
+const CUTSCENE_PLAYER_PATH := "res://scenes/cutscenes/cutscene_player.tscn"
+
 @onready var fade_rect: ColorRect = $FadeRect
 @onready var hud_panel: Control = $HUDPanel
 @onready var pause_menu: Control = get_node_or_null("PauseMenu")
+
+var _cutscene_overlay: CanvasLayer = null
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -48,6 +52,42 @@ func fade_in(duration: float = 0.5) -> void:
 func reset_fade() -> void:
 	if fade_rect:
 		fade_rect.modulate.a = 0.0
+
+func is_cutscene_overlay_active() -> bool:
+	return _cutscene_overlay != null and is_instance_valid(_cutscene_overlay)
+
+func play_overlay_cutscene(cutscene_id_arg: String) -> void:
+	if is_cutscene_overlay_active():
+		return
+	var packed: PackedScene = load(CUTSCENE_PLAYER_PATH)
+	if packed == null:
+		push_error("Cutscene scene not found: " + CUTSCENE_PLAYER_PATH)
+		return
+	var parent_node: Node = get_tree().current_scene
+	if parent_node == null:
+		parent_node = get_tree().root
+
+	await play_fade_transition(true, 0.35)
+	var overlay := CanvasLayer.new()
+	overlay.name = "CutsceneOverlay"
+	overlay.layer = 80
+	var cutscene: Control = packed.instantiate() as Control
+	cutscene.set("cutscene_id", cutscene_id_arg)
+	cutscene.set("overlay_mode", true)
+	overlay.add_child(cutscene)
+	_cutscene_overlay = overlay
+	parent_node.add_child(overlay)
+
+	await play_fade_transition(false, 0.35)
+	if is_instance_valid(cutscene):
+		await cutscene.cutscene_finished
+
+	await play_fade_transition(true, 0.35)
+	if is_instance_valid(overlay):
+		overlay.queue_free()
+	if _cutscene_overlay == overlay:
+		_cutscene_overlay = null
+	await play_fade_transition(false, 0.35)
 
 func toggle_mind_vault() -> void:
 	var scene := get_tree().current_scene
@@ -100,6 +140,8 @@ func _handle_pause_key() -> void:
 			get_viewport().set_input_as_handled()
 
 func _is_any_overlay_open() -> bool:
+	if is_cutscene_overlay_active():
+		return true
 	var scene := get_tree().current_scene
 	if scene == null:
 		return false

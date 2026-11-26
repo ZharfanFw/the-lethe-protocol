@@ -7,6 +7,7 @@ signal transition_requested(target_chapter: int)
 @export var required_flags: Array[String] = []
 @export var prompt_message: String = "[E] Lanjut ke chapter berikutnya"
 @export var skip_cutscene: bool = false
+@export var cutscene_id: String = ""
 
 var player_in_zone: bool = false
 var transitioning: bool = false
@@ -78,4 +79,4 @@ func try_transition() -> void:
 	GameManager.set_flag("chapter_%d_completed" % (target_next_chapter - 1), true)
 	transition_requested.emit(target_next_chapter)
 	await UIManager.play_fade_transition(true, 0.4)
-	GameManager.advance_to_chapter(target_next_chapter, true, skip_cutscene)
+	GameManager.advance_to_chapter(target_next_chapter, true, skip_cutscene, cutscene_id)

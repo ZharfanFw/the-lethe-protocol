@@ -111,6 +111,7 @@ const LEGACY_ITEM_MIGRATION: Dictionary = {
 var saved_player_position: Vector2 = Vector2.ZERO
 var has_saved_position: bool = false
 var saved_map_id: String = ""
+var _skip_scene_position_capture: bool = false
 
 func _ready() -> void:
 	_load_evidence_db()
@@ -364,13 +365,18 @@ func play_cutscene(cutscene_id: String, next_scene_path: String) -> void:
 		return
 	get_tree().change_scene_to_file(CUTSCENE_SCENE_PATH)
 
-func advance_to_chapter(chapter_number: int, autosave: bool = true, skip_cutscene: bool = false) -> void:
+func advance_to_chapter(chapter_number: int, autosave: bool = true, skip_cutscene: bool = false, cutscene_override: String = "") -> void:
 	if chapter_number < 0 or chapter_number > TOTAL_CHAPTERS:
 		push_error("Invalid chapter number: %d" % chapter_number)
 		return
 	current_chapter = chapter_number
+	has_saved_position = false
+	saved_player_position = Vector2.ZERO
+	saved_map_id = ""
 	if autosave:
+		_skip_scene_position_capture = true
 		SaveManager.save_game(current_slot)
+		_skip_scene_position_capture = false
 	chapter_transition_started.emit(chapter_number)
 	if chapter_number == 0:
 		play_cutscene("prolog", chapter_scene_path(1))
@@ -382,7 +388,9 @@ func advance_to_chapter(chapter_number: int, autosave: bool = true, skip_cutscen
 	if skip_cutscene or chapter_number == 3:
 		get_tree().change_scene_to_file(target_path)
 		return
-	play_cutscene("chapter_%d" % chapter_number, target_path)
+	var default_cutscene: String = "chapter_1" if chapter_number == 2 else ("chapter_%d" % chapter_number)
+	var target_cutscene: String = cutscene_override if not cutscene_override.is_empty() else default_cutscene
+	play_cutscene(target_cutscene, target_path)
 
 func resolve_ending(ending_id: int) -> void:
 	if not ENDING_TITLES.has(ending_id):
@@ -410,7 +418,7 @@ func is_ending_available(ending_id: int) -> bool:
 
 func to_save_dict() -> Dictionary:
 	var tree := get_tree()
-	if tree:
+	if tree and not _skip_scene_position_capture:
 		var player := tree.get_first_node_in_group("player") as Node2D
 		if player and is_instance_valid(player):
 			saved_player_position = player.global_position

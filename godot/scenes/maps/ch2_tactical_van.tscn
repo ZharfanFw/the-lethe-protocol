@@ -222,3 +222,4 @@ position = Vector2(292, 74)
 quest_evidence_id = "EVID-203"
 quest_flag = "colin_sparrow_met"
 quest_memory_bonus = 35
+quest_cutscene_id = "chapter_2"

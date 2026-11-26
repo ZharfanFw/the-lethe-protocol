@@ -16,6 +16,7 @@ extends StaticBody2D
 @export var quest_memory_bonus: int = 0
 @export var quest_required_evidence: Array[String] = []
 @export var quest_missing_req_lines: Array[String] = []
+@export var quest_cutscene_id: String = ""
 
 @onready var prompt_label: Label = $PromptLabel
 @onready var interaction_area: Area2D = $InteractionArea
@@ -70,7 +71,7 @@ func _get_dialogue_box() -> CanvasLayer:
 	return dialogue_box
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not player_in_range:
+	if not player_in_range or is_talking or UIManager.is_cutscene_overlay_active():
 		return
 	
 	var is_interact := event.is_action_pressed("interact")
@@ -104,6 +105,10 @@ func _unhandled_input(event: InputEvent) -> void:
 					else:
 						active_lines = ["Periksa petunjuk di sekitarmu terlebih dahulu sebelum melapor kembali padaku."]
 				else:
+					if not quest_cutscene_id.is_empty():
+						get_viewport().set_input_as_handled()
+						_run_quest_cutscene(active_speaker)
+						return
 					var q_id: String = quest_dialogue_id if not quest_dialogue_id.is_empty() else quest_evidence_id
 					var q_entry := GameManager.get_interactable_dialogue(q_id) if not q_id.is_empty() else {}
 					if not q_entry.is_empty():
@@ -140,6 +145,38 @@ func _lines_have_choices(check_lines: Array) -> bool:
 		if item is Dictionary and item.has("choices"):
 			return true
 	return false
+
+func _run_quest_cutscene(active_speaker: String) -> void:
+	var cached_player: Node = player_ref
+	if cached_player and cached_player.get("can_move") != null:
+		cached_player.set("can_move", false)
+	var q_id: String = quest_dialogue_id if not quest_dialogue_id.is_empty() else quest_evidence_id
+	var q_entry := GameManager.get_interactable_dialogue(q_id) if not q_id.is_empty() else {}
+	if not q_entry.is_empty():
+		active_speaker = str(q_entry.get("speaker", active_speaker))
+	await UIManager.play_overlay_cutscene(quest_cutscene_id)
+	if not is_inside_tree():
+		return
+	if not q_entry.is_empty():
+		var q_note: String = str(q_entry.get("note", ""))
+		if not q_note.is_empty():
+			GameManager.unlock_note(q_note)
+	if not quest_evidence_id.is_empty():
+		GameManager.add_evidence(quest_evidence_id)
+	if quest_memory_bonus != 0:
+		GameManager.add_memory(quest_memory_bonus)
+	GameManager.set_flag(quest_flag, true)
+	GameManager.unlock_profile_by_name(active_speaker)
+	if not npc_id.is_empty():
+		GameManager.unlock_profile(npc_id)
+	is_talking = false
+	_face_front()
+	if cached_player and is_instance_valid(cached_player) and cached_player.get("can_move") != null:
+		var world_node := get_tree().get_first_node_in_group("world")
+		var blocking: bool = world_node != null and world_node.has_method("is_ui_blocking") and world_node.is_ui_blocking()
+		cached_player.set("can_move", not blocking)
+	if player_in_range and prompt_label:
+		prompt_label.visible = true
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "Player" or body.is_in_group("player"):
 		player_ref = body
